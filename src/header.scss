@@ -81,15 +81,24 @@
         }
     }
     .options-side-bar{
-        width: 70%;
+        width: 100%;
         p{
             color: $white;
+            background-color: $principal;
+            border-radius: 5px;
+            padding: 2vh 0 2vh 15%;
             font-size: 2em;
             text-align: left;
             font-weight: 500;
             font-family: 'Barlow Condensed', sans-serif;
-            margin: 15% 0;
-        }
+            box-shadow: 0 3px 4px 0 #28079b88, 0 -3px 4px 0 #28079b88;
+            margin: 10px 0;
+            transition: ease-in-out 0.1s;
+
+            &:active{
+                background-color: $detail;
+            }
+        }        
     }
 }
 .side-bar-content.active{
