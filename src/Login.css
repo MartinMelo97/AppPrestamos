@@ -1,0 +1,27 @@
+.tittle {
+    color: #fff;
+    text-align: center;
+   }
+
+   .input-lg {
+     color: white;
+     background-color: #4009fb;
+     -webkit-border-radius: 15px;
+    -moz-border-radius: 15px;
+     border-radius: 15px;
+    height: 7vh;
+    border:3px solid #ffffff;
+    border-width:3px;
+    border-style:solid;
+    padding-left: 2vh; 
+  }
+
+.btn-style {
+  color:#4009fb;
+  background-color: #fff;
+  width: 30vw;
+  height: 7vh;
+  text-align: center;
+ }   
+    
+ 
