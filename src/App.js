@@ -5,6 +5,7 @@ import NumberPayments from './NumberPayments'
 import Calendar from './Calendar'
 import HamburgerMenu from './HamburgerMenu'
 import Header from './Header.jsx'
+import NewCustomer from './NewCustomer.jsx'
 import Customers from './Customers'
 import InfoCustomers from './InfoCustomers'
 import Historial from './Historial'
@@ -18,6 +19,7 @@ function App() {
   return (
     <div>
       <Header/>
+      <NewCustomer />
     </div>
   );
 }
