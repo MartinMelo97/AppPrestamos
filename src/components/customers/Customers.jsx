@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { Switch, Route } from 'react-router-dom'
+import './customers.scss'
 
 import CustomerDetail from './CustomerDetail'
 
