@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import './header.scss'
 import HamburgerMenu from './HamburgerMenu.jsx'
-import MenuIcon from './assets/icons/menu.svg'
+import MenuIcon from '../../../assets/icons/menu.svg'
 
 class Header extends Component {
     constructor(props) {

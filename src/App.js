@@ -3,10 +3,12 @@ import Login from './Login'
 import Principal from './Principal'
 import NumberPayments from './NumberPayments'
 import Calendar from './Calendar'
-import HamburgerMenu from './HamburgerMenu'
-import Header from './Header.jsx'
-import DetalleCliente from './DetalleCliente'
-import Customers from './Customers'
+import Header from './components/common/header/Header'
+
+import Customers from './components/customers/Customers'
+
+import NotFound from './components/common/not_found/NotFound'
+
 import InfoCustomers from './InfoCustomers'
 import Historial from './Historial'
 import CorteDia from './CorteDia'
@@ -19,7 +21,10 @@ function App() {
   return (
     <div>
       <Header/>
-      <DetalleCliente/>
+      <Switch>
+        <Route exact path="/clientes/detalle/" component={ Customers } />
+        <Route component={ NotFound } />
+      </Switch>
     </div>
   );
 }

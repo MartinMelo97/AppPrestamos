@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import sun from './assets/icons/sun.svg'
+import sun from '../../../assets/icons/sun.svg'
 
 const HamburgerMenu = (props) =>{
     return(
