@@ -22,7 +22,7 @@ function App() {
     <div>
       <Header/>
       <Switch>
-        <Route exact path="/clientes/detalle/" component={ Customers } />
+        <Route path="/clientes/" component={ Customers } />
         <Route component={ NotFound } />
       </Switch>
     </div>

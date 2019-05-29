@@ -1,5 +1,4 @@
 import React from 'react'
-import './customer_detail.scss'
 
 const CustomerDetail = (props) => (
     props.customer ?
