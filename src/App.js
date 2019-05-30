@@ -5,7 +5,8 @@ import NumberPayments from './NumberPayments'
 import Calendar from './Calendar'
 import Header from './components/common/header/Header'
 
-import Customers from './components/customers/Customers'
+import CustomerDetail from './components/customers/detail/CustomerDetail'
+import NewCustomer from './components/customers/new/NewCustomer'
 
 import NotFound from './components/common/not_found/NotFound'
 
@@ -22,7 +23,8 @@ function App() {
     <div>
       <Header/>
       <Switch>
-        <Route path="/clientes/" component={ Customers } />
+        <Route exact path="/clientes/detalle/" component={ CustomerDetail } />
+        <Route exact path="/clientes/nuevo/" component={ NewCustomer } />
         <Route component={ NotFound } />
       </Switch>
     </div>

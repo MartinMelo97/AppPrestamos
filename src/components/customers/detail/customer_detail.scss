@@ -1,0 +1,56 @@
+@import '../../variables.scss';
+
+.detail{
+    min-height: 90vh;
+    font-family: 'Barlow Condensed', sans-serif;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    .head{
+        max-width: 60%;
+        display: flex;
+        justify-content: flex-start;
+        align-items: flex-end;
+        flex-direction: column;
+        .client-name{
+            font-size: 5em;
+            margin: 0;
+        }
+        span{
+            font-size: 2em;
+        }
+    }
+    .client-data{
+        width: 70%;
+        margin-bottom: 5vh;
+        height: 50vh;
+        p{
+            font-size: 1.8em;
+            //border: 0.5px solid #aaa;
+            border-top-left-radius: 10% 50%;
+            border-bottom-left-radius: 10% 50%;
+            border-top-right-radius: 10% 50%;
+            border-bottom-right-radius: 10% 50%;
+            box-shadow: 0 2px 5px 0 #ccc;
+            padding: 5px;
+            text-align: center;
+            font-weight: 600;
+            span{
+                color: $detail;
+                font-weight: 900;
+            }
+        }
+    }
+
+    button{
+        background-color: $detail;
+        border-radius: 10px;
+        color: $white;
+        text-transform: uppercase;
+        border: none;
+        font-weight: 600;
+        font-size: 1.2em;
+        padding: 1vh 5vw;
+    }
+}
