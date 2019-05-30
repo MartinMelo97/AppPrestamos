@@ -1,0 +1,61 @@
+@import '../../variables.scss';
+
+.login-container{
+    background-color: $principal;
+    height: 100vh;
+    max-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    button, input{
+        font-family: 'Barlow Condensed', sans-serif;
+    }
+    p, input{
+        color: $white;
+    }
+    input, button {
+        &:focus{
+            outline: none;
+        }
+    }
+    .login-title{
+        margin: 0 0 2vh 0;
+        font-size: 2.5em;
+        font-weight: 600;
+        letter-spacing: 2px;
+    }
+    .login-topic{
+        width: 70%;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        margin: 2vh;
+        p{
+            font-size: 2.3em;
+            margin: 0;
+            width: 100%;
+        }
+        input{
+            width: 100%;
+            border-radius: 15px;
+            border: 3px solid $white;
+            background-color: transparent;
+            height: 5vh;
+            min-height: 40px;
+            padding: 0 10px; 
+            font-size: 1.9em;
+            width: calc(100% - 20px);
+        }
+    }
+    .login-button{
+        background-color: $white;
+        color: $principal;
+        border: none;
+        border-radius: 15px;
+        font-size: 2em;
+        padding: 5px 0;
+        width: 30%;
+        margin-top: 2vh;
+    }
+}

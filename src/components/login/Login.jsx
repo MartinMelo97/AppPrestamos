@@ -5,14 +5,24 @@ class Login extends Component {
     constructor(props){
         super(props)
         this.state = {
-
+            topics: [
+                'correo',
+                'contraseña'
+            ]
         }
     }
 
     render(){
         return(
-            <div>
-                <p>Login</p>
+            <div className="login-container">
+                <p className="login-title">Iniciar sesión</p>
+                {this.state.topics.map((topic, i)=>(
+                    <div className="login-topic">
+                        <p>{ topic }</p>
+                        <input type={ topic === 'contraseña' ? 'password' : 'text' }/>
+                    </div>
+                ))}
+                <button className="login-button">Entrar</button>
             </div>
         )
     }
