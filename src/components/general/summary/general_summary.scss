@@ -1,0 +1,63 @@
+@import '../../../variables.scss';
+
+.summary-div-container{
+
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    width: 100vw;
+
+    .summary-title{
+        text-transform: uppercase;
+        font-weight: 900;
+        font-size: 5em;
+        margin-top: 1vh;
+        margin-bottom: 5vh;
+        width: 80vw;
+        text-align: center;
+    }
+
+    .calendar{
+
+        width: 80vw;
+        box-shadow: 0px 5px 10px 1px #0003;
+
+        #calendar-header{
+            width: 80vw;
+            padding-left: 3vw;
+            span{
+                font-size: 2em;
+                font-weight: 900;
+                margin: 0 1vw;
+            }
+        }
+
+        #calendar-body{
+            display: grid;
+            grid-template-columns: repeat(7, calc(100% / 7));
+            grid-template-rows: repeat(8, calc(100% / 8));
+            width: 80vw;
+            min-height: 50vh;
+            align-items: center;
+            justify-items: center;
+
+            span{
+                width: calc(80vw / 7);
+                height: calc(80vw / 7);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                font-size: 1.7em;
+                font-weight: 900;
+            }
+
+            .this-is{
+                background-color: $principal;
+                border-radius: 50%;
+                color: $white;
+            }
+        }
+    }
+}
