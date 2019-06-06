@@ -36,7 +36,7 @@
         #calendar-body{
             display: grid;
             grid-template-columns: repeat(7, calc(100% / 7));
-            grid-template-rows: repeat(8, calc(100% / 8));
+            grid-template-rows: repeat(7, calc(100% / 7));
             width: 80vw;
             min-height: 50vh;
             align-items: center;

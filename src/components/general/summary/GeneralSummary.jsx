@@ -54,6 +54,14 @@ class GeneralSummary extends Component {
             contX = startDay === 8 ? contX + 1 : contX
             startDay = startDay === 8 ?  1 : startDay
         }
+
+        let calendar = document.getElementById('calendar-body')
+        if(contX < 8 && calendar != null && startDay > 1)
+            calendar.style.gridTemplateRows= ('repeat(7, calc(100% / 7))')
+        if(contX < 8 && calendar != null && startDay < 2)
+            calendar.style.gridTemplateRows= ('repeat(6, calc(100% / 6))')
+        if(contX < 7 && calendar != null)
+            calendar.style.gridTemplateRows= ('repeat(6, calc(100% / 6))')
     }
 
     render(){
