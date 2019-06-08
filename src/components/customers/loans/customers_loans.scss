@@ -40,9 +40,10 @@
     }
     .transparent-white-div{
         position: fixed;
+        z-index: 1;
         bottom: 0;
         height: 50vh;
         width: 100vw;
-        background: linear-gradient(to bottom, #fff0, #fff9);
+        background: linear-gradient(to bottom, #e8e8e800, #e8e8e899);
     }
 }

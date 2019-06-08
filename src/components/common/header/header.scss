@@ -41,6 +41,7 @@
     left: -100%;
     transition: 0.5s ease-in-out;
     -webkit-transition: 0.5s ease-in-out;
+    z-index: 10000;
 
     .on-click-exit{
         grid-column: 2/auto;
@@ -61,6 +62,7 @@
     flex-direction: column;
     justify-content: flex-start;
     align-items: center;
+    z-index: 10000;
     .day{
         width: 70%;
         margin-bottom: 15%;
