@@ -17,6 +17,33 @@ class CustomersLoans extends Component {
                 {
                     name: 'Gabriel'
                 },
+                {
+                    name: 'Isaac'
+                },
+                {
+                    name: 'Daniel'
+                },
+                {
+                    name: 'Martin'
+                },
+                {
+                    name: 'Indra'
+                },
+                {
+                    name: 'Jesus'
+                },
+                {
+                    name: 'Oscar'
+                },
+                {
+                    name: 'Arturo'
+                },
+                {
+                    name: 'Topi'
+                },
+                {
+                    name: 'David'
+                },
             ],
             reds:[]
         }
@@ -69,6 +96,7 @@ class CustomersLoans extends Component {
                         </div>
                     ))}
                 </div>
+                <div className="transparent-white-div"/>
             </div>
         )
     }
