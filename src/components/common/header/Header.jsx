@@ -30,10 +30,10 @@ class Header extends Component {
 
     componentDidMount = () =>{
         let { day } = this.state
-        let days = ["Lun.", "Mar.", "Miér.", "Jue.", "Vier.", "Sáb.", "Dom."]
+        let days = ["Dom.","Lun.", "Mar.", "Miér.", "Jue.", "Vier.", "Sáb."]
         let monts = ["Ener", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"]
         let date = new Date()
-        day = `${days[ date.getDay() - 1 ]} ${date.getDate()} ${monts[date.getMonth()]}`
+        day = `${days[ date.getDay()]} ${date.getDate()} ${monts[date.getMonth()]}`
         this.setState({ day })
     }
 
