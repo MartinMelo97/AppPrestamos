@@ -17,8 +17,8 @@ class CustomersLoans extends Component {
     redsGenerate = () =>{
         let { reds } = this.state
 
-        let optionsR = ['5','6','7','8','9','a','b','c','d','e','f']
-        let optionsGB = ['0','1','2','3']
+        let optionsR = ['7','8','9','a','b','c','d','e','f']
+        let optionsGB = ['0','1','2']
 
         let red = '#'
         let random
