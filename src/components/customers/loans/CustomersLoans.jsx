@@ -8,42 +8,7 @@ class CustomersLoans extends Component {
         super(props)
         this.state = {
             customers:[
-                {
-                    name: 'Alicia'
-                },
-                {
-                    name: 'Montse'
-                },
-                {
-                    name: 'Gabriel'
-                },
-                {
-                    name: 'Isaac'
-                },
-                {
-                    name: 'Daniel'
-                },
-                {
-                    name: 'Martin'
-                },
-                {
-                    name: 'Indra'
-                },
-                {
-                    name: 'Jesus'
-                },
-                {
-                    name: 'Oscar'
-                },
-                {
-                    name: 'Arturo'
-                },
-                {
-                    name: 'Topi'
-                },
-                {
-                    name: 'David'
-                },
+                
             ],
             reds:[]
         }
@@ -87,14 +52,17 @@ class CustomersLoans extends Component {
                 <img src={ plus } alt="agregar"/>
                 </p>
                 <div className="info-customers-container">
-                    {this.state.customers.map((customer, i)=>(
+                    { this.state.customers.length > 0 ?
+                    this.state.customers.map((customer, i)=>(
                         <div className="info-customer-container">
                             <span style = {{
                                 backgroundColor : this.state.reds[i]
                             }}>{customer.name}</span>
                             <img src={ info } alt="info"/>
                         </div>
-                    ))}
+                    ))
+                    :
+                    null}
                 </div>
                 <div className="transparent-white-div"/>
             </div>
