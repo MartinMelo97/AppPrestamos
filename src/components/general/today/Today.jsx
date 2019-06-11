@@ -18,10 +18,98 @@ class Today extends Component {
                 {
                     name: "Alicia",
                     total: 5000
-                }
+                },
+                {
+                    name: "Alicia",
+                    total: 5000
+                },
+                {
+                    name: "Alicia",
+                    total: 5000
+                },
+                {
+                    name: "Alicia",
+                    total: 5000
+                },
+                {
+                    name: "Alicia",
+                    total: 5000
+                },
+                {
+                    name: "Alicia",
+                    total: 5000
+                },
+                {
+                    name: "Alicia",
+                    total: 5000
+                },
+                {
+                    name: "Alicia",
+                    total: 5000
+                },
+                {
+                    name: "Alicia",
+                    total: 5000
+                },
+                {
+                    name: "Alicia",
+                    total: 5000
+                },
+                {
+                    name: "Alicia",
+                    total: 5000
+                },
+                {
+                    name: "Alicia",
+                    total: 5000
+                },
+                {
+                    name: "Alicia",
+                    total: 5000
+                },
+                {
+                    name: "Alicia",
+                    total: 5000
+                },
+                {
+                    name: "Alicia",
+                    total: 5000
+                },
+                {
+                    name: "Alicia",
+                    total: 5000
+                },
+                {
+                    name: "Alicia",
+                    total: 5000
+                },
+                {
+                    name: "Alicia",
+                    total: 5000
+                },
+                {
+                    name: "Alicia",
+                    total: 5000
+                },
+                {
+                    name: "Alicia",
+                    total: 5000
+                },
+                {
+                    name: "Alicia",
+                    total: 5000
+                },
+                {
+                    name: "Alicia",
+                    total: 5000
+                },
+                {
+                    name: "Alicia",
+                    total: 5000
+                },
             ],
             blues:[],
-            day: 10,
+            day: 11,
             actualDay: null
         }
     }
@@ -62,8 +150,8 @@ class Today extends Component {
 
     render(){
         return(
-            <div className="general-today-container">
-                <div className="today-header">
+            <div className="general-loans-container">
+                <div className="loans-header">
                     <img src={ arrow } alt="anterior"/>
                     
                     {this.state.day === this.state.actualDay ? 
@@ -76,6 +164,21 @@ class Today extends Component {
                     :
                     <img src={ arrow } alt="siguiente"/>}
                 </div>
+                <div className="customers-container">
+                    {this.state.customers.length > 0 ?
+                    this.state.customers.map((customer, i)=>(
+                        <div className="loans-container"
+                        style = {{
+                            backgroundColor : this.state.blues[i]
+                        }}>
+                            <span>{customer.name}</span>
+                            <span>${customer.total}</span>
+                        </div>
+                    ))
+                    :
+                    null}
+                </div>
+                <div className="transparent-white-div"/>
             </div>
         )
     }
