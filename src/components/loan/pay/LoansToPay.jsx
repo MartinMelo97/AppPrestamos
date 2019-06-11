@@ -17,13 +17,13 @@ class LoansToPay extends Component {
             <div className="pay-loan-container">
                 <p className="pay-loan-title">
                 { this.state.customer != null ?
-                customer.name
+                this.state.customer.name
                 : 
                 null}
                 </p>
                 <span className="pay-loan-subtitle">
                     Pago #{ this.state.customer != null ?
-                            customer.payNumber
+                            this.state.customer.payNumber
                             : 
                             null}
                 </span>
