@@ -13,7 +13,7 @@ import NewCustomer from './components/customers/new/NewCustomer'
 import CutOfDay from './components/general/cut/CutOfDay'
 import Record from './components/general/record/Record'
 import GeneralSummary from './components/general/summary/GeneralSummary'
-import Today from './components/general/today/Today'
+import Loans from './components/general/loans/Loans'
 
 import LoansDetail from './components/loan/detail/LoansDetail'
 import LoansList from './components/loan/list/LoansList'
@@ -34,7 +34,7 @@ function App() {
         <Route exact path="/general/corte-dia/" component={ CutOfDay } />
         <Route exact path="/general/historial/" component={ Record } />
         <Route exact path="/general/resumen/" component={ GeneralSummary } />
-        <Route exact path="/general/hoy/" component={ Today } />
+        <Route exact path="/general/prestamos/" component={ Loans } />
 
         <Route exact path="/prestamos/detalle/" component={ LoansDetail } />
         <Route exact path="/prestamos/lista/" component={ LoansList } />

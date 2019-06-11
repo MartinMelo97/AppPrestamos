@@ -1,8 +1,8 @@
 import React, { Component } from 'react'
-import './today.scss'
+import './loans.scss'
 import arrow from '../../../assets/icons/left-arrow.svg'
 
-class Today extends Component {
+class Loans extends Component {
     constructor(props){
         super(props)
         this.state = {
@@ -85,4 +85,4 @@ class Today extends Component {
     }
 }
 
-export default Today
+export default Loans
