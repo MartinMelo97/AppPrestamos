@@ -1,0 +1,101 @@
+@import '../../../variables.scss';
+
+.pay-loan-container{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    flex-direction: column;
+
+    .pay-loan-title{
+        font-size: 4em;
+        font-weight: 900;
+        text-transform: uppercase;
+        margin: 10px 0 10vh 0;
+        position: relative;
+        .pay-loan-subtitle{
+            position: absolute;
+            right: 0;
+            top: 100%;
+            font-size: calc(1em / 8 * 3);
+        }
+    }
+    .buttons-container{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: flex-start;
+        button, input {
+            font-family: 'Barlow Condensed';
+            &:focus{
+                outline: none;
+            }
+        }
+        .button-style-one{
+            color: $white;
+            padding: 5px 30px;
+            text-transform: uppercase;
+            font-size: 1.5em;
+            border-radius: 10px;
+            background-color: $principal;
+            border: none;
+            letter-spacing: 2px;
+            font-weight: 600;
+        }
+        span {
+            margin: 5vh 0;
+            font-size: 1.5em;
+        }
+        .button-style-two{
+            font-size: 1.5em;
+            text-transform: uppercase;
+            border: none;
+            border-radius: 10px;
+            font-weight: 600;
+            letter-spacing: 1px;
+            transition: ease-in-out 0.3s;
+            &.not-active{
+                color: $white;
+                background-color: $detail;
+            }
+            &.active{
+                color: $black;
+                background-color: $white;
+            }
+        }
+        .ghost-container{
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: space-around;
+            height: 30vh;
+            transition: ease-in-out 0.3s;
+            input{
+                width: 60vw;
+                border: 0.5px solid $black;
+                border-radius: 10px;
+                color: $black;
+                text-align: center;
+                font-size: 1.5em;
+            }
+            button{
+                font-size: 1.5em;
+                text-transform: uppercase;
+                border: none;
+                border-radius: 10px;
+                font-weight: 600;
+                letter-spacing: 1px;
+                padding: 3px 15px;
+                color: $white;
+                background-color: $detail;
+            }
+            &.not-active{
+                visibility: hidden;
+                opacity: 0;
+            }
+            &.active{
+                visibility: visible;
+                opacity: 1;
+            }
+        }
+    }
+}
