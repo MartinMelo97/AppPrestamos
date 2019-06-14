@@ -1,0 +1,128 @@
+@import '../../../variables.scss';
+
+.new-loan-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    .new-loan-title{
+        font-size: 4em;
+        max-width: 80vw;
+        margin: 0;
+        text-align: center;
+        font-weight: 900;
+        text-transform: uppercase;
+    }
+    .loan-number{
+        margin: 5vh 0;
+        font-size: 1.5em;
+        font-weight: 600;
+    }
+    .data-container{
+        display: inherit;
+        flex-direction: inherit;
+        align-items: inherit;
+        justify-content: inherit;
+        span{
+            width: 80vw;
+            font-size: 1.5em;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+        .select-customer{
+            width: 80vw;
+            position: relative;
+            .space{
+                font-size: 1.5em;
+                border: 1px solid $black;
+                border-radius: 10px;
+                height: 30px;
+                margin: 0;
+                transition: ease-in-out 0.15s;
+                &.active{
+                    border-radius: 10px 10px 0 0;
+                }
+                &.not-active{
+                    border-radius: 10px;
+                }
+            }
+            img{
+                position: absolute;
+                &.view-button{
+                    width: 5vw;
+                    right: 10px;
+                    top: calc(15px - 2.5vw);
+                    transform: rotate(-90deg);
+                }
+                &.add-button{
+                    width: 7vw;
+                    left: calc(100% + 1.5vw);
+                    top: calc(15px - 2.5vw);
+                }
+            }
+            .options-container{
+                position: absolute;
+                top: 100%;
+                left: 0px;
+                font-weight: 900;
+                max-height: 200px;
+                border: 1px solid $black;
+                width: calc(80vw - 2px);
+                border-bottom-left-radius: 10px;
+                border-bottom-right-radius: 10px;
+                transition: ease-in-out 0.15s;
+                @if height = 200px {
+                    overflow-y: scroll;
+                }
+                @else{
+                    overflow-y: hidden;
+                }
+                &.active{
+                    visibility: visible;
+                    animation: open 0.3s;
+                    opacity: 1;
+                    @keyframes open {
+                        from{
+                            clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%);
+                        }to{
+                            clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+                        }
+                    }
+                }
+                &.not-active{
+                    visibility: hidden;
+                    animation: close 0.3s;
+                    opacity: 0;
+                    @keyframes close {
+                        from{
+                            clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+                            opacity: 1;
+                        }to{
+                            clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%);
+                            opacity: 1;
+                        }
+                    }
+                }
+                .option{
+                    margin: 0;
+                    height: 38px;
+                    border-width: 1px 0;
+                    border-style: solid;
+                    border-color: $black;
+                    color: $black;
+                    font-size: 1.5em;
+                    width: 100%;
+                    transition: ease-in-out 0.15s;
+                    background: $white;
+                    &:active{
+                        background-color: $principal;
+                        color: $white; 
+                    }
+                }
+            }
+        }        
+        .date-container{
+            width: fit-content;
+        }
+    }
+}
