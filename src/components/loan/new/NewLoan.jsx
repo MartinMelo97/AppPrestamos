@@ -46,6 +46,7 @@ class NewLoan extends Component {
         let space = document.getElementsByClassName(`space`)[0]
 
         space.innerText = select.innerText
+        this.selectClient()
     }
 
     selectNumer = () =>{
@@ -107,18 +108,18 @@ class NewLoan extends Component {
                 <div className="data-container">
                     <span>Cliente</span>
                     <div 
-                    className="select-customer"
-                    onClick={ () => this.selectClient() }>
+                    className="select-customer">
                         <p
                         className={`space ${this.state.active === false ? "not-active" : "active" }`}
-                        >{ this.state.client != null ?
+                        onClick={ () => this.selectClient() }>{ this.state.client != null ?
                         this.state.client
                         :
                         null }</p>
                         <img
                          src={ arrow }
                          alt="desplegar"
-                         className={`view-button ${this.state.active === false ? "not-active" : "active" }`} />
+                         className={`view-button ${this.state.active === false ? "not-active" : "active" }`}
+                         onClick={ () => this.selectClient() } />
                         <img src={ plus } alt="agregar" className="add-button"/>
                         <div
                         style={{
