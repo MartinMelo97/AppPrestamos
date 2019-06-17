@@ -10,13 +10,13 @@
         max-width: 80vw;
         margin: 0;
         text-align: center;
-        font-weight: 900;
+        font-weight: 500;
         text-transform: uppercase;
     }
     .loan-number{
         margin: 2vh 0;
         font-size: 1.5em;
-        font-weight: 600;
+        font-weight: 500;
     }
     .data-container{
         display: inherit;
@@ -26,7 +26,7 @@
         span{
             width: 80vw;
             font-size: 1.5em;
-            font-weight: 600;
+            font-weight: 400;
             margin-top: 10px;
         }
         .select-customer{
@@ -136,7 +136,7 @@
         }        
         .date-container{
             width: fit-content;
-            margin: 2vh 0;
+            margin: 10vh 0 5vh 0 ;
         }
         .limit{
             display: flex;
@@ -159,7 +159,7 @@
                     border-radius: 15px;
                     box-shadow: 0 2px 5px 0 #0009;
                     font-size: 1.5em;
-                    font-weight: 600;
+                    font-weight: 500;
                     text-align: center;
                     transition: ease-in-out 0.15s;
                     &.not-active{
@@ -228,6 +228,7 @@
             padding: 5px 25px;
             color: $white;
             margin-top: 40px;
+            margin-bottom: 5vh;
             font-size: 1.7em;
             border: none;
             letter-spacing: 2px;
