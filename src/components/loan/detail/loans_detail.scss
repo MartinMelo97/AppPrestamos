@@ -1,0 +1,14 @@
+@import '../../../variables.scss';
+button{
+    font-size: 1.7em;
+    text-transform: uppercase;
+    border: none;
+    margin-top: 40px;
+    border-radius: 15px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    padding: 5px 25px;
+    color: $white;
+    background-color: $detail;
+    font-family: 'Barlow Condensed';
+}

@@ -1,0 +1,11 @@
+@import '../../../variables.scss';
+.progress-bar {
+    position: relative;
+    height: 2vh;;
+    width: 100%;
+    border-radius: 50px;
+   // column-count:4;
+   // column-gap:0.5px;
+    box-shadow: 0 3px 6px 0 #ccc;
+    padding: 5px;
+  }
