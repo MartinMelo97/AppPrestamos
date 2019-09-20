@@ -46,7 +46,7 @@ class GeneralSummary extends Component {
             child.appendChild(text)
             child.style.gridColumn=startDay
             child.style.gridRow=contX
-            if( days[i] == this.state.day)
+            if( days[i] === this.state.day)
                 child.className="this-is"
             container.appendChild(child)
 

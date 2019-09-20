@@ -1,4 +1,4 @@
-import React, { Component } from 'react'
+import React from 'react'
 import Filler from './Filler'
 import './ProgressBar.scss'
 const ProgressBar = (props) => {

@@ -1,5 +1,7 @@
 import React from 'react';
-import { Switch, Route, NavLink } from 'react-router-dom'
+import { Switch, Route } from 'react-router-dom'
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import Header from './components/common/header/Header'
 import NotFound from './components/common/not_found/NotFound'
@@ -24,6 +26,7 @@ function App() {
   return (
     <div>
       <Header/>
+      <ToastContainer />
       <Switch>
         <Route exact path="/" component={ Login }/>
 

@@ -1,14 +1,12 @@
 import React, { Component } from 'react'
 import './loans.scss'
 import arrow from '../../../assets/icons/left-arrow.svg'
-
+import firebase from 'firebase' 
 class Loans extends Component {
     constructor(props){
         super(props)
         this.state = {
-            customers:[
-                
-            ],
+            customers:[],
             blues:[],
             day: 1,
             actualDay: null
@@ -27,12 +25,10 @@ class Loans extends Component {
         for(let i = 0; i < 500; i++){
             for(let i = 0; i < 4; i++){
                 random = Math.floor(Math.random() * optionsRG.length)
-                console.log(random)
                 blue += optionsRG[random]
             }
             for(let i = 0; i < 4; i++){
                 random = Math.floor(Math.random() * optionsB.length)
-                console.log(random)
                 blue += optionsB[random]
             }
             blues.push(blue)
@@ -47,6 +43,17 @@ class Loans extends Component {
         let { actualDay } = this.state
         actualDay = new Date().getDate()
         this.setState({ actualDay })
+
+        firebase.firestore().collection('loan')
+            .onSnapshot((dates)=>{
+            let names = []
+            dates.forEach(date=>{
+                let dato = date.data()
+                names.push(dato)
+            })
+            console.log(names)
+            this.setState({customers: names})
+        })
     }
 
     render(){
@@ -72,8 +79,8 @@ class Loans extends Component {
                         style = {{
                             backgroundColor : this.state.blues[i]
                         }}>
-                            <span>{customer.name}</span>
-                            <span>${customer.total}</span>
+                            <span>{customer.Cliente}</span>
+                            <span>${customer.Cantidad}</span>
                         </div>
                     ))
                     :

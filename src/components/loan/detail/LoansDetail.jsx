@@ -63,7 +63,7 @@ class LoansDetail extends Component {
             child.style.gridColumn=startDay
             child.style.gridRow=contX
             onclick={ a(child){child.className="this-is"}}
-            if( days[i] == this.state.day)
+            if( days[i] === this.state.day)
                 child.className="this-is"
              
             container.appendChild(child)
@@ -83,7 +83,7 @@ class LoansDetail extends Component {
     }
 
     render(){
-        const { value, selectedValue } = this.state;
+       // const { value, selectedValue } = this.state;
         return(
             <div className="summary-div-container">
                 <p className="summary-title">{ this.state.prestamo }</p>

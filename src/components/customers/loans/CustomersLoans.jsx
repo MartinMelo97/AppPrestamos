@@ -1,17 +1,33 @@
 import React, { Component } from 'react'
+import { NavLink } from 'react-router-dom'
 import './customers_loans.scss'
 import plus from '../../../assets/icons/plus.svg'
 import info from '../../../assets/icons/information.svg'
-
+import firebase from 'firebase'
+import Detail from './../detail/CustomerDetail'
 class CustomersLoans extends Component {
     constructor(props){
         super(props)
         this.state = {
-            customers:[
-                
-            ],
-            reds:[]
+            reds:[],
+            customers: null,
+            areCustomers: false,
+            idCustomer: null,
         }
+    }
+
+    componentWillMount = () => {
+        firebase.firestore().collection('customers')
+        .onSnapshot((customers)=>{
+          let array_dates = []
+          customers.forEach(date=>{
+              let dato = date.data()
+              dato.id = date.id
+              array_dates.push(dato)
+          })
+          this.setState({customers: array_dates, areDates: true})
+      })
+      this.redsGenerate()
     }
 
     redsGenerate = () =>{
@@ -26,12 +42,10 @@ class CustomersLoans extends Component {
         for(let i = 0; i < 500; i++){
             for(let i = 0; i < 2; i++){
                 random = Math.floor(Math.random() * optionsR.length)
-                console.log(random)
                 red += optionsR[random]
             }
             for(let i = 0; i < 4; i++){
                 random = Math.floor(Math.random() * optionsGB.length)
-                console.log(random)
                 red += optionsGB[random]
             }
             reds.push(red)
@@ -41,28 +55,27 @@ class CustomersLoans extends Component {
         this.setState({ reds })
     }
 
-    componentDidMount = () =>{
-        this.redsGenerate()
-    }
-
     render(){
         return(
             <div className="customers-loans-container">
                 <p className="customers-loans-title">Clientes
-                <img src={ plus } alt="agregar"/>
+                <NavLink to="/clientes/nuevo/"><img src={ plus } alt="agregar"/></NavLink>
                 </p>
                 <div className="info-customers-container">
-                    { this.state.customers.length > 0 ?
+                    { this.state.customers ?
                     this.state.customers.map((customer, i)=>(
-                        <div className="info-customer-container">
+                        <div className="info-customer-container" key={i}>
                             <span style = {{
                                 backgroundColor : this.state.reds[i]
-                            }}>{customer.name}</span>
-                            <img src={ info } alt="info"/>
+                            }}>{customer.Nombre}</span>
+                            <NavLink to="/clientes/detalle/">
+                                
+                                <img src={ info } alt="info"/>
+                            </NavLink>
                         </div>
                     ))
                     :
-                    null}
+                    <p>Cargando...</p>}
                 </div>
                 <div className="transparent-white-div"/>
             </div>

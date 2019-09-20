@@ -1,22 +1,25 @@
 import React, { Component } from 'react'
+import { NavLink } from 'react-router-dom'
 import './new_loan.scss'
 import arrow from '../../../assets/icons/left-arrow.svg'
 import plus from '../../../assets/icons/plus.svg'
+import firebase from 'firebase'
+import { toast } from 'react-toastify'
 
 class NewLoan extends Component {
     constructor(props){
         super(props)
         this.state = {
-            loansLength: 19,
+            loansLength: 1,
             client: null,
-            customerNames:[
-                'Alicia',
-                'Pedro',
-                'Martin',
-                'Daniel',
-                'Pablo',
-                'Isaac'
-            ],
+            customerNames:[],
+            Loan: {
+                Cliente: "",
+                Cantidad: "",
+                Plazo: "20",
+                Fecha: "",
+                Num_Prestamo: ""
+            },
             date: null,
             limit: null,
             days: [],
@@ -33,6 +36,13 @@ class NewLoan extends Component {
         let thisDate = new Date()
         date = `${days[thisDate.getDay()]} ${thisDate.getDate()} ${months[thisDate.getMonth()]} ${thisDate.getFullYear()}`
         
+        var dateFormat = thisDate.getDate()+"/"+(thisDate.getMonth()+1)+"/"+thisDate.getFullYear()
+        console.log("La fecha di hoy "+dateFormat)
+        
+        let { Loan } = this.state
+        Loan.Fecha = dateFormat
+        this.setState(Loan)
+
         this.setState({ date })
     }
 
@@ -46,6 +56,12 @@ class NewLoan extends Component {
         let space = document.getElementsByClassName(`space`)[0]
 
         space.innerText = select.innerText
+
+        let { Loan } = this.state
+        Loan.Cliente = select.innerText
+        this.setState(Loan)
+
+        console.log("El cliente"+select.innerText)
         this.selectClient()
     }
 
@@ -78,7 +94,6 @@ class NewLoan extends Component {
         let select = document.getElementById(`n${day}`)
         let space = document.getElementsByClassName(`number-limit`)[0]
         let options = document.getElementsByClassName(`number-option`)
-
         for(let i = 0; i < options.length; i++){
             options[i].style.color = "#000"
         }
@@ -86,6 +101,12 @@ class NewLoan extends Component {
         select.style.color = "#0ac8e5"
 
         space.innerText = select.innerText
+
+        let { Loan } = this.state
+        Loan.Plazo = select.innerText
+        this.setState(Loan)
+
+        console.log("El Num"+select.innerText)
     }
 
     componentDidMount = () =>{
@@ -95,6 +116,54 @@ class NewLoan extends Component {
             days.push(i)
         }
         this.setState({ days })
+
+        firebase.firestore().collection('loan')
+            .onSnapshot((dates)=>{
+            let num = []
+            dates.forEach(date=>{
+                let dato = date.data().Num_Prestamo
+                num.push(dato)
+            })
+            console.log(num.length+1)
+            this.setState({loansLength: num.length+1})
+            let {Loan} = this.state
+            Loan.Num_Prestamo = num.length+1
+            this.setState(Loan)
+
+        })
+        firebase.firestore().collection('customers')
+            .onSnapshot((dates)=>{
+            let names = []
+            dates.forEach(date=>{
+                let dato = date.data().Nombre
+                names.push(dato)
+            })
+            console.log(names)
+            this.setState({customerNames: names})
+        })
+    }
+
+    changeCant = (e) => {
+        let { Loan } = this.state
+        Loan.Cantidad = e.target.value
+        this.setState(Loan)
+    }
+
+    Register = () => {
+        console.log(this.state.Loan)
+        firebase.firestore().collection('loan').add(this.state.Loan)
+        .then(()=>{
+            toast.success("Datos registrados")
+            let {Loan} = this.state
+            Loan.Cantidad = ""
+            this.setState(Loan)
+            this.setState({select: false})
+            this.setState({client: null})
+        })
+        .catch((err)=>{
+            toast.error("Datos no registrados")
+            console.log(err)
+        })
     }
 
     render(){
@@ -102,7 +171,7 @@ class NewLoan extends Component {
             <div className="new-loan-container">
                 <p className="new-loan-title">Nuevo Prestamo</p>
                 <span className="loan-number">{this.state.loansLength != null ?
-                `#${this.state.loansLength+1}`
+                `#${this.state.loansLength}`
                 :
                 null}</span>
                 <div className="data-container">
@@ -120,7 +189,7 @@ class NewLoan extends Component {
                          alt="desplegar"
                          className={`view-button ${this.state.active === false ? "not-active" : "active" }`}
                          onClick={ () => this.selectClient() } />
-                        <img src={ plus } alt="agregar" className="add-button"/>
+                        <NavLink to="/clientes/nuevo/"><img src={ plus } alt="agregar" className="add-button"/></NavLink>
                         <div
                         style={{
                             overflowY : this.state.customerNames.length >= 6 ? 'scroll' : 'hidden'
@@ -128,7 +197,7 @@ class NewLoan extends Component {
                         className={`options-container ${this.state.active === false ? "not-active" : "active" }`}>
                             { this.state.customerNames.length > 0 ?
                             this.state.customerNames.map((name, i)=>(
-                                <p 
+                                <p key={i}
                                 className={`option opn${i}`}
                                 onClick={()=>this.inputClient(i)}>{ name }</p>
                             ))
@@ -137,7 +206,9 @@ class NewLoan extends Component {
                         </div>
                     </div>
                     <span>Cantidad</span>
-                    <input type="number"/>
+                    <input type="number" 
+                    onChange={(e)=>this.changeCant(e)} 
+                    value={this.state.Loan.Cantidad || ""}/>
                     <span className="date-container">{ this.state.date != null ?
                     this.state.date
                     :
@@ -154,8 +225,9 @@ class NewLoan extends Component {
                             '20' }</p>
                             <div
                             className={`numbers-container ${this.state.select ? 'active' : 'not-active'}`} >
-                                {this.state.days.map((day)=>(
-                                    <span 
+                                {this.state.days.map((day, i)=>(
+                                    <span
+                                    key={i}
                                     className='number-option'
                                     id={`n${day}`}
                                     onClick={()=>this.inputNumber(day)}>
@@ -166,7 +238,7 @@ class NewLoan extends Component {
                         </div>
                         <span>Días</span>
                     </div>
-                    <button className="add-loan-button">Agregar</button>
+                    <button className="add-loan-button" onClick={this.Register}>Agregar</button>
                 </div>
             </div>
         )

@@ -1,17 +1,27 @@
 import React, { Component } from 'react'
 import './record.scss'
 import arrow from '../../../assets/icons/left-arrow.svg'
-
+import firebase from 'firebase'
 class Record extends Component {
     constructor(props){
         super(props)
         this.state = {
-            customers:[
-                
-            ],
+            customers:[],
             day: 1,
             actualDay: 1,
         }
+    }
+    componentDidMount = () =>{
+        firebase.firestore().collection('customers')
+            .onSnapshot((dates)=>{
+            let names = []
+            dates.forEach(date=>{
+                let dato = date.data()
+                names.push(dato)
+            })
+            console.log(names)
+            this.setState({customers: names})
+        })
     }
 
     render(){
@@ -33,10 +43,10 @@ class Record extends Component {
                 <div className="customers-name-container">
                     { this.state.customers.length > 0 ?
                     this.state.customers.map((customer)=>(
-                        <span>{ customer.name }</span>
+                        <span>{ customer.Nombre }</span>
                     ))
                     :
-                    null }
+                    <p>No hay datos para mostrar.</p> }
                 </div>
             </div>
         )

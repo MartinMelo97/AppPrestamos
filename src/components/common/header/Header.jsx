@@ -9,13 +9,6 @@ class Header extends Component {
         this.state = {
             day:null,
             user:null,
-            options:[
-                "Clientes",
-                "Historial",
-                "Corte del día",
-                "Resumen Gral.",
-                "Prestamos"
-            ],
             active:null
         }
     }
@@ -42,7 +35,6 @@ class Header extends Component {
             <div className="header">
                 <HamburgerMenu
                 active={this.state.active}
-                options={this.state.options}
                 day={this.state.day}
                 user={this.state.user}
                 sidebar={this.sidebar}/> 
