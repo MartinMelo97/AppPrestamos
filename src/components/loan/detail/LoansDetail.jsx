@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
 import './loans_detail.scss'
 import moment from 'moment' 
-
+import {NavLink} from 'react-router-dom'
 class LoansDetail extends Component {
     constructor(props){
         super(props)
@@ -14,7 +14,7 @@ class LoansDetail extends Component {
             days : [],
             startDay : 0,
             contX: 2,
-            prestamo: "Prestamo 5",
+            prestamo: "Prestamo",
             weeksDays : [
                 "D","L","M","X","J","V","S"
             ] 
@@ -103,7 +103,7 @@ class LoansDetail extends Component {
                         {this.maping() }
                     </div>
                 </div>
-                <button className="button-add">Liquidar</button>
+                <NavLink to="/prestamos/a-pagar/"><button className="button-add">Liquidar</button></NavLink>
             </div>
         )
     }

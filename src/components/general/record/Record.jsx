@@ -42,8 +42,8 @@ class Record extends Component {
                 </span>
                 <div className="customers-name-container">
                     { this.state.customers.length > 0 ?
-                    this.state.customers.map((customer)=>(
-                        <span>{ customer.Nombre }</span>
+                    this.state.customers.map((customer, i)=>(
+                        <span key={i}>{ customer.Nombre }</span>
                     ))
                     :
                     <p>No hay datos para mostrar.</p> }

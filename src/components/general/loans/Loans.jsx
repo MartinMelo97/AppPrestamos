@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import './loans.scss'
-import arrow from '../../../assets/icons/left-arrow.svg'
+import { NavLink } from 'react-router-dom'
+import plus from '../../../assets/icons/plus.svg'
 import firebase from 'firebase' 
 class Loans extends Component {
     constructor(props){
@@ -59,29 +60,19 @@ class Loans extends Component {
     render(){
         return(
             <div className="general-loans-container">
-                <div className="loans-header">
-                    <img src={ arrow } alt="anterior"/>
-                    
-                    {this.state.day === this.state.actualDay ? 
-                    <span>Hoy</span>
-                    :
-                    <span>{this.state.day}</span>}
-
-                    {this.state.day === this.state.actualDay ? 
-                    null
-                    :
-                    <img src={ arrow } alt="siguiente"/>}
-                </div>
+                <p className="customers-loans-title">Prestamos
+                <NavLink to="/prestamos/nuevo/"><img src={ plus } alt="agregar"/></NavLink>
+                </p>
                 <div className="customers-container">
                     {this.state.customers.length > 0 ?
                     this.state.customers.map((customer, i)=>(
-                        <div className="loans-container"
+                        <NavLink to="/prestamos/detalle/" key={i} className="Link-option"><div className="loans-container"
                         style = {{
                             backgroundColor : this.state.blues[i]
-                        }}>
+                        }} >
                             <span>{customer.Cliente}</span>
                             <span>${customer.Cantidad}</span>
-                        </div>
+                        </div></NavLink>
                     ))
                     :
                     null}

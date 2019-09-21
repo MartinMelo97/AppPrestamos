@@ -8,7 +8,7 @@
     align-items: center;
     justify-content: flex-start;
     .head{
-        max-width: 60%;
+        max-width: 100%;
         display: flex;
         justify-content: flex-start;
         align-items: flex-end;
@@ -46,16 +46,15 @@
     }
      span{
             color: $black;
-            margin-left: 0.5em;
+            margin-left: 0.3em;
             font-weight: 900;
             float: left;
             
         }
 }
 .Progress{
-    
-    margin-left: 0.5em;
-    float: left;
+    margin-right: 11px;
+    float: right;
     width: 15%;
     margin-top: 1vh;
     margin-bottom: 1vh;

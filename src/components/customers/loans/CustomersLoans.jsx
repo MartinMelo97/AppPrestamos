@@ -12,7 +12,14 @@ class CustomersLoans extends Component {
             reds:[],
             customers: null,
             areCustomers: false,
-            idCustomer: null,
+            datesCustomer: {
+                id: "",
+                nombre: "",
+                apellido: "",
+                correo: "",
+                direccion: "",
+                telefono: "",
+            },
         }
     }
 
@@ -54,6 +61,18 @@ class CustomersLoans extends Component {
         //console.log(reds)
         this.setState({ reds })
     }
+   
+    DatesCustomers = (e, id, Nombre, Apellido, Correo, Direccion, Telefono) => {
+        let {datesCustomer} = this.state
+        datesCustomer.id = id
+        datesCustomer.nombre = Nombre
+        datesCustomer.correo = Correo
+        datesCustomer.apellido = Apellido
+        datesCustomer.direccion = Direccion
+        datesCustomer.telefono = Telefono
+        this.setState(datesCustomer)
+        window.locationf="/clientes/detalle/"
+    }
 
     render(){
         return(
@@ -68,15 +87,24 @@ class CustomersLoans extends Component {
                             <span style = {{
                                 backgroundColor : this.state.reds[i]
                             }}>{customer.Nombre}</span>
-                            <NavLink to="/clientes/detalle/">
-                                
-                                <img src={ info } alt="info"/>
-                            </NavLink>
+                            
+                                <img src={ info } alt="info" onClick={(e)=>this.DatesCustomers(e, customer.id, customer.Nombre, customer.Apellido, customer.Correo, customer.Direccion, customer.Telefono )}/>
+                            
                         </div>
                     ))
                     :
                     <p>Cargando...</p>}
                 </div>
+                    <div className="detail-prop">
+                        <Detail 
+                        className="detail-prop"
+                        id={this.state.datesCustomer.id}
+                        nombre={this.state.datesCustomer.nombre}
+                        apellido={this.state.datesCustomer.apellido}
+                        correo={this.state.datesCustomer.correo}
+                        telefono={this.state.datesCustomer.telefono}
+                        direccion={this.state.datesCustomer.direccion}/>
+                    </div>
                 <div className="transparent-white-div"/>
             </div>
         )
