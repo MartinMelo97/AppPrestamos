@@ -11,6 +11,7 @@ import Login from './components/login/Login'
 import CustomerDetail from './components/customers/detail/CustomerDetail'
 import CustomersLoans from './components/customers/loans/CustomersLoans'
 import NewCustomer from './components/customers/new/NewCustomer'
+import EditCustomer from './components/customers/edit'
 
 import CutOfDay from './components/general/cut/CutOfDay'
 import Record from './components/general/record/Record'
@@ -33,6 +34,7 @@ function App() {
         <Route exact path="/clientes/detalle/" component={ CustomerDetail } />
         <Route exact path="/clientes/prestamos/" component={ CustomersLoans } />
         <Route exact path="/clientes/nuevo/" component={ NewCustomer } />
+        <Route exact path="/clientes/editar/" component={ EditCustomer } />
 
         <Route exact path="/general/corte-dia/" component={ CutOfDay } />
         <Route exact path="/general/historial/" component={ Record } />

@@ -4,7 +4,6 @@ import './customers_loans.scss'
 import plus from '../../../assets/icons/plus.svg'
 import info from '../../../assets/icons/information.svg'
 import firebase from 'firebase'
-import Detail from './../detail/CustomerDetail'
 class CustomersLoans extends Component {
     constructor(props){
         super(props)
@@ -23,7 +22,7 @@ class CustomersLoans extends Component {
         }
     }
 
-    componentWillMount = () => {
+    componentDidMount = () => {
         firebase.firestore().collection('customers')
         .onSnapshot((customers)=>{
           let array_dates = []
@@ -58,10 +57,9 @@ class CustomersLoans extends Component {
             reds.push(red)
             red = '#'
         }
-        //console.log(reds)
         this.setState({ reds })
     }
-   
+
     DatesCustomers = (e, id, Nombre, Apellido, Correo, Direccion, Telefono) => {
         let {datesCustomer} = this.state
         datesCustomer.id = id
@@ -71,7 +69,11 @@ class CustomersLoans extends Component {
         datesCustomer.direccion = Direccion
         datesCustomer.telefono = Telefono
         this.setState(datesCustomer)
-        window.locationf="/clientes/detalle/"
+
+        this.props.history.push({
+           pathname: '/clientes/detalle/',
+           state: this.state.datesCustomer
+        })
     }
 
     render(){
@@ -87,24 +89,12 @@ class CustomersLoans extends Component {
                             <span style = {{
                                 backgroundColor : this.state.reds[i]
                             }}>{customer.Nombre}</span>
-                            
                                 <img src={ info } alt="info" onClick={(e)=>this.DatesCustomers(e, customer.id, customer.Nombre, customer.Apellido, customer.Correo, customer.Direccion, customer.Telefono )}/>
-                            
                         </div>
                     ))
                     :
                     <p>Cargando...</p>}
                 </div>
-                    <div className="detail-prop">
-                        <Detail 
-                        className="detail-prop"
-                        id={this.state.datesCustomer.id}
-                        nombre={this.state.datesCustomer.nombre}
-                        apellido={this.state.datesCustomer.apellido}
-                        correo={this.state.datesCustomer.correo}
-                        telefono={this.state.datesCustomer.telefono}
-                        direccion={this.state.datesCustomer.direccion}/>
-                    </div>
                 <div className="transparent-white-div"/>
             </div>
         )
