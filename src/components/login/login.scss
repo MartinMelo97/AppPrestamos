@@ -8,6 +8,12 @@
     flex-direction: column;
     align-items: center;
     justify-content: center;
+    form{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+    }
     button, input{
         font-family: 'Barlow Condensed', sans-serif;
     }
@@ -45,7 +51,6 @@
             min-height: 40px;
             padding: 0 10px; 
             font-size: 1.9em;
-            width: calc(100% - 20px);
         }
     }
     .login-button{
@@ -58,4 +63,10 @@
         width: 30%;
         margin-top: 2vh;
     }
+}
+.link-register{
+    color: $white;
+    font-size: 4vh;
+    margin-top: 3vh;
+    margin-bottom: 2vh;
 }

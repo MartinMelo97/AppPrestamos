@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import './header.scss'
 import HamburgerMenu from './HamburgerMenu.jsx'
 import MenuIcon from '../../../assets/icons/menu.svg'
-
 class Header extends Component {
     constructor(props) {
         super(props)
@@ -29,7 +28,6 @@ class Header extends Component {
         day = `${days[ date.getDay()]} ${date.getDate()} ${monts[date.getMonth()]}`
         this.setState({ day })
     }
-
     render(){
         return(
             <div className="header">

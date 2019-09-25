@@ -4,7 +4,10 @@ import {BrowserRouter} from 'react-router-dom'
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-import firebase from 'firebase'
+//import firebase from 'firebase'
+import * as firebase from "firebase/app";
+import "firebase/auth";
+import "firebase/database";
 firebase.initializeApp(
     {
         apiKey: "AIzaSyDk6vp22tgyVqgJmPDB_vhxV1JaKw4fvqY",

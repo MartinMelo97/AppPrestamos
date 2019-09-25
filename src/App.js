@@ -1,6 +1,10 @@
 import React from 'react'
 import { Switch, Route } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
+import { AuthProvider } from './auth'
+import PrivateRoute from './routes/PrivateRoute'
+import PublicRoute from './routes/PublicRoute'
+
 import 'react-toastify/dist/ReactToastify.css'
 import 'antd/dist/antd.css'
 
@@ -8,6 +12,7 @@ import Header from './components/common/header/Header'
 import NotFound from './components/common/not_found/NotFound'
 
 import Login from './components/login/Login'
+import Register from './components/register'
 
 import CustomerDetail from './components/customers/detail/CustomerDetail'
 import CustomersLoans from './components/customers/loans/CustomersLoans'
@@ -25,35 +30,38 @@ import LoansToPay from './components/loan/pay/LoansToPay'
 import NewLoan from './components/loan/new/NewLoan'
 import InfoLoan from './components/loan/info'
 
-function App() {
+const App = () => {
   return (
+    <AuthProvider>
     <div>
       <Header/>
       <ToastContainer />
       <Switch>
-        <Route exact path="/" component={ Login }/>
-        <Route exact path="/dashboard" component={ LoansList }/>
-        <Route exact path="/dashboard/info" component={ InfoLoan }/>
+        <PublicRoute exact path="/" component={ Login }/>
+        <PublicRoute exact path="/registro" component={ Register }/>
+        <PrivateRoute exact path="/dashboard" component={ LoansList }/>
+        <PrivateRoute exact path="/dashboard/info" component={ InfoLoan }/>
 
-        <Route exact path="/clientes/detalle/" component={ CustomerDetail } />
-        <Route exact path="/clientes/prestamos/" component={ CustomersLoans } />
-        <Route exact path="/clientes/nuevo/" component={ NewCustomer } />
-        <Route exact path="/clientes/editar/" component={ EditCustomer } />
+        <PrivateRoute exact path="/clientes/detalle/" component={ CustomerDetail } />
+        <PrivateRoute exact path="/clientes/prestamos/" component={ CustomersLoans } />
+        <PrivateRoute exact path="/clientes/nuevo/" component={ NewCustomer } />
+        <PrivateRoute exact path="/clientes/editar/" component={ EditCustomer } />
 
-        <Route exact path="/general/corte-dia/" component={ CutOfDay } />
-        <Route exact path="/general/historial/" component={ Record } />
-        <Route exact path="/general/resumen/" component={ GeneralSummary } />
-        <Route exact path="/general/prestamos/" component={ Loans } />
+        <PrivateRoute exact path="/general/corte-dia/" component={ CutOfDay } />
+        <PrivateRoute exact path="/general/historial/" component={ Record } />
+        <PrivateRoute exact path="/general/resumen/" component={ GeneralSummary } />
+        <PrivateRoute exact path="/general/prestamos/" component={ Loans } />
 
-        <Route exact path="/prestamos/detalle/" component={ LoansDetail } />
-        <Route exact path="/prestamos/lista/" component={ LoansList } />
-        <Route exact path="/prestamos/a-pagar/" component={ LoansToPay } />
-        <Route exact path="/prestamos/nuevo/" component={ NewLoan } />
+        <PrivateRoute exact path="/prestamos/detalle/" component={ LoansDetail } />
+        <PrivateRoute exact path="/prestamos/lista/" component={ LoansList } />
+        <PrivateRoute exact path="/prestamos/a-pagar/" component={ LoansToPay } />
+        <PrivateRoute exact path="/prestamos/nuevo/" component={ NewLoan } />
 
-        <Route component={ NotFound } />
+        <PrivateRoute component={ NotFound } />
       </Switch>
     </div>
-  );
+    </AuthProvider>
+  )
 }
 
 export default App;
