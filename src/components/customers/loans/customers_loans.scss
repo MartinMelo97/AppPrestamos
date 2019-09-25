@@ -19,12 +19,17 @@
         }
     }
 
+    .info-customers-container {
+        z-index: 10;
+    }
+
     .info-customer-container{
         display: flex;
         align-items: center;
         justify-content: space-between;
         width: 80vw;
         margin: 2vh 0;
+        z-index: 999;
 
         span{
             color: $white;

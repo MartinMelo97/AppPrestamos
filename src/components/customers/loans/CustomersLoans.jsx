@@ -61,7 +61,6 @@ class CustomersLoans extends Component {
     }
 
     DatesCustomers = (e, id, Nombre, Apellido, Correo, Direccion, Telefono) => {
-        console.log("Acabo de llegar")
         let {datesCustomer} = this.state
         datesCustomer.id = id
         datesCustomer.nombre = Nombre
