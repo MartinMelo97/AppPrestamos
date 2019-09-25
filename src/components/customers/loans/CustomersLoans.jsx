@@ -61,6 +61,7 @@ class CustomersLoans extends Component {
     }
 
     DatesCustomers = (e, id, Nombre, Apellido, Correo, Direccion, Telefono) => {
+        console.log("Acabo de llegar")
         let {datesCustomer} = this.state
         datesCustomer.id = id
         datesCustomer.nombre = Nombre
@@ -95,7 +96,7 @@ class CustomersLoans extends Component {
                     :
                     <p>Cargando...</p>}
                 </div>
-                <div className="transparent-white-div"/>
+                
             </div>
         )
     }
