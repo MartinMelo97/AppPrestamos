@@ -7,13 +7,6 @@ class EditCustomer extends Component {
     constructor(props){
         super(props)
         this.state = {
-            Customers: {
-                Nombre: "",
-                Apellido: "",
-                Direccion: "",
-                Correo: "",
-                Telefono: ""
-            },
             dates: this.props.location.state,
             datesCustomers: {
                 Nombre: "",
@@ -42,43 +35,44 @@ class EditCustomer extends Component {
     }
 
     changeName = (e) => {
-        let { Customers } = this.state
-        Customers.Nombre = e.target.value
-        this.setState(Customers)
+        let { datesCustomers } = this.state
+        datesCustomers.Nombre = e.target.value
+        console.log("Your name is " + e.target.value)
+        this.setState(datesCustomers)
     }
     changeFirstName = (e) => {
-        let { Customers } = this.state
-        Customers.Apellido = e.target.value
-        this.setState(Customers)
+        let { datesCustomers } = this.state
+        datesCustomers.Apellido = e.target.value
+        this.setState(datesCustomers)
     }
     changeAddress = (e) => {
-        let { Customers } = this.state
-        Customers.Direccion = e.target.value
-        this.setState(Customers)
+        let { datesCustomers } = this.state
+        datesCustomers.Direccion = e.target.value
+        this.setState(datesCustomers)
     }
     changeEmail = (e) => {
-        let { Customers } = this.state
-        Customers.Correo = e.target.value
-        this.setState(Customers)
+        let { datesCustomers } = this.state
+        datesCustomers.Correo = e.target.value
+        this.setState(datesCustomers)
     }
     changePhone = (e) => {
-        let { Customers } = this.state
-        Customers.Telefono = e.target.value
-        this.setState(Customers)
+        let { datesCustomers } = this.state
+        datesCustomers.Telefono = e.target.value
+        this.setState(datesCustomers)
     }
 
     Edit = () => {
-        console.log(this.state.Customers)
+        console.log(this.state.datesCustomers)
         firebase.firestore().collection('customers').doc(this.state.dates.id)
-        .set(this.state.Customers)
+        .set(this.state.datesCustomers)
         .then(()=>{
             toast.success("Datos actualizados")
             let {datesCustomers} = this.state
-            datesCustomers.nombre = ""
-            datesCustomers.apellido = ""
-            datesCustomers.direccion = ""
-            datesCustomers.correo = ""
-            datesCustomers.telefono = ""
+            datesCustomers.Nombre = ""
+            datesCustomers.Apellido = ""
+            datesCustomers.Direccion = ""
+            datesCustomers.Correo = ""
+            datesCustomers.Telefono = ""
             this.setState(datesCustomers)
         })
         .catch((err)=>{

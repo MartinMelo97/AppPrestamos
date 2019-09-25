@@ -22,6 +22,13 @@ class LoansList extends Component {
             this.setState({list: Loans})
         })
     }
+
+    goInfo = () => {
+        this.props.history.push({
+            pathname: '/dashboard/info'
+        })
+    }
+
     render(){
         return(
             <div className="detail">
@@ -29,12 +36,12 @@ class LoansList extends Component {
                     <p className="client-name">{this.state.list.prestamo}</p>
            </div>
            { this.state.list.length > 0 ? this.state.list.map((loan, i)=>(
-               <button className="btn-list" key={i}>
-                    <span>{loan.Num_Prestamo}</span>
+               <div className="btn-list" key={i} onClick={() => this.goInfo()}>
+                    <span>{i+1}</span>
                     <span>{loan.Cliente}</span>
-                    <span>{loan.Fecha}</span>
+                    <span>{loan.fechaInicio}</span>
                     <div className="Progress"><ProgressBar percentage={this.state.percentage}/></div>
-               </button>
+               </div>
            ))
             : <p>Cargando..</p>
             }

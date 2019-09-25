@@ -1,0 +1,27 @@
+.content-info-loan{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    font-family: 'Barlow Condensed', sans-serif;
+    .tittle-info-loan{
+        font-weight: 900;
+        text-transform: uppercase;
+        font-size: 4em;
+        margin-bottom: 0;
+    }
+    .ant-progress-inner {
+        height: 220px !important;
+        width: 220px !important;
+        font-size: 50px !important;
+    }
+    .info-progress-p{
+        font-weight: 200;
+        font-size: 2em;
+        margin-bottom: 2vh;
+    }
+    .s-info{
+        font-weight: bold;
+        font-size: 2em;
+    }
+}

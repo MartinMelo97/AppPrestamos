@@ -29,7 +29,7 @@
     .btn-list{
         margin-top: 0.5em;
         font-size: 1.8em;
-        height: 7vh;
+        
         width: 85%;
         background-color: $white;
         align-items: center;
@@ -49,13 +49,13 @@
             margin-left: 0.3em;
             font-weight: 900;
             float: left;
-            
+            font-family: 'Barlow Condensed', sans-serif;
         }
 }
 .Progress{
     margin-right: 11px;
     float: right;
-    width: 15%;
+    width: 20%;
     margin-top: 1vh;
     margin-bottom: 1vh;
     

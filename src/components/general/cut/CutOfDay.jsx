@@ -1,15 +1,27 @@
 import React, { Component } from 'react'
 import './cut_of_day.scss'
-
+import firebase from 'firebase'
 class CutOfDay extends Component {
     constructor(props){
         super(props)
         this.state = {
-            customers:[
-
-            ],
+            customers: [],
             total: 0
         }
+    }
+    componentDidMount = () => {
+        firebase.firestore().collection('loan')
+            .onSnapshot((dates)=>{
+            let names = []
+            dates.forEach(date=>{
+                let dato = date.data()
+                dato.id = date.id
+                names.push(dato)
+            })
+            this.setState({customers: names})
+            this.updateTotal()
+        })
+        
     }
 
     updateTotal = () =>{
@@ -18,15 +30,11 @@ class CutOfDay extends Component {
         if( customers.length > 0 ){
             total = 0
             for(let i = 0; i < customers.length; i++){
-                total += customers[i].value
+                total += customers[i].pago
             }
 
             this.setState({ total })
         }
-    }
-
-    componentDidMount = () =>{
-        this.updateTotal()
     }
 
     render(){
@@ -37,9 +45,9 @@ class CutOfDay extends Component {
                     <div className="list-loans-container">
                         {this.state.customers.length > 0 ?
                         this.state.customers.map((customer, i)=>(
-                            <div className="customer-value-container">
-                                <span className="customer-name">{customer.name}</span>
-                                <span className="customer-value">{ `$${customer.value}` }</span>
+                            <div className="customer-value-container" key={i}> 
+                                <span className="customer-name">{customer.Cliente}</span>
+                                <span className="customer-value">{ `$${customer.pago}` }</span>
                             </div>
                         ))
                         :

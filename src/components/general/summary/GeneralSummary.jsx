@@ -1,3 +1,4 @@
+ 
 import React, { Component } from 'react'
 import './general_summary.scss'
 
@@ -79,7 +80,7 @@ class GeneralSummary extends Component {
                             <span style = {{
                                 gridColumn : `${i+1}`,
                                 gridRow : 1
-                            }}>{ day }</span>
+                            }} key={i}>{ day }</span>
                         ))}
                         {this.maping()}
                     </div>
