@@ -1,9 +1,78 @@
 @import '../../../variables.scss';
-button{
+
+.loans-div-container{
+
+    display: flex;
+    flex-direction: column;
+    justify-content: start;
+    align-items: center;
+    width: 100vw;
+
+    .loans-detail-title{
+        text-transform: uppercase;
+        font-weight: 900;
+        font-size: 4em;
+        margin-top: 1vh;
+        margin-bottom: 2vh;
+        width: 80vw;
+        text-align: center;
+        letter-spacing: 1vw;
+    }
+    .loans-detail-p{
+        font-size: 5vh;
+        margin-top: 2vh;
+        margin-bottom: 2vh;
+    }
+
+    .calendar-loans{
+
+        width: 60vw;
+        box-shadow: 0px 5px 10px 1px #0003;
+
+        #calendar-header-loans{
+            width: 60vw;
+            padding-left: 3vw;
+            span{
+                font-size: 2em;
+                font-weight: 900;
+                margin: 0 1vw;
+            }
+        }
+
+        #calendar-body-loans{
+            display: grid;
+            grid-template-columns: repeat(7, calc(100% / 7));
+            grid-template-rows: repeat(7, calc(100% / 7));
+            width: 60vw;
+            min-height: 30vh;
+            align-items: center;
+            justify-items: center;
+
+            span{
+                width: calc(60vw / 7);
+                height: calc(60vw / 7);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                font-size: 1.7em;
+                font-weight: 900;
+            }
+
+            .this-is-active{
+                background-color: $detail;
+                border-radius: 50%;
+                color: $white;
+            }  
+        }
+    }
+}
+
+.button-loans-detail{
     font-size: 1.7em;
     text-transform: uppercase;
     border: none;
-    margin-top: 40px;
+    margin-top: 8vh;
     border-radius: 15px;
     font-weight: 600;
     letter-spacing: 1px;
@@ -12,3 +81,5 @@ button{
     background-color: $detail;
     font-family: 'Barlow Condensed';
 }
+
+

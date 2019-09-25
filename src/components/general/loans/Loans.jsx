@@ -10,7 +10,18 @@ class Loans extends Component {
             customers:[],
             blues:[],
             day: 1,
-            actualDay: null
+            actualDay: null,
+            datesLoan: {
+                id: "",
+                Nombre: "",
+                diaInicio: "",
+                diaFin: "",
+                mesInicio: "",
+                mesFin: "",
+                Year: "",
+                numPay: "",
+                pago: "",
+            }
         }
     }
 
@@ -35,7 +46,6 @@ class Loans extends Component {
             blues.push(blue)
             blue = '#'
         }
-        //console.log(reds)
         this.setState({ blues })
     }
 
@@ -50,10 +60,28 @@ class Loans extends Component {
             let names = []
             dates.forEach(date=>{
                 let dato = date.data()
+                dato.id = date.id
                 names.push(dato)
             })
-            console.log(names)
             this.setState({customers: names})
+        })
+    }
+
+    Detail = (e,id, Cliente, diaInicio, diaFin, mesInicio, mesFin,Year, pago, numPay) => {
+        let {datesLoan} = this.state
+        datesLoan.id = id
+        datesLoan.mesInicio = mesInicio
+        datesLoan.mesFin = mesFin
+        datesLoan.Year = Year
+        datesLoan.Nombre = Cliente
+        datesLoan.diaInicio = diaInicio
+        datesLoan.diaFin = diaFin
+        datesLoan.numPay = numPay
+        datesLoan.pago = pago
+        this.setState(datesLoan)
+        this.props.history.push({
+            pathname: '/prestamos/detalle/',
+            state: this.state.datesLoan
         })
     }
 
@@ -66,13 +94,15 @@ class Loans extends Component {
                 <div className="customers-container">
                     {this.state.customers.length > 0 ?
                     this.state.customers.map((customer, i)=>(
-                        <NavLink to="/prestamos/detalle/" key={i} className="Link-option"><div className="loans-container"
+                        <div className="loans-container" key={i}
+                        onClick={(e) => this.Detail(e, customer.id, customer.Cliente, customer.diaInicio, customer.diaFin, customer.mesInicio, customer.mesFin,customer.Year, 
+                            customer.pago, customer.numPay, )}
                         style = {{
                             backgroundColor : this.state.blues[i]
                         }} >
                             <span>{customer.Cliente}</span>
                             <span>${customer.Cantidad}</span>
-                        </div></NavLink>
+                        </div>
                     ))
                     :
                     null}

@@ -1,7 +1,8 @@
-import React from 'react';
+import React from 'react'
 import { Switch, Route } from 'react-router-dom'
-import { ToastContainer } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import { ToastContainer } from 'react-toastify'
+import 'react-toastify/dist/ReactToastify.css'
+import 'antd/dist/antd.css'
 
 import Header from './components/common/header/Header'
 import NotFound from './components/common/not_found/NotFound'
@@ -22,6 +23,7 @@ import LoansDetail from './components/loan/detail/LoansDetail'
 import LoansList from './components/loan/list/LoansList'
 import LoansToPay from './components/loan/pay/LoansToPay'
 import NewLoan from './components/loan/new/NewLoan'
+import InfoLoan from './components/loan/info'
 
 function App() {
   return (
@@ -30,6 +32,8 @@ function App() {
       <ToastContainer />
       <Switch>
         <Route exact path="/" component={ Login }/>
+        <Route exact path="/dashboard" component={ LoansList }/>
+        <Route exact path="/dashboard/info" component={ InfoLoan }/>
 
         <Route exact path="/clientes/detalle/" component={ CustomerDetail } />
         <Route exact path="/clientes/prestamos/" component={ CustomersLoans } />

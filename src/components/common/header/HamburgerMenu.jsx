@@ -12,6 +12,7 @@ const HamburgerMenu = (props) =>{
                     <p>{props.user}</p>
                 </div>
                 <div className="options-side-bar">
+                    <Link to="/dashboard" className="Link-option"><p>Home</p></Link>
                     <Link to="/clientes/prestamos/" className="Link-option"><p>Clientes</p></Link>
                     <Link to="/general/historial/" className="Link-option"><p>Historial</p></Link>
                     <Link to="/general/corte-dia/" className="Link-option"><p>Corte del día</p></Link>

@@ -1,16 +1,25 @@
 import React, { Component } from 'react'
 import './loans_to_pay.scss'
+import firebase from 'firebase'
+import {toast} from 'react-toastify'
 
 class LoansToPay extends Component {
     constructor(props){
         super(props)
         this.state = {
             customer:{
-                name: 'Alicia',
-                payNumber: 1,
+                name: '',
+                payNumber: '',
             },
+            pago: "",
             active: false
         }
+    }
+    componentDidMount = () =>{
+        let {customer} = this.state
+        customer.name = this.props.location.state.Nombre
+        customer.payNumber = this.props.location.state.numPay+1
+        this.setState(customer)
     }
 
     changeActive = () =>{
@@ -23,6 +32,26 @@ class LoansToPay extends Component {
         active = !active
 
         this.setState({ active })
+    }
+    payChange = (e) => {
+        var numPago = parseInt(e.target.value)
+        this.setState({pago: numPago})
+        console.log(this.state.pago)
+    }
+    loanPay = () => {
+        firebase.firestore().collection('loan').doc(this.props.location.state.id)
+        .update({
+            pago:this.state.pago,
+            numPay: this.state.customer.payNumber
+        })
+        .then(()=>{
+            toast.success("Se agregó el pago")
+            this.setState({pago: ""})
+        })
+        .catch((err)=>{
+            toast.error("No se agregó el pago")
+            console.log(err)
+        })
     }
 
     render(){
@@ -48,8 +77,8 @@ class LoansToPay extends Component {
                     onClick={ () => this.changeActive() }
                     >Parcial</button>
                     <div className="ghost-container not-active">
-                        <input type="number" placeholder="$"/>
-                        <button className="button-add">Agregar</button>
+                        <input type="number" placeholder="$" onChange={(e) => this.payChange(e)} value={this.state.pago}/>
+                        <button className="button-add" onClick={this.loanPay}>Agregar</button>
                     </div>
                 </div>
             </div>
