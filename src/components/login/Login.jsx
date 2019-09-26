@@ -3,6 +3,7 @@ import './login.scss'
 import {Link, withRouter, Redirect} from 'react-router-dom'
 import firebase from 'firebase'
 import {toast} from 'react-toastify'
+import './../../animate.css'
 
 const Login = ({ history }) => {
     const handleLogin = useCallback(
@@ -23,6 +24,7 @@ const Login = ({ history }) => {
 
     return(
         <div className="login-container">
+          <div className="login-container-form animated bounceInLeft">
             <p className="login-title">Iniciar sesión</p>
             <form onSubmit={handleLogin}> 
             <div className="login-topic">
@@ -36,6 +38,7 @@ const Login = ({ history }) => {
             <Link className="link-register" to="/registro">Crea una cuenta.</Link>
             <button type="submit" className="login-button">Entrar</button>
             </form>
+            </div>
         </div>
         )
 }

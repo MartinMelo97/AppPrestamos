@@ -18,7 +18,7 @@ const HamburgerMenu = (props) =>{
                     <Link to="/general/corte-dia/" className="Link-option"><p>Corte del día</p></Link>
                     <Link to="/general/resumen/" className="Link-option"><p>Resumen Gral.</p></Link>
                     <Link to="/general/prestamos/" className="Link-option"><p>Prestamos</p></Link>
-                    <Link onClick={() => firebase.auth().signOut()} className="Link-option"><p>Cerrar sesión</p></Link>
+                    <p onClick={() => firebase.auth().signOut()}>Cerrar sesión</p>
                 </div>
             </div>
             <div className="on-click-exit" onClick={props.sidebar}></div>
