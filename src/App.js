@@ -1,5 +1,5 @@
 import React from 'react'
-import { Switch } from 'react-router-dom'
+import { Switch, Route } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import { AuthProvider } from './auth'
 import PrivateRoute from './routes/PrivateRoute'
@@ -30,6 +30,11 @@ import LoansToPay from './components/loan/pay/LoansToPay'
 import NewLoan from './components/loan/new/NewLoan'
 import InfoLoan from './components/loan/info'
 
+import ListOptions from './components/options/menu'
+import ListAmins from './components/options/admins'
+import DetailAmins from './components/options/admins/detail'
+import EditAdmins from './components/options/admins/edit'
+
 const App = () => {
   return (
     <AuthProvider>
@@ -38,9 +43,13 @@ const App = () => {
       <ToastContainer />
       <Switch>
         <PublicRoute exact path="/" component={ Login }/>
-        <PublicRoute exact path="/registro" component={ Register }/>
+        <Route exact path="/registro" component={ Register }/>
         <PrivateRoute exact path="/dashboard" component={ LoansList }/>
-        <PrivateRoute exact path="/dashboard/info" component={ InfoLoan }/>
+        <PrivateRoute exact path="/dashboard/info/" component={ InfoLoan }/>
+        <Route exact path="/opciones/lista/" component={ ListOptions }/>
+        <Route exact path="/opciones/admins/" component={ ListAmins }/>
+        <Route exact path="/admins/editar/" component={ EditAdmins }/>
+        <Route exact path="/admins/detalle/" component={ DetailAmins }/>
 
         <PrivateRoute exact path="/clientes/detalle/" component={ CustomerDetail } />
         <PrivateRoute exact path="/clientes/prestamos/" component={ CustomersLoans } />

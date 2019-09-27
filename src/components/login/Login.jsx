@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react'
 import './login.scss'
-import {Link, withRouter, Redirect} from 'react-router-dom'
+import {Link, withRouter} from 'react-router-dom'
 import firebase from 'firebase'
 import {toast} from 'react-toastify'
 import './../../animate.css'

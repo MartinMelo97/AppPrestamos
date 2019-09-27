@@ -175,7 +175,7 @@ class NewLoan extends Component {
 
     changeCant = (e) => {
         let { Loan } = this.state
-        Loan.Cantidad = e.target.value
+        Loan.Cantidad = parseInt(e.target.value)
         this.setState(Loan)
     }
 

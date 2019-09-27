@@ -12,6 +12,7 @@ class LoansToPay extends Component {
                 payNumber: '',
             },
             pago: "",
+            percentage: "",
             active: false
         }
     }
@@ -35,14 +36,15 @@ class LoansToPay extends Component {
     }
     payChange = (e) => {
         var numPago = parseInt(e.target.value)
-        this.setState({pago: numPago})
-        console.log(this.state.pago)
+        var numPercentage = (numPago * 100)/ this.props.location.state.cantidad
+        this.setState({pago: numPago, percentage: numPercentage})
     }
     loanPay = () => {
         firebase.firestore().collection('loan').doc(this.props.location.state.id)
         .update({
             pago:this.state.pago,
-            numPay: this.state.customer.payNumber
+            numPay: this.state.customer.payNumber,
+            percentage: this.state.percentage
         })
         .then(()=>{
             toast.success("Se agregó el pago")

@@ -8,13 +8,23 @@ import './../../animate.css'
 const Register = ({ history }) => {
     const handleSignUp = useCallback(async event => {
         event.preventDefault();
-        const { email, password } = event.target.elements;
+        const { email, password, username } = event.target.elements;
         try {
           await firebase
             .auth()
             .createUserWithEmailAndPassword(email.value, password.value);
-            toast.info("¡Usuarioregistrado!")
-          history.push("/");
+            firebase.firestore().collection('admin').add({
+              correo: email.value,
+              password: password.value,
+              username: username.value
+            }).catch((err)=>{
+              console.log(err)
+            })
+            toast.info("¡Usuarioregistrado! \nAhora inicia sesión")
+            email.value = ""
+            password.value = ""
+            username.value = ""
+            history.push("/registro")
         } catch (error) {
           toast.error("¡Error! Usuario no registrado.")
         }
@@ -30,11 +40,15 @@ const Register = ({ history }) => {
                 <input name="email" type="email"/>
             </div>
             <div className="login-topic">
+                <p>Username</p>
+                <input name="username" type="text"/>
+            </div>
+            <div className="login-topic">
                 <p>Contraseña</p>
                 <input name="password" type="password"/>
             </div>
             <Link className="link-register" to="/">Olvidalo, tengo una cuenta.</Link>
-            <button type="submit" className="login-button">Registrar</button>
+            <button type="submit" className="login-button">Crear</button>
             </form>
             </div>
         </div>

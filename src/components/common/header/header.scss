@@ -120,3 +120,91 @@
     text-decoration: none;
     color: none;
 }
+.Link-option-img{ 
+    text-decoration: none;
+    color: none;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+@media screen and (min-width: 768px) {
+    .side-bar-content{
+        display: flow-root;
+        width: 100%;
+        height: 100vh;
+        grid-template-columns: 70% 30%;
+        grid-template-rows: 100%;
+        position: fixed;
+        opacity: 0;
+        top: 0;
+        left: -100%;
+        transition: 0.5s ease-in-out;
+        -webkit-transition: 0.5s ease-in-out;
+        z-index: 10000;
+    
+        .on-click-exit{
+            grid-column: 2/auto;
+            grid-row: 1/auto;
+            width: 100%;
+            height: 100vh;
+        }
+    }
+    
+    .side-bar{
+        grid-column: 1/auto;
+        grid-row: 1/auto;
+        height: 70vh;
+        width: 100%;
+        background-color: $principal;
+        box-shadow: 10px 0 50px 0 #00000099;
+        display: flex;
+        flex-direction: inherit;
+        justify-content: flex-start;
+        align-items: center;
+        z-index: 10000;
+        .day{
+            width: 70%;
+            margin-bottom: 15%;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            img{
+                width: 40%;
+                margin: 5% 0;
+            }
+            p{
+                font-weight: 500;
+                font-size: 2em;
+                color: $white;
+                margin: 0;
+                text-align: center;
+                font-family: 'Barlow Condensed', sans-serif;
+            }
+        }
+        .options-side-bar{
+            width: 100%;
+            p{
+                color: $white;
+                background-color: $principal;
+                border-radius: 5px;
+                padding: 2vh 0 2vh 15%;
+                font-size: 2em;
+                text-align: left;
+                font-weight: 500;
+                font-family: 'Barlow Condensed', sans-serif;
+                box-shadow: 0 3px 4px 0 #28079b88, 0 -3px 4px 0 #28079b88;
+                margin: 10px 0;
+                transition: ease-in-out 0.1s;
+    
+                &:active{
+                    background-color: $detail;
+                }
+            }        
+        }
+    }
+    .side-bar-content.active{
+        opacity: 1;
+        left: 0;
+    }
+}

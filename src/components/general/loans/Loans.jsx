@@ -21,6 +21,7 @@ class Loans extends Component {
                 Year: "",
                 numPay: "",
                 pago: "",
+                cantidad: "",
             }
         }
     }
@@ -67,7 +68,7 @@ class Loans extends Component {
         })
     }
 
-    Detail = (e,id, Cliente, diaInicio, diaFin, mesInicio, mesFin,Year, pago, numPay) => {
+    Detail = (e,id, Cliente, diaInicio, diaFin, mesInicio, mesFin,Year, pago, numPay, Cantidad) => {
         let {datesLoan} = this.state
         datesLoan.id = id
         datesLoan.mesInicio = mesInicio
@@ -78,6 +79,7 @@ class Loans extends Component {
         datesLoan.diaFin = diaFin
         datesLoan.numPay = numPay
         datesLoan.pago = pago
+        datesLoan.cantidad = Cantidad
         this.setState(datesLoan)
         this.props.history.push({
             pathname: '/prestamos/detalle/',
@@ -96,7 +98,7 @@ class Loans extends Component {
                     this.state.customers.map((customer, i)=>(
                         <div className="loans-container" key={i}
                         onClick={(e) => this.Detail(e, customer.id, customer.Cliente, customer.diaInicio, customer.diaFin, customer.mesInicio, customer.mesFin,customer.Year, 
-                            customer.pago, customer.numPay, )}
+                            customer.pago, customer.numPay, customer.Cantidad )}
                         style = {{
                             backgroundColor : this.state.blues[i]
                         }} >
