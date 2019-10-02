@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import './header.scss'
 import HamburgerMenu from './HamburgerMenu.jsx'
 import MenuIcon from '../../../assets/icons/menu.svg'
+import firebase from 'firebase'
 class Header extends Component {
     constructor(props) {
         super(props)
@@ -27,6 +28,18 @@ class Header extends Component {
         let date = new Date()
         day = `${days[ date.getDay()]} ${date.getDate()} ${monts[date.getMonth()]}`
         this.setState({ day })
+
+        firebase.auth().onAuthStateChanged((user) => {
+            if (user) {
+              console.log("El UID "+user.email)
+              firebase.firestore().collection('admin').where("correo", "==", user.email).onSnapshot((users)=>{
+                users.forEach(user=>{
+                    let dato = user.data().username
+                    this.setState({user: dato})
+                })
+              })
+            }
+          })
     }
     render(){
         return(

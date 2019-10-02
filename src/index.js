@@ -4,7 +4,6 @@ import {BrowserRouter} from 'react-router-dom'
 import './index.css';
 import App from './App';
 import * as serviceWorker from './serviceWorker';
-//import firebase from 'firebase'
 import * as firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/database";
@@ -19,7 +18,6 @@ firebase.initializeApp(
         appId: "1:963326054228:web:771d7d662322b1b66bc2c1"
     }
 )
-
 ReactDOM.render(
 <BrowserRouter>
 <App />

@@ -12,15 +12,23 @@ class LoansToPay extends Component {
                 payNumber: '',
             },
             pago: "",
+            UpdateFecha: "",
             percentage: "",
             active: false
         }
     }
     componentDidMount = () =>{
+        var newDate = new Date()
+        var newDay = newDate.getDate()
+        var newMonth = newDate.getMonth()+1
+        var newYear = newDate.getFullYear()
+        var newFecha = newDay+"/"+newMonth+"/"+newYear
+        this.setState({UpdateFecha: newFecha})
         let {customer} = this.state
         customer.name = this.props.location.state.Nombre
         customer.payNumber = this.props.location.state.numPay+1
         this.setState(customer)
+
     }
 
     changeActive = () =>{
@@ -36,18 +44,23 @@ class LoansToPay extends Component {
     }
     payChange = (e) => {
         var numPago = parseInt(e.target.value)
-        var numPercentage = (numPago * 100)/ this.props.location.state.cantidad
-        this.setState({pago: numPago, percentage: numPercentage})
+        this.setState({pago: numPago})
     }
     loanPay = () => {
+        var Totalpay = this.state.pago + this.props.location.state.pago 
+        console.log("El total que vinen: "+Totalpay)
+        var numPercentage = (Totalpay * 100)/ this.props.location.state.cantidad
+
         firebase.firestore().collection('loan').doc(this.props.location.state.id)
         .update({
-            pago:this.state.pago,
+            pago:this.state.pago + this.props.location.state.pago,
+            ultimatePay: this.state.pago,
             numPay: this.state.customer.payNumber,
-            percentage: this.state.percentage
+            datePay: this.state.UpdateFecha,
+            percentage: numPercentage
         })
         .then(()=>{
-            toast.success("Se agregó el pago")
+            toast.info("Se agregó el pago")
             this.setState({pago: ""})
         })
         .catch((err)=>{

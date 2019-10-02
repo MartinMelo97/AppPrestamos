@@ -1,0 +1,23 @@
+@import './../../variables.scss';
+.checkbox-form{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    margin-top: 2vh;
+    .ant-checkbox-wrapper {
+        font-size: 2em !important;
+        color: #000 !important;
+    }
+    .ant-checkbox{
+        font-size: 0em !important;
+    }
+    .ant-checkbox-wrapper + span, .ant-checkbox + span {
+        font-size: 1.5em !important;
+        font-weight: 600;
+        color: #000;
+    }
+    .ant-checkbox-checked .ant-checkbox-inner {
+        background-color: $principal;
+        border-color: $principal;
+    }
+}

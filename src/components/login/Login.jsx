@@ -1,6 +1,6 @@
 import React, { useCallback } from 'react'
 import './login.scss'
-import {Link, withRouter} from 'react-router-dom'
+import {withRouter} from 'react-router-dom'
 import firebase from 'firebase'
 import {toast} from 'react-toastify'
 import './../../animate.css'
@@ -35,7 +35,6 @@ const Login = ({ history }) => {
                 <p>Contraseña</p>
                 <input name="password" type="password"/>
             </div>
-            <Link className="link-register" to="/registro">Crea una cuenta.</Link>
             <button type="submit" className="login-button">Entrar</button>
             </form>
             </div>

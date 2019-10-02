@@ -1,0 +1,19 @@
+.error-locked{
+    display: flex;
+    align-items: center;
+    flex-direction: column;
+    justify-content: center;
+    img {
+        height: 20vh;
+        width: 20vw;
+    }
+    p{
+        margin-bottom: 0;
+        font-size: 3vh;
+    }
+}
+.head-error-locked{
+    font-size: 3em !important;
+    font-weight: 900;
+    margin-top: 2vh;
+}

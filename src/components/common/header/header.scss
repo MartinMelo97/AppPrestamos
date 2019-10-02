@@ -52,6 +52,10 @@
     -webkit-transition: 0.5s ease-in-out;
     z-index: 10000;
 
+    .side-bar-close{
+        display: none;
+    }
+
     .on-click-exit{
         grid-column: 2/auto;
         grid-row: 1/auto;
@@ -149,12 +153,22 @@
             width: 100%;
             height: 100vh;
         }
+        .side-bar-close{
+            display: block;
+            margin-top: 0;
+            margin-left: 1vw;
+            margin-bottom: 90vh;
+            img {
+                width: 3vw;
+                height: 3vh;
+            }
+        }
     }
     
     .side-bar{
         grid-column: 1/auto;
         grid-row: 1/auto;
-        height: 70vh;
+        height: 100vh;
         width: 100%;
         background-color: $principal;
         box-shadow: 10px 0 50px 0 #00000099;
@@ -184,6 +198,7 @@
         }
         .options-side-bar{
             width: 100%;
+            margin-right: 2vw;
             p{
                 color: $white;
                 background-color: $principal;

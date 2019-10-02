@@ -1,88 +1,104 @@
- 
 import React, { Component } from 'react'
 import './general_summary.scss'
-
+import money from './../../../assets/icons/money.svg'
+import loan from './../../../assets/icons/funding.svg'
+import admin from './../../../assets/icons/coordinator.svg'
+import customer from './../../../assets/icons/teamwork.svg'
+import firebase from 'firebase'  
 class GeneralSummary extends Component {
     constructor(props){
         super(props)
         this.state = {
-            day : 1,
-            month : "Enero",
-            year : "2000",
-            days : [],
-            startDay : 0,
-            contX: 2,
-            weeksDays : [
-                "D","L","M","X","J","V","S"
-            ]
+            NumCustomer: "",
+            customers: "",
+            NumLoan: "",
+            Admins: "",
+            Cantidad: "",
+            SupAdmin: 0,
+            NomAdmin: 0
         }
     }
 
     componentDidMount = () =>{
-        let { day, month, year, days, startDay } = this.state
-        let months = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
-        let date = new Date()
-
-        startDay = new Date(date.getFullYear(), date.getMonth(), 1).getDay() + 1
-        for(let i = 1; i <= new Date(date.getFullYear(), date.getMonth()+1, 0).getDate(); i++){
-            days.push(`${i}`)
-        }
-        day = date.getDate()
-        year = date.getFullYear()
-        month = months[date.getMonth()]
-
-        this.setState({ day, month, year, days, startDay })
+        firebase.firestore().collection('loan')
+            .onSnapshot((dates)=>{
+            let loan = []
+            dates.forEach(date=>{
+                let dato = date.data()
+                loan.push(dato)
+            })
+            this.setState({NumLoan: loan.length})
+            this.setState({customers: loan})
+            this.updateTotal()
+        })
+        firebase.firestore().collection('customers')
+            .onSnapshot((dates)=>{
+            let customer = []
+            dates.forEach(date=>{
+                let dato = date.data()
+                customer.push(dato)
+            })
+            this.setState({NumCustomer: customer.length})
+        })
+        firebase.firestore().collection('admin')
+            .onSnapshot((dates)=>{
+            let admin = []
+            dates.forEach(date=>{
+                let dato = date.data()
+                admin.push(dato)
+            })
+            this.setState({Admins: admin.length})
+        })
+        firebase.firestore().collection('admin').where("super", "==", true)
+            .onSnapshot((dates)=>{
+            let Superadmin = []
+            dates.forEach(date=>{
+                let dato = date.data()
+                Superadmin.push(dato)
+            })
+            this.setState({SupAdmin: Superadmin.length})
+        })
+        var normal = this.state.Admins - this.state.SupAdmin 
+        this.setState({NomAdmin: normal})
     }
+    updateTotal = () =>{
+        let { customers } = this.state
+        if( customers.length > 0 ){
+            var total = 0
+            for(let i = 0; i < customers.length; i++){
+                total += customers[i].Cantidad
+            }
 
-    maping = () =>{
-        let { startDay, contX, days } = this.state
-
-        let container = document.getElementById('calendar-body')
-        let text
-        let child
-
-        for(let i = 0; i < days.length; i++){
-            text = document.createTextNode(days[i])
-            child = document.createElement('span')
-            child.appendChild(text)
-            child.style.gridColumn=startDay
-            child.style.gridRow=contX
-            if( days[i] === this.state.day)
-                child.className="this-is"
-            container.appendChild(child)
-
-            startDay++
-            contX = startDay === 8 ? contX + 1 : contX
-            startDay = startDay === 8 ?  1 : startDay
+            this.setState({ Cantidad: total })
         }
-
-        let calendar = document.getElementById('calendar-body')
-        if(contX < 8 && calendar != null && startDay > 1)
-            calendar.style.gridTemplateRows= ('repeat(7, calc(100% / 7))')
-        if(contX < 8 && calendar != null && startDay < 2)
-            calendar.style.gridTemplateRows= ('repeat(6, calc(100% / 6))')
-        if(contX < 7 && calendar != null)
-            calendar.style.gridTemplateRows= ('repeat(6, calc(100% / 6))')
     }
 
     render(){
         return(
             <div className="summary-div-container">
                 <p className="summary-title">Resumen Gral</p>
-
-                <div className="calendar">
-                    <div id="calendar-header">
-                        <span className="month">{ this.state.month }</span>
-                        <span className="month">{ this.state.year }</span>
+                <div className="summary-content">
+                    <div className="summary-head-l">
+                        <img src={customer} alt="client"/>
+                        <p>{this.state.NumCustomer} Clientes</p>
                     </div>
-                    <div id="calendar-body">
-                        {this.state.weeksDays.map((day, i)=>(
-                            <span style = {{
-                                gridColumn : `${i+1}`,
-                                gridRow : 1
-                            }} key={i}>{ day }</span>
-                        ))}
-                        {this.maping()}
+                    <div className="summary-head-r">
+                        <img src={loan} alt="loan"/>
+                        <p>{this.state.NumLoan} Préstamos</p>
+                    </div>
+                    <div className="summary-body-one">
+                        <img src={money} alt="money"/>
+                        <p>{this.state.Cantidad} MXN Prestados</p>
+                    </div>
+                    <div className="summary-body-two">
+                        <img src={admin} alt="admins"/>
+                        <p>{this.state.Admins} Administradores</p>
+                    </div>
+                    <div className="summary-body-three-l">
+                        <p>{this.state.SupAdmin} Super Admin.</p>
+                    </div>
+                    <div className="summary-body-three-r">
+                        <p>{this.state.NomAdmin} Adim. Normal</p>
                     </div>
                 </div>
             </div>

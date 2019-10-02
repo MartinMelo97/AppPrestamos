@@ -1,78 +1,64 @@
 import React, { Component } from 'react'
 import firebase from 'firebase'
 import { toast } from 'react-toastify'
+import { Checkbox } from 'antd'
 
 export default class EditAdmins extends Component {
     constructor(props){
         super(props)
         this.state = {
-            dates: this.props.location.state,
-            datesCustomers: {
-                Nombre: "",
-                Apellido: "",
-                Direccion: "",
-                Correo: "",
-                Telefono: ""
+            datesAdmin: {
+                correo: "",
+                password: "",
+                username: "",
+                super: false, 
             },
         }
     }
     componentDidMount = () => {
-        firebase.firestore().collection('customers')
+        console.log(this.props.location.state)
+        firebase.firestore().collection('admin').doc(this.props.location.state.id)
         .get().then(doc => {
-            const {datesCustomers} = this.state
-            datesCustomers.Nombre = doc.data().Nombre
-            datesCustomers.Apellido = doc.data().Apellido
-            datesCustomers.Correo = doc.data().Correo
-            datesCustomers.Direccion = doc.data().Direccion
-            datesCustomers.Telefono = doc.data().Telefono
-            this.setState(datesCustomers)
-            console.log("Datos que traigo uwu "+this.state.datesCustomers)
+            const {datesAdmin} = this.state
+            datesAdmin.correo = doc.data().correo
+            datesAdmin.username = doc.data().username
+            datesAdmin.super = doc.data().super
+            this.setState(datesAdmin)
+            console.log("Datos que traigo uwu ")
+            console.log(this.state.datesAdmin)
           })
           .catch(err => {
             console.log('Error getting document', err);
           })
     }
 
-    changeName = (e) => {
-        let { datesCustomers } = this.state
-        datesCustomers.Nombre = e.target.value
-        console.log("Your name is " + e.target.value)
-        this.setState(datesCustomers)
+    changeCorreo = (e) => {
+        let { datesAdmin } = this.state
+        datesAdmin.correo = e.target.value
+        this.setState(datesAdmin)
     }
-    changeFirstName = (e) => {
-        let { datesCustomers } = this.state
-        datesCustomers.Apellido = e.target.value
-        this.setState(datesCustomers)
+    changeUser = (e) => {
+        let { datesAdmin } = this.state
+        datesAdmin.username = e.target.value
+        this.setState(datesAdmin)
     }
-    changeAddress = (e) => {
-        let { datesCustomers } = this.state
-        datesCustomers.Direccion = e.target.value
-        this.setState(datesCustomers)
+    changePass = (e) => {
+        let { datesAdmin } = this.state
+        datesAdmin.password = e.target.value
+        this.setState(datesAdmin)
     }
-    changeEmail = (e) => {
-        let { datesCustomers } = this.state
-        datesCustomers.Correo = e.target.value
-        this.setState(datesCustomers)
-    }
-    changePhone = (e) => {
-        let { datesCustomers } = this.state
-        datesCustomers.Telefono = e.target.value
-        this.setState(datesCustomers)
+    onChange = (e) => {
+        let { datesAdmin } = this.state
+        datesAdmin.super = e.target.checked
+        this.setState(datesAdmin)
     }
 
     Edit = () => {
-        console.log(this.state.datesCustomers)
-        firebase.firestore().collection('customers').doc(this.state.dates.id)
-        .set(this.state.datesCustomers)
+        firebase.firestore().collection('admin').doc(this.props.location.state.id)
+        .update(this.state.datesAdmin)
         .then(()=>{
-            toast.success("Datos actualizados")
-            let {datesCustomers} = this.state
-            datesCustomers.Nombre = ""
-            datesCustomers.Apellido = ""
-            datesCustomers.Direccion = ""
-            datesCustomers.Correo = ""
-            datesCustomers.Telefono = ""
-            this.setState(datesCustomers)
+            toast.success("Datos actualizados!")
+            this.props.history.push('/opciones/admins')
         })
         .catch((err)=>{
             toast.error("Datos no actualizados")
@@ -87,15 +73,12 @@ export default class EditAdmins extends Component {
                 <div className="topics-container">
                     <div className="topic">
                         <p>Correo</p>
-                        <input type="text" onChange={(e)=>this.changeName(e)} value={this.state.datesCustomers.Nombre}/>
+                        <input type="text" onChange={(e)=>this.changeCorreo(e)} value={this.state.datesAdmin.correo}/>
                         <p>Username</p>
-                        <input type="text" onChange={(e)=>this.changeFirstName(e)} value={this.state.datesCustomers.Apellido}/>
+                        <input type="text" onChange={(e)=>this.changeUser(e)} value={this.state.datesAdmin.username}/>
                         <p>Contraseña</p>
-                        <input type="text" onChange={(e)=>this.changeAddress(e)} value={this.state.datesCustomers.Direccion}/>
-                        <p>Correo</p>
-                        <input type="text" onChange={(e)=>this.changeEmail(e)} value={this.state.datesCustomers.Correo}/>
-                        <p>Teléfono</p>
-                        <input type="text" onChange={(e)=>this.changePhone(e)} value={this.state.datesCustomers.Telefono}/>
+                        <input type="password" onChange={(e)=>this.changePass(e)} value={this.state.datesAdmin.password}/>
+                        <Checkbox checked={this.state.datesAdmin.super} className="checkbox-form" value={this.state.datesAdmin.super} onChange={this.onChange} >Súper Administrador</Checkbox>
                     </div>
                 </div>
                 <button className="add-button" onClick={this.Edit}>Editar</button>

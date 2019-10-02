@@ -19,9 +19,19 @@
         font-weight: 200;
         font-size: 2em;
         margin-bottom: 2vh;
+        text-align: center;
     }
     .s-info{
         font-weight: bold;
-        font-size: 2em;
+        font-size: 1em;
+    }
+    .info-p-container{
+        margin-top: 5vh;
+        display: grid;
+    }
+    .s-info-fecha{
+        text-align: center;
+        font-size: 4vh;
+        padding-bottom: 3vh;
     }
 }

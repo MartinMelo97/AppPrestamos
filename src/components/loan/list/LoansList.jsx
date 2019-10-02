@@ -7,7 +7,13 @@ class LoansList extends Component {
         super(props)
         this.state = {
             list: [],
-            percentage: 40
+            loansDates: {
+                Cantidad: 0,
+                pago: 0,
+                fechaInicio: "",
+                fechaFin: "",
+                percentage: 0
+            }
         }
     }
     componentDidMount = () => {
@@ -18,14 +24,22 @@ class LoansList extends Component {
                 let dato = date.data()
                 Loans.push(dato)
             })
-            console.log(Loans)
             this.setState({list: Loans})
         })
     }
 
-    goInfo = () => {
+    goInfo = (e, Cantidad, fechaInicio, fechaFin, percentage, pago ) => {
+        const {loansDates} = this.state
+        loansDates.pago = pago
+        loansDates.percentage = percentage
+        loansDates.fechaFin = fechaFin
+        loansDates.fechaInicio = fechaInicio
+        loansDates.Cantidad = Cantidad
+        this.setState(loansDates)
+
         this.props.history.push({
-            pathname: '/dashboard/info'
+            pathname: '/dashboard/info',
+            state: this.state.loansDates
         })
     }
 
@@ -36,11 +50,11 @@ class LoansList extends Component {
                     <p className="client-name">{this.state.list.prestamo}</p>
            </div>
            { this.state.list.length > 0 ? this.state.list.map((loan, i)=>(
-               <div className="btn-list" key={i} onClick={() => this.goInfo()}>
+               <div className="btn-list" key={i} onClick={(e) => this.goInfo(e, loan.Cantidad, loan.fechaInicio, loan.fechaFin, loan.percentage, loan.pago)}>
                     <span>{i+1}</span>
                     <span>{loan.Cliente}</span>
                     <span>{loan.fechaInicio}</span>
-                    <div className="Progress"><ProgressBar percentage={this.state.percentage}/></div>
+                    <div className="Progress"><ProgressBar percentage={loan.percentage}/></div>
                </div>
            ))
             : <p>Cargando..</p>

@@ -1,10 +1,12 @@
 import React from 'react'
 import sun from '../../../assets/icons/sun.svg'
+import close from './../../../assets/icons/delete.svg'
 import {Link} from 'react-router-dom'
 const HamburgerMenu = (props) =>{
     return(
         <div className={ "side-bar-content " + props.active }>
             <div className="side-bar">
+            <div className="side-bar-close" onClick={props.sidebar}><img src={close} alt="close"/></div>
                 <div className="day">
                     <p>{props.day}</p>
                     <Link to="/dashboard" className="Link-option-img"><img src={sun} alt="sol"/></Link>

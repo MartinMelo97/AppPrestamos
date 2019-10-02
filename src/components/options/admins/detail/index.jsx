@@ -2,9 +2,7 @@ import React from 'react'
 import {NavLink} from 'react-router-dom'
 
 const AdminDetail = (props) =>{
-    const {username, email, fecha, pass} = props.location.state
-    console.log(props.location.state)
-
+    const {username, email, fecha, active} = props.location.state
     return(
         <div className="detail">
             <div className="head">
@@ -15,7 +13,11 @@ const AdminDetail = (props) =>{
                 <p>Activos: <span>1</span></p>
                 <p>{email}</p>
                 <p>{fecha}</p>
-                <p>{pass}</p>
+                {active === true ?
+                <p>Super Admin</p> :
+                <p>Admin. Normal</p>
+                 }
+                
             </div>
             <NavLink
             to={{

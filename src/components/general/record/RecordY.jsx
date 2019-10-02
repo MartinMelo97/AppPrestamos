@@ -2,14 +2,14 @@ import React, { Component } from 'react'
 import './record.scss'
 import arrow from '../../../assets/icons/left-arrow.svg'
 import firebase from 'firebase'
-import {NavLink} from 'react-router-dom' 
-class Record extends Component {
+import {NavLink} from 'react-router-dom'
+export default class RecordY extends Component {
     constructor(props){
         super(props)
         this.state = {
             customers:[],
             datesLoan: {
-                Nombre: "", 
+                Nombre: "",
                 fecha: "",
                 pago: 0,
                 num: 0
@@ -18,10 +18,11 @@ class Record extends Component {
     }
     componentDidMount = () =>{
         var newDate = new Date()
-        var newDay = newDate.getDate()
+        var newDay = newDate.getDate()-1
         var newMonth = newDate.getMonth()+1
         var newYear = newDate.getFullYear()
         var newFecha = newDay+"/"+newMonth+"/"+newYear
+
         firebase.firestore().collection('loan').where("datePay", "==", newFecha)
             .onSnapshot((dates)=>{
             let names = []
@@ -48,15 +49,17 @@ class Record extends Component {
     render(){
         return(
             <div className="general-record-container">
-                <NavLink to="/general/historial/ayer"><img src={ arrow } alt="anterior" className="arrow-r"/></NavLink>
+                <NavLink to="/general/historial/"><img src={ arrow } alt="anterior" className="arrow-l"/></NavLink>
+                <NavLink to="/general/historial/buscar"><img src={ arrow } alt="siguiente" className="arrow-r"/></NavLink>
 
                 <p className="header-general-record">Historial</p>
-                <span className="subtitle-general-record">Hoy</span>
+                <span className="subtitle-general-record">Ayer
+                </span>
                 <div className="customers-name-container">
                     { this.state.customers.length > 0 ?
                     this.state.customers.map((customer, i)=>(
                         <span key={i} 
-                        onClick={(e) => this.Detail(e, customer.Cliente, customer.numPay, customer.ultimatePay, customer.datePay )}
+                        onClick={(e) => this.Detail(e, customer.Cliente, customer.numPay, customer.ultimatePay, customer.datePay)}
                         >{ customer.Cliente }</span>
                     ))
                     :
@@ -65,6 +68,4 @@ class Record extends Component {
             </div>
         )
     }
-}
-
-export default Record
+} 

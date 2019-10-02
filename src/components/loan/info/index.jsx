@@ -5,32 +5,43 @@ export default class Info extends Component {
     constructor(props){
         super(props)
         this.state = {
-            list: [],
-            percentage: 40
+            datesLoan: this.props.location.state
         }
     }
     render() {
+        const {fechaInicio, fechaFin, Cantidad, pago, percentage} = this.state.datesLoan
+        var restant = Cantidad - pago
+        var valuePersentage
+        if (percentage % 1 === 0) {
+            valuePersentage = parseInt(percentage)
+        } else {
+            valuePersentage = parseFloat(percentage.toFixed(1)) 
+        }
         return (
             <div className="content-info-loan">
                 <p className="tittle-info-loan">Info</p>
-                {this.state.percentage < 100 ?
+                {percentage < 100 ?
                 <div>
                     <p className="info-progress-p">Pregreso del prestamo</p>
-                    <Progress type="circle" percent={this.state.percentage} />
-                    <span className="s-info">-</span>
-                    <p className="info-progress-p">El prestamo fue: <span className="s-info"></span></p>
-                    <p className="info-progress-p">Cantidad pagada: <span className="s-info"></span></p>
-                    <p className="info-progress-p">Cantidad restante: <span className="s-info"></span></p>
+                    <Progress type="circle" percent={valuePersentage} />
+                    <div className="info-p-container">
+                        <span className="s-info-fecha">{fechaInicio} - {fechaFin}</span>
+                        <p className="info-progress-p">El prestamo fue: <span className="s-info">${Cantidad}</span></p>
+                        <p className="info-progress-p">Cantidad pagada: <span className="s-info">${pago}</span></p>
+                        <p className="info-progress-p">Cantidad restante: <span className="s-info">${restant}</span></p>
+                    </div>
                 </div>
                 : 
                 <div>
-                <p>El pago ha sido completado</p>
-                <Progress type="circle" percent={100} />
-                <p>-</p>
-                <p>El prestamo fue:</p>
-                <p>Cantidad pagada:</p>
-                <p>Cantidad restante:</p>
-            </div>}
+                    <p className="info-progress-p">¡Prestamo pagado!</p>
+                    <Progress type="circle" percent={100} />
+                    <div className="info-p-container">
+                        <span className="s-info-fecha">{fechaInicio} - {fechaFin}</span>
+                        <p className="info-progress-p">El prestamo fue: <span className="s-info">${Cantidad}</span></p>
+                        <p className="info-progress-p">Cantidad pagada: <span className="s-info">${pago}</span></p>
+                        <p className="info-progress-p">Cantidad restante: <span className="s-info">${restant}</span></p>
+                    </div>
+                </div>}
             </div>
         )
     }
