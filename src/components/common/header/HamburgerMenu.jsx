@@ -17,7 +17,7 @@ const HamburgerMenu = (props) =>{
                     <Link to="/general/historial/" className="Link-option"><p>Historial</p></Link>
                     <Link to="/general/corte-dia/" className="Link-option"><p>Corte del día</p></Link>
                     <Link to="/general/resumen/" className="Link-option"><p>Resumen Gral.</p></Link>
-                    <Link to="/general/prestamos/" className="Link-option"><p>Prestamos</p></Link>
+                    <Link to="/general/prestamos/" className="Link-option"><p>Préstamos</p></Link>
                     <Link to="/opciones/lista" className="Link-option"><p>Configuración</p></Link>
                 </div>
             </div>

@@ -27,6 +27,7 @@ class NewLoan extends Component {
                 mesFin: "",
                 numPay: 0,
                 pago: 0,
+                percentage: 0,
             },
             date: null,
             limit: null,
@@ -183,7 +184,7 @@ class NewLoan extends Component {
         console.log(this.state.Loan)
         firebase.firestore().collection('loan').add(this.state.Loan)
         .then(()=>{
-            toast.success("Datos registrados")
+            toast.info("Préstamo registrado!")
             let {Loan} = this.state
             Loan.Cantidad = ""
             this.setState(Loan)
@@ -191,7 +192,7 @@ class NewLoan extends Component {
             this.setState({limit: '20'})
         })
         .catch((err)=>{
-            toast.error("Datos no registrados")
+            toast.error("No se pudo registrar el présatmo")
             console.log(err)
         })
     }

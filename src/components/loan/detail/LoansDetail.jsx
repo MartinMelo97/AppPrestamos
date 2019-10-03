@@ -148,21 +148,21 @@ class LoansDetail extends Component {
                         ))}
                         {this.maping()}
                     </div>
-                    <div>
+                    
+                    {this.state.important.range > 0 ?     
                     <div id="calendar-header-loans">
                         <span className="month">{ this.state.monthend }</span>
                         <span className="month">{ this.state.year }</span>
                     </div>
-                     
+                    : null} 
                     <div id="calendar-body-loans-two">
-                        {this.state.weeksDays.map((day, i)=>(
+                        {this.state.important.range > 0 ?this.state.weeksDays.map((day, i)=>(
                             <span style = {{
                                 gridColumn : `${i+1}`,
                                 gridRow : 1
                             }} key={i}>{ day }</span>
-                        ))}
-                        {this.mapingo()}
-                    </div>
+                        )) : null}
+                       { this.state.important.range > 0 ?  this.mapingo() : null}
                     </div>
                 </div>
                 <p className="loans-detail-p">{this.state.dateEnd}</p>

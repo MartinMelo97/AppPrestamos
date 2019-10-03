@@ -109,7 +109,6 @@ class Loans extends Component {
                     :
                     null}
                 </div>
-                <div className="transparent-white-div"/>
             </div>
         )
     }
