@@ -39,7 +39,7 @@
     .img-arrow-back {
         width: 8vw;
         height: 8vh;
-        position: fixed;
+        position: absolute;
         left: 3vw;
         top: 11vh; 
     }
@@ -62,7 +62,7 @@
         margin-top: 2vh;
     }
     .sub-list-pay{
-        margin-top: 2vh;
+        margin-top: 0;
         margin-bottom: 0;
         font-size: 2em;
         text-align: center;
@@ -72,4 +72,5 @@
     .container-list-payments{
         display: flex;
         flex-direction: column;
+        margin-bottom: 7vh;
     }

@@ -10,9 +10,7 @@ class GeneralSummary extends Component {
         super(props)
         this.state = {
             NumCustomer: "",
-            customers: "",
             NumLoan: "",
-            Admins: "",
             Cantidad: "",
             SupAdmin: 0,
             NomAdmin: 0
@@ -20,57 +18,17 @@ class GeneralSummary extends Component {
     }
 
     componentDidMount = () =>{
-        firebase.firestore().collection('loan')
+        firebase.firestore().collection('SummaryDates')
             .onSnapshot((dates)=>{
-            let loan = []
+            let summary = []
             dates.forEach(date=>{
                 let dato = date.data()
-                loan.push(dato)
+                summary.push(dato)
             })
-            this.setState({NumLoan: loan.length})
-            this.setState({customers: loan})
-            this.updateTotal()
-        })
-        firebase.firestore().collection('customers')
-            .onSnapshot((dates)=>{
-            let customer = []
-            dates.forEach(date=>{
-                let dato = date.data()
-                customer.push(dato)
+            summary.forEach(date=>{
+                this.setState({NumLoan: date.loans, Cantidad: date.total, NumCustomer: date.customers, SupAdmin: date.admins.root, NomAdmin: date.admins.normal})
             })
-            this.setState({NumCustomer: customer.length})
         })
-        firebase.firestore().collection('admin')
-            .onSnapshot((dates)=>{
-            let admin = []
-            dates.forEach(date=>{
-                let dato = date.data()
-                admin.push(dato)
-            })
-            this.setState({Admins: admin.length})
-        })
-        firebase.firestore().collection('admin').where("super", "==", true)
-            .onSnapshot((dates)=>{
-            let Superadmin = []
-            dates.forEach(date=>{
-                let dato = date.data()
-                Superadmin.push(dato)
-            })
-            this.setState({SupAdmin: Superadmin.length})
-        })
-        var normal = this.state.Admins - this.state.SupAdmin 
-        this.setState({NomAdmin: normal})
-    }
-    updateTotal = () =>{
-        let { customers } = this.state
-        if( customers.length > 0 ){
-            var total = 0
-            for(let i = 0; i < customers.length; i++){
-                total += customers[i].Cantidad
-            }
-
-            this.setState({ Cantidad: total })
-        }
     }
 
     render(){
@@ -92,7 +50,7 @@ class GeneralSummary extends Component {
                     </div>
                     <div className="summary-body-two">
                         <img src={admin} alt="admins"/>
-                        <p>{this.state.Admins} Administradores</p>
+                        <p>{this.state.SupAdmin + this.state.NomAdmin} Administradores</p>
                     </div>
                     <div className="summary-body-three-l">
                         <p>{this.state.SupAdmin} Super Admin.</p>
