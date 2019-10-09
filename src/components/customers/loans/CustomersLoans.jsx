@@ -3,14 +3,19 @@ import { NavLink } from 'react-router-dom'
 import './customers_loans.scss'
 import plus from '../../../assets/icons/plus.svg'
 import info from '../../../assets/icons/information.svg'
+import close from './../../../assets/icons/close.svg'
 import firebase from 'firebase'
+import {toast} from 'react-toastify'
+import {Modal} from 'antd'
 class CustomersLoans extends Component {
     constructor(props){
         super(props)
         this.state = {
             reds:[],
+            visible: false,
+            id: "",
+            name: "",
             customers: null,
-            areCustomers: false,
             datesCustomer: {
                 id: "",
                 nombre: "",
@@ -23,7 +28,7 @@ class CustomersLoans extends Component {
     }
 
     componentDidMount = () => {
-        firebase.firestore().collection('customers')
+        firebase.firestore().collection('Customers').where("deleted", "==", false)
         .onSnapshot((customers)=>{
           let array_dates = []
           customers.forEach(date=>{
@@ -31,7 +36,7 @@ class CustomersLoans extends Component {
               dato.id = date.id
               array_dates.push(dato)
           })
-          this.setState({customers: array_dates, areDates: true})
+          this.setState({customers: array_dates})
       })
       this.redsGenerate()
     }
@@ -75,7 +80,29 @@ class CustomersLoans extends Component {
            state: this.state.datesCustomer
         })
     }
+    DeleteCustomer = (e, id, name) => {
+        this.setState({visible: true, id: id, name: name});
+    }
 
+    handleOk = e => {
+        firebase.firestore().collection('Customers').doc(this.state.id).update({
+            deleted: true
+        }).then(()=>{
+            toast.info("Cliente eliminado!")
+        }).catch(err => {
+            toast.error("Ups! no se pudo eliminar al cliente.")
+            console.log(err)
+        } )
+        this.setState({
+          visible: false,
+        })
+      }
+    
+      handleCancel = e => {
+        this.setState({
+          visible: false,
+        })
+    }
     render(){
         return(
             <div className="customers-loans-container">
@@ -88,14 +115,23 @@ class CustomersLoans extends Component {
                         <div className="info-customer-container" key={i}>
                             <span style = {{
                                 backgroundColor : this.state.reds[i]
-                            }}>{customer.Nombre}</span>
-                                <img src={ info } alt="info" onClick={(e)=>this.DatesCustomers(e, customer.id, customer.Nombre, customer.Apellido, customer.Correo, customer.Direccion, customer.Telefono )}/>
+                            }}>{customer.firstName}</span>
+                                <img src={ info } alt="info" onClick={(e)=>this.DatesCustomers(e, customer.id, customer.firstName, customer.lastName, customer.email, customer.address, customer.phoneNumber )}/>
+                                <img src={close} alt="close" onClick={(e)=>this.DeleteCustomer(e, customer.id, customer.firstName)}/>
                         </div>
                     ))
                     :
                     <p>Cargando...</p>}
                 </div>
-                
+                <Modal
+                    className="design-modal-c"
+                    title="Confirma"
+                    visible={this.state.visible}
+                    onOk={this.handleOk}
+                    onCancel={this.handleCancel}
+                    >
+                    <p>¿Estás seguro de eliminar a {this.state.name}?</p>
+                </Modal>
             </div>
         )
     }

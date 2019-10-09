@@ -7,7 +7,8 @@ export default class RecordY extends Component {
     constructor(props){
         super(props)
         this.state = {
-            customers:[],
+            payments:[],
+            date: "",
             datesLoan: {
                 Nombre: "",
                 fecha: "",
@@ -23,22 +24,21 @@ export default class RecordY extends Component {
         var newYear = newDate.getFullYear()
         var newFecha = newDay+"/"+newMonth+"/"+newYear
 
-        firebase.firestore().collection('loan').where("datePay", "==", newFecha)
-            .onSnapshot((dates)=>{
-            let names = []
-            dates.forEach(date=>{
+        firebase.firestore().collection('LoansByDate').where("date", "==", newFecha)
+            .onSnapshot((infoLoan)=>{
+            let loans = []
+            infoLoan.forEach(date=>{
                 let dato = date.data()
-                names.push(dato)
+                loans.push(dato)
             })
-            this.setState({customers: names})
+            loans.forEach(payment => this.setState({payments: payment.payments, date: payment.date}))
         })
     }
-    Detail = (e, Cliente, numPay, ultimatePay, datePay) => {
+    Detail = (e, Cliente, pago ) => {
         let {datesLoan} = this.state
         datesLoan.Nombre = Cliente
-        datesLoan.num = numPay
-        datesLoan.pago = ultimatePay
-        datesLoan.fecha = datePay
+        datesLoan.pago = pago
+        datesLoan.fecha = this.state.date 
         this.setState(datesLoan)
         this.props.history.push({
             pathname: '/historial/detalle/',
@@ -56,11 +56,11 @@ export default class RecordY extends Component {
                 <span className="subtitle-general-record">Ayer
                 </span>
                 <div className="customers-name-container">
-                    { this.state.customers.length > 0 ?
-                    this.state.customers.map((customer, i)=>(
+                { this.state.payments.length > 0 ?
+                    this.state.payments.map((payment, i)=>(
                         <span key={i} 
-                        onClick={(e) => this.Detail(e, customer.Cliente, customer.numPay, customer.ultimatePay, customer.datePay)}
-                        >{ customer.Cliente }</span>
+                        onClick={(e) => this.Detail(e, payment.customer, payment.amount)}
+                        >{ payment.customer }</span>
                     ))
                     :
                     <p>No hay datos para mostrar.</p> }

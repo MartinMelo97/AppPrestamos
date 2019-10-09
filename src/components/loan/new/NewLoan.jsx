@@ -14,21 +14,19 @@ class NewLoan extends Component {
             client: null,
             customerNames:[],
             Loan: {
-                Cliente: "No user",
-                Cantidad: "",
-                Plazo: "20",
-                Num_Prestamo: "",
-                fechaInicio: "",
-                fechaFin: "",
-                Year: "",
-                diaInicio: "",
-                diaFin: "",
-                mesInicio: "",
-                mesFin: "",
-                numPay: 0,
-                pago: 0,
-                percentage: 0,
+                total: 0,
+                loanRef: "",
+                dateStart: "",
+                dateEnd: "",
+                payed: 0,
+                remaining: 0,
+                payments: [],
+                created: firebase.firestore.Timestamp.fromDate(new Date()),
+                updated: firebase.firestore.Timestamp.fromDate(new Date()),
             },
+            plazo: "20",
+            dateId: "",
+            ArrayLoans: [],
             date: null,
             limit: null,
             days: [],
@@ -50,23 +48,9 @@ class NewLoan extends Component {
         var codeLoan = thisDate.getFullYear().toString()+thisDate.getMonth().toString()+thisDate.getDate().toString()
         + thisDate.getHours().toString()+thisDate.getMinutes().toString()+thisDate.getSeconds().toString()+thisDate.getMilliseconds().toString()
         
-        var newDate = new Date()
-        var range = parseInt(this.state.Loan.Plazo)
-        newDate.setDate(newDate.getDate() + range) 
-        var newDay = newDate.getDate()
-        var newMonth = newDate.getMonth()+1
-        var newYear = newDate.getFullYear()
-        var newFecha = newDay+"/"+newMonth+"/"+newYear
-        
         let { Loan } = this.state
-        Loan.fechaInicio = dateFormat
-        Loan.diaInicio = thisDate.getDate()
-        Loan.mesInicio = thisDate.getMonth()+1
-        Loan.Year = thisDate.getFullYear()
-        Loan.Num_Prestamo = codeLoan
-        Loan.diaFin = newDay
-        Loan.mesFin= newMonth
-        Loan.fechaFin= newFecha
+        Loan.dateStart = dateFormat
+        Loan.loanRef = codeLoan
         this.setState(Loan)
 
         this.setState({ date })
@@ -77,15 +61,21 @@ class NewLoan extends Component {
         active = !active
         this.setState({ active })
     }
-    inputClient = (i) =>{
+    inputClient = (i, id) =>{
         let select = document.getElementsByClassName(`opn${i}`)[0]
         let space = document.getElementsByClassName(`space`)[0]
 
         space.innerText = select.innerText
 
-        let { Loan } = this.state
-        Loan.Cliente = select.innerText
-        this.setState(Loan)
+
+        firebase.firestore().collection('Customers').doc(id)
+        .onSnapshot((customer)=>{
+            if (customer.data().loans !== undefined){
+                this.setState({ArrayLoans: customer.data().loans})
+            }
+            console.log(this.state.ArrayLoans)             
+        })
+        this.setState({dateId: id})
         this.selectClient()
     }
 
@@ -111,7 +101,6 @@ class NewLoan extends Component {
                 alert(e)
             }
         }
-        console.log("State el num " + this.state.limit)
         this.setState({ select })
     }
     inputNumber = (day) =>{
@@ -125,23 +114,9 @@ class NewLoan extends Component {
         select.style.color = "#0ac8e5"
 
         space.innerText = select.innerText
-
-        let { Loan } = this.state
-        Loan.Plazo = select.innerText
-        this.setState(Loan)
-
-        var newDate = new Date()
-        var range = parseInt(this.state.Loan.Plazo)
-        newDate.setDate(newDate.getDate() + range) 
-        var newDay = newDate.getDate()
-        var newMonth = newDate.getMonth()+1
-        var newYear = newDate.getFullYear()
-        var newFecha = newDay+"/"+newMonth+"/"+newYear
+        this.setState({plazo: select.innerText})
         
-        Loan.diaFin = newDay
-        Loan.mesFin= newMonth
-        Loan.fechaFin= newFecha 
-        this.setState(Loan)
+
     }
 
     componentDidMount = () =>{
@@ -163,11 +138,12 @@ class NewLoan extends Component {
             
         })
 
-        firebase.firestore().collection('customers')
+        firebase.firestore().collection('Customers')
             .onSnapshot((dates)=>{
             let names = []
             dates.forEach(date=>{
-                let dato = date.data().Nombre
+                let dato = date.data()
+                dato.id = date.id
                 names.push(dato)
             })
             this.setState({customerNames: names})
@@ -176,20 +152,35 @@ class NewLoan extends Component {
 
     changeCant = (e) => {
         let { Loan } = this.state
-        Loan.Cantidad = parseInt(e.target.value)
+        Loan.total = parseInt(e.target.value)
         this.setState(Loan)
     }
 
     Register = () => {
+        var newDate = new Date()
+        var range = parseInt(this.state.plazo)
+        newDate.setDate(newDate.getDate() + range) 
+        var newDay = newDate.getDate()
+        var newMonth = newDate.getMonth()+1
+        var newYear = newDate.getFullYear()
+        var newFecha = newDay+"/"+newMonth+"/"+newYear
+        
+        let { Loan } = this.state
+        Loan.dateEnd = newFecha
+        this.setState(Loan)
         console.log(this.state.Loan)
-        firebase.firestore().collection('loan').add(this.state.Loan)
+
+        var id = this.state.dateId
+        var loans = this.state.ArrayLoans
+        loans.push(this.state.Loan)
+        console.log(loans)       
+        firebase.firestore().collection('Customers').doc(id).update({loans})
         .then(()=>{
             toast.info("Préstamo registrado!")
-            let {Loan} = this.state
-            Loan.Cantidad = ""
-            this.setState(Loan)
+            this.setState({Loan: {total: ""}})
             this.setState({client: ""})
-            this.setState({limit: '20'})
+            this.setState({ArrayLoans: []})
+            this.setState({limit: "20"})
         })
         .catch((err)=>{
             toast.error("No se pudo registrar el présatmo")
@@ -200,6 +191,7 @@ class NewLoan extends Component {
     render(){
         return(
             <div className="new-loan-container">
+                <NavLink to="/general/prestamos/"><img src={arrow} className="img-arrow-back" alt="arrow"/></NavLink>
                 <p className="new-loan-title">Nuevo Prestamo</p>
                 <span className="loan-number">{this.state.loansLength != null ?
                 `#${this.state.loansLength}`
@@ -227,10 +219,10 @@ class NewLoan extends Component {
                         }}
                         className={`options-container ${this.state.active === false ? "not-active" : "active" }`}>
                             { this.state.customerNames.length > 0 ?
-                            this.state.customerNames.map((name, i)=>(
+                            this.state.customerNames.map((customer, i)=>(
                                 <p key={i}
                                 className={`option opn${i}`}
-                                onClick={()=>this.inputClient(i)}>{ name }</p>
+                                onClick={()=>this.inputClient(i, customer.id)}>{customer.firstName} {customer.lastName}</p>
                             ))
                             :
                             null }
@@ -241,7 +233,7 @@ class NewLoan extends Component {
                     placeholder="$"
                     className="input-cant"
                     onChange={(e)=>this.changeCant(e)} 
-                    value={this.state.Loan.Cantidad || ""}/>
+                    value={this.state.Loan.total || ""}/>
                     <span className="date-container">{ this.state.date != null ?
                     this.state.date
                     :

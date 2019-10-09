@@ -1,60 +1,84 @@
 import React, { Component } from 'react'
 import './loans_list.scss'
 import ProgressBar from './ProgressBar'
-import firebase from 'firebase'
+import info from './../../../assets/icons/information.svg'
+import arrow from './../../../assets/icons/left-arrow.svg'
 class LoansList extends Component {
     constructor(props){
         super(props)
         this.state = {
-            list: [],
             loansDates: {
-                Cantidad: 0,
+                cantidad: 0,
                 pago: 0,
                 fechaInicio: "",
                 fechaFin: "",
-                percentage: 0
+                restante: 0,
+                name: this.props.location.state.name,
+                id: this.props.location.state.id,
+                payments: "",
+                loans: this.props.location.state.loans,
+                ref: "",
+            },
+            loansInfo: {
+                cantidad: 0,
+                pago: 0,
+                fechaInicio: "",
+                fechaFin: "",
+                restante: 0,
+                loans: this.props.location.state.loans,
+                payments: ""
             }
         }
     }
-    componentDidMount = () => {
-        firebase.firestore().collection('loan').orderBy('Num_Prestamo')
-            .onSnapshot((dates)=>{
-            let Loans = []
-            dates.forEach(date=>{
-                let dato = date.data()
-                Loans.push(dato)
-            })
-            this.setState({list: Loans})
+    goInfo = (e, fechaFin, fechaInicio, cantidad, ref, pago, rest, payments ) => {
+        const {loansDates} = this.state
+        loansDates.restante = rest
+        loansDates.pago = pago
+        loansDates.fechaFin = fechaFin
+        loansDates.fechaInicio = fechaInicio
+        loansDates.cantidad = cantidad
+        loansDates.ref = ref
+        loansDates.payments = payments
+        this.setState(loansDates)
+        
+        this.props.history.push({
+            pathname: '/prestamos/detalle/',
+            state: this.state.loansDates
         })
     }
 
-    goInfo = (e, Cantidad, fechaInicio, fechaFin, percentage, pago ) => {
-        const {loansDates} = this.state
-        loansDates.pago = pago
-        loansDates.percentage = percentage
-        loansDates.fechaFin = fechaFin
-        loansDates.fechaInicio = fechaInicio
-        loansDates.Cantidad = Cantidad
-        this.setState(loansDates)
-
+    goDetail = (e, fechaFin, fechaInicio, cantidad, pago, restante, payments) => {
+        const {loansInfo} = this.state
+        loansInfo.fechaFin = fechaFin
+        loansInfo.fechaInicio = fechaInicio
+        loansInfo.cantidad = cantidad
+        loansInfo.pago = pago
+        loansInfo.restante = restante
+        loansInfo.payments = payments
+        this.setState(loansInfo)
+        
         this.props.history.push({
-            pathname: '/dashboard/info',
-            state: this.state.loansDates
+            pathname: '/prestamos/lista/info/',
+            state: this.state.loansInfo
         })
     }
 
     render(){
         return(
             <div className="detail">
+            <img onClick={()=> window.history.back()} src={arrow} className="img-arrow-back" alt="arrow"/>    
             <div className="head">
-                    <p className="client-name">{this.state.list.prestamo}</p>
+                <p className="client-name">{this.props.location.state.name}</p>
+                <span>Préstamo</span>
            </div>
-           { this.state.list.length > 0 ? this.state.list.map((loan, i)=>(
-               <div className="btn-list" key={i} onClick={(e) => this.goInfo(e, loan.Cantidad, loan.fechaInicio, loan.fechaFin, loan.percentage, loan.pago)}>
+           { this.props.location.state.loans.length > 0 ? this.props.location.state.loans.map((loan, i)=>(
+               <div className="info-loan-list-btn" key={i}>
+               <div className="btn-list"  onClick={(e) => this.goInfo(e, loan.dateEnd, loan.dateStart, loan.total, loan.loanRef, loan.payed, loan.remaining, loan.payments)}>
                     <span>{i+1}</span>
-                    <span>{loan.Cliente}</span>
-                    <span>{loan.fechaInicio}</span>
-                    <div className="Progress"><ProgressBar percentage={loan.percentage}/></div>
+                    <span>${loan.total} MXN</span>
+                    <div className="Progress"><ProgressBar percentage={(loan.payed*100)/loan.total}/></div>
+               </div>
+               <img src={info} alt="info" onClick={(e) => this.goDetail(e, loan.dateEnd, loan.dateStart, loan.total, loan.payed, loan.remaining, loan.payments)}/>
                </div>
            ))
             : <p>Cargando..</p>

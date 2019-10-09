@@ -1,32 +1,29 @@
 import React from 'react'
 import {NavLink} from 'react-router-dom'
 import './customer_detail.scss'
+import arrow from './../../../assets/icons/left-arrow.svg'
 
 const CustomerDetail = (props) =>{
-    const {nombre, correo, direccion, telefono} = props.location.state
+    const {nombre, correo, direccion, telefono, apellido} = props.location.state
 
     return(
         <div className="detail">
+            <NavLink to="/clientes/prestamos/"><img src={arrow} className="img-arrow-back" alt="arrow"/></NavLink>
             <div className="head">
                 <p className="client-name">{nombre}</p>
                 <span>Info</span>
             </div>
             <div className="client-data">
-                <p>Activos: <span>1</span></p>
-                <p>{correo}</p>
-                <p>{direccion}</p>
-                <p>{telefono}</p>
+                <p>Apellido: <span>{apellido}</span></p>
+                <p>Correo: <span>{correo}</span></p>
+                <p>Dirección: <span>{direccion}</span></p>
+                <p>Teléfono: <span>{telefono}</span></p>
             </div>
             <NavLink
             to={{
                 pathname: '/clientes/editar/',
                 state: {
-                    id: props.location.state.id,
-                    nombre: props.location.state.nombre,
-                    apellido: props.location.state.apellido,
-                    direccion: props.location.state.direccion,
-                    correo: props.location.state.correo,
-                    telefono: props.location.state.telefono
+                    id: props.location.state.id
                 }
             }}
             >

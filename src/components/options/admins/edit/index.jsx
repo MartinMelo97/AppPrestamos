@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import firebase from 'firebase'
 import { toast } from 'react-toastify'
 import { Checkbox } from 'antd'
+import {NavLink} from 'react-router-dom'
+import arrow from '../../../../assets/icons/left-arrow.svg'
 
 export default class EditAdmins extends Component {
     constructor(props){
@@ -69,6 +71,7 @@ export default class EditAdmins extends Component {
     render(){
         return(
             <div className="new-custumer-container">
+                <NavLink to="/opciones/admins"><img src={arrow} className="img-arrow-back" alt="arrow"/></NavLink>
                 <p className="title-new-customer">Editar Admin.</p>
                 <div className="topics-container">
                     <div className="topic">

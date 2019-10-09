@@ -52,8 +52,8 @@ const App = () => {
         <Route exact path="/general/historial/ayer" component={ RecordY }/>
         <Route exact path="/general/historial/buscar" component={ RecordUpdate }/>
         <Route exact path="/error" component={ ErrorAccount }/>
-        <Route exact path="/dashboard" component={ LoansList }/>
-        <Route exact path="/dashboard/info/" component={ InfoLoan }/>
+        <Route exact path="/prestamos/lista/" component={ LoansList }/>
+        <Route exact path="/prestamos/lista/info/" component={ InfoLoan }/>
         <Route exact path="/opciones/lista/" component={ ListOptions }/>
         <Route exact path="/opciones/admins/" component={ ListAmins }/>
         <Route exact path="/admins/editar/" component={ EditAdmins }/>

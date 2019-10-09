@@ -3,6 +3,7 @@ import './loans.scss'
 import { NavLink } from 'react-router-dom'
 import plus from '../../../assets/icons/plus.svg'
 import firebase from 'firebase' 
+import {toast} from 'react-toastify'
 class Loans extends Component {
     constructor(props){
         super(props)
@@ -13,15 +14,9 @@ class Loans extends Component {
             actualDay: null,
             datesLoan: {
                 id: "",
-                Nombre: "",
-                diaInicio: "",
-                diaFin: "",
-                mesInicio: "",
-                mesFin: "",
-                Year: "",
-                numPay: "",
-                pago: "",
-                cantidad: "",
+                name: "",
+                loans: "",
+                payments: ""
             }
         }
     }
@@ -56,35 +51,34 @@ class Loans extends Component {
         actualDay = new Date().getDate()
         this.setState({ actualDay })
 
-        firebase.firestore().collection('loan')
+        firebase.firestore().collection('Customers').where("deleted", "==", false)
             .onSnapshot((dates)=>{
-            let names = []
+            let customer = []
             dates.forEach(date=>{
                 let dato = date.data()
                 dato.id = date.id
-                names.push(dato)
+                customer.push(dato)
             })
-            this.setState({customers: names})
+            this.setState({customers: customer})
         })
     }
 
-    Detail = (e,id, Cliente, diaInicio, diaFin, mesInicio, mesFin,Year, pago, numPay, Cantidad) => {
+    Detail = (e,id, loans, name, lastName, payments) => {
         let {datesLoan} = this.state
         datesLoan.id = id
-        datesLoan.mesInicio = mesInicio
-        datesLoan.mesFin = mesFin
-        datesLoan.Year = Year
-        datesLoan.Nombre = Cliente
-        datesLoan.diaInicio = diaInicio
-        datesLoan.diaFin = diaFin
-        datesLoan.numPay = numPay
-        datesLoan.pago = pago
-        datesLoan.cantidad = Cantidad
+        datesLoan.name = name+" "+lastName
+        datesLoan.loans = loans
+        datesLoan.payments = payments
         this.setState(datesLoan)
-        this.props.history.push({
-            pathname: '/prestamos/detalle/',
-            state: this.state.datesLoan
-        })
+        if (loans === undefined){
+            toast.warn("Cliente sin préstamos 💲✋")
+        } else{
+            this.props.history.push({
+                pathname: '/prestamos/lista/',
+                state: this.state.datesLoan
+            })
+        }
+        
     }
 
     render(){
@@ -97,13 +91,11 @@ class Loans extends Component {
                     {this.state.customers.length > 0 ?
                     this.state.customers.map((customer, i)=>(
                         <div className="loans-container" key={i}
-                        onClick={(e) => this.Detail(e, customer.id, customer.Cliente, customer.diaInicio, customer.diaFin, customer.mesInicio, customer.mesFin,customer.Year, 
-                            customer.pago, customer.numPay, customer.Cantidad )}
+                        onClick={(e) => this.Detail(e, customer.id, customer.loans, customer.firstName, customer.lastName, customer.payments)}
                         style = {{
                             backgroundColor : this.state.blues[i]
                         }} >
-                            <span>{customer.Cliente}</span>
-                            <span>${customer.Cantidad}</span>
+                            <span>{customer.firstName} {customer.lastName}</span>
                         </div>
                     ))
                     :

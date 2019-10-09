@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import './index.scss'
 import firebase from 'firebase'
 import { toast } from 'react-toastify'
+import arrow from './../../../assets/icons/left-arrow.svg'
 
 class EditCustomer extends Component {
     constructor(props){
@@ -9,25 +10,24 @@ class EditCustomer extends Component {
         this.state = {
             dates: this.props.location.state,
             datesCustomers: {
-                Nombre: "",
-                Apellido: "",
-                Direccion: "",
-                Correo: "",
-                Telefono: ""
+                firstName: "",
+                lastName: "",
+                address: "",
+                email: "",
+                phoneNumber: ""
             },
         }
     }
     componentDidMount = () => {
-        firebase.firestore().collection('customers').doc(this.state.dates.id)
+        firebase.firestore().collection('Customers').doc(this.state.dates.id)
         .get().then(doc => {
             const {datesCustomers} = this.state
-            datesCustomers.Nombre = doc.data().Nombre
-            datesCustomers.Apellido = doc.data().Apellido
-            datesCustomers.Correo = doc.data().Correo
-            datesCustomers.Direccion = doc.data().Direccion
-            datesCustomers.Telefono = doc.data().Telefono
+            datesCustomers.firstName = doc.data().firstName
+            datesCustomers.lastName = doc.data().lastName
+            datesCustomers.email = doc.data().email
+            datesCustomers.address = doc.data().address
+            datesCustomers.phoneNumber = doc.data().phoneNumber
             this.setState(datesCustomers)
-            console.log("Datos que traigo uwu "+this.state.datesCustomers)
           })
           .catch(err => {
             console.log('Error getting document', err);
@@ -37,7 +37,6 @@ class EditCustomer extends Component {
     changeName = (e) => {
         let { datesCustomers } = this.state
         datesCustomers.Nombre = e.target.value
-        console.log("Your name is " + e.target.value)
         this.setState(datesCustomers)
     }
     changeFirstName = (e) => {
@@ -66,13 +65,13 @@ class EditCustomer extends Component {
         firebase.firestore().collection('customers').doc(this.state.dates.id)
         .set(this.state.datesCustomers)
         .then(()=>{
-            toast.success("Datos actualizados")
+            toast.info("Datos actualizados")
             let {datesCustomers} = this.state
-            datesCustomers.Nombre = ""
-            datesCustomers.Apellido = ""
-            datesCustomers.Direccion = ""
-            datesCustomers.Correo = ""
-            datesCustomers.Telefono = ""
+            datesCustomers.firstName = ""
+            datesCustomers.lastName = ""
+            datesCustomers.address = ""
+            datesCustomers.email = ""
+            datesCustomers.phoneNumber = ""
             this.setState(datesCustomers)
         })
         .catch((err)=>{
@@ -84,19 +83,20 @@ class EditCustomer extends Component {
     render(){
         return(
             <div className="new-custumer-container">
+                <img src={arrow} onClick={()=> window.history.back()} className="img-arrow-back" alt="arrow"/>
                 <p className="title-new-customer">Editar Cliente</p>
                 <div className="topics-container">
                     <div className="topic">
                         <p>Nombre</p>
-                        <input type="text" onChange={(e)=>this.changeName(e)} value={this.state.datesCustomers.Nombre}/>
+                        <input type="text" onChange={(e)=>this.changeName(e)} value={this.state.datesCustomers.firstName}/>
                         <p>Apellido</p>
-                        <input type="text" onChange={(e)=>this.changeFirstName(e)} value={this.state.datesCustomers.Apellido}/>
+                        <input type="text" onChange={(e)=>this.changeFirstName(e)} value={this.state.datesCustomers.lastName}/>
                         <p>Dirección</p>
-                        <input type="text" onChange={(e)=>this.changeAddress(e)} value={this.state.datesCustomers.Direccion}/>
+                        <input type="text" onChange={(e)=>this.changeAddress(e)} value={this.state.datesCustomers.address}/>
                         <p>Correo</p>
-                        <input type="text" onChange={(e)=>this.changeEmail(e)} value={this.state.datesCustomers.Correo}/>
+                        <input type="text" onChange={(e)=>this.changeEmail(e)} value={this.state.datesCustomers.email}/>
                         <p>Teléfono</p>
-                        <input type="text" onChange={(e)=>this.changePhone(e)} value={this.state.datesCustomers.Telefono}/>
+                        <input type="text" onChange={(e)=>this.changePhone(e)} value={this.state.datesCustomers.phoneNumber}/>
                     </div>
                 </div>
                 <button className="add-button" onClick={this.Edit}>Editar</button>

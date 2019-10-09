@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import './loans_detail.scss'
 import {NavLink} from 'react-router-dom'
+import arrow from '../../../assets/icons/left-arrow.svg'
 
 class LoansDetail extends Component {
     constructor(props){
@@ -30,7 +31,15 @@ class LoansDetail extends Component {
     }
 
     componentDidMount = () =>{
-        const {diaInicio, diaFin, mesInicio, mesFin,Year} = this.props.location.state
+        var Init = this.Dates(this.props.location.state.fechaInicio)
+        var End = this.Dates(this.props.location.state.fechaFin) 
+
+        var diaInicio = Init[0]
+        var mesInicio = Init[1]
+        var diaFin = End[0]
+        var mesFin = End[1]
+        var Year = Init[2]
+        var YearEnd = End[2]
         console.log(this.props.location.state)
         let { day, month, year, days, startDay, ultimateDay, endDay, daystwo, monthend } = this.state
         let months = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
@@ -45,7 +54,7 @@ class LoansDetail extends Component {
         year = Year
 
         // The second month
-        endDay = new Date(Year, mesFin-1, 1).getDay() + 1
+        endDay = new Date(YearEnd, mesFin-1, 1).getDay() + 1
         for(let i = 1; i <= new Date(date.getFullYear(), mesFin, 0).getDate(); i++){
             daystwo.push(`${i}`)
         }
@@ -61,8 +70,17 @@ class LoansDetail extends Component {
         let {dateEnd, dateInit, datesProps} = this.state 
         datesProps = this.props.location.state
         dateInit = diaInicio+" "+monts[mesInicio-1]+". "+Year
-        dateEnd = diaFin+" "+monts[mesFin-1]+". "+Year 
+        dateEnd = diaFin+" "+monts[mesFin-1]+". "+YearEnd 
         this.setState({ dateEnd, dateInit, datesProps})
+    }
+
+    Dates = (date) => {
+        var array = date.split("/")
+        var newArray = []
+        array.map((item) =>{
+            newArray.push(parseInt(item))
+        })
+        return newArray
     }
 
     maping = () =>{
@@ -132,7 +150,8 @@ class LoansDetail extends Component {
     render(){
         return(
             <div className="loans-div-container">
-                <p className="loans-detail-title">Prestamo</p>
+                <img src={arrow} onClick={()=> window.history.back()} className="img-arrow-back" alt="arrow"/>
+                <p className="loans-detail-title">Detalles</p>
                 <p className="loans-detail-p">{this.state.dateInit}</p>
                 <div className="calendar-loans">
                     <div id="calendar-header-loans">

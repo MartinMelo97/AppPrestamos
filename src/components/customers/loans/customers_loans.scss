@@ -12,7 +12,7 @@
         display: flex;
         justify-content: center;
         align-items: center;
-        margin: 0 0 3vh 0;
+        margin: 0 0 0 0;
         img{
             width: 7vw;
             margin-left: 5vw;
@@ -71,4 +71,29 @@
             width: 7vw;
             margin-left: 2vw;
         }
+}
+
+.design-modal-c{
+    .ant-modal-header{
+        background-color: #f5222d;
+        color: #fff;
+    }
+    .ant-modal-title{
+        color: #fff;
+        font-size: 1.8em;
+    }
+    p{
+        margin-bottom: 0;
+        font-size: 1.5em;
+        text-align: center;
+    }
+    .ant-btn-primary{
+        background-color: #f5222d;
+        border-color: #f5222d;
+        font-size: 1.5em;
+    }
+    .ant-btn{
+        font-size: 1.5em !important;
+    }
+
 }

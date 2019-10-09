@@ -2,81 +2,87 @@ import React, { Component } from 'react'
 import './new_customer.scss'
 import firebase from 'firebase'
 import { toast } from 'react-toastify'
+import {NavLink} from 'react-router-dom'
+import arrow from './../../../assets/icons/left-arrow.svg'
 
 class NewCustomer extends Component {
     constructor(props){
         super(props)
         this.state = {
             Customers: {
-                Nombre: "",
-                Apellido: "",
-                Direccion: "",
-                Correo: "",
-                Telefono: ""
+                firstName: "",
+                lastName: "",
+                address: "",
+                email: "",
+                phoneNumber: "",
+                deleted: false,
+                created: firebase.firestore.Timestamp.fromDate(new Date()),
+                updated: firebase.firestore.Timestamp.fromDate(new Date()),
             }
         }
     }
     
     changeName = (e) => {
         let { Customers } = this.state
-        Customers.Nombre = e.target.value
+        Customers.firstName = e.target.value
         this.setState(Customers)
     }
     changeFirstName = (e) => {
         let { Customers } = this.state
-        Customers.Apellido = e.target.value
+        Customers.lastName = e.target.value
         this.setState(Customers)
     }
     changeAddress = (e) => {
         let { Customers } = this.state
-        Customers.Direccion = e.target.value
+        Customers.address = e.target.value
         this.setState(Customers)
     }
     changeEmail = (e) => {
         let { Customers } = this.state
-        Customers.Correo = e.target.value
+        Customers.email = e.target.value
         this.setState(Customers)
     }
     changePhone = (e) => {
         let { Customers } = this.state
-        Customers.Telefono = e.target.value
+        Customers.phoneNumber = e.target.value
         this.setState(Customers)
     }
 
     Register = () => {
         console.log(this.state.Customers)
-        firebase.firestore().collection('customers').add(this.state.Customers)
+        firebase.firestore().collection('Customers').add(this.state.Customers)
         .then(()=>{
-            toast.success("Datos registrados")
+            toast.info("Datos del cliente registrados!")
             let {Customers} = this.state
-            Customers.Nombre = ""
-            Customers.Apellido = ""
-            Customers.Direccion = ""
-            Customers.Correo = ""
-            Customers.Telefono = ""
+            Customers.firstName = ""
+            Customers.lastName = ""
+            Customers.address = ""
+            Customers.email = ""
+            Customers.phoneNumber = ""
             this.setState(Customers)
         })
         .catch((err)=>{
-            toast.error("Datos no registrados")
+            toast.error("Datos del cliente no registrados")
             console.log(err)
         })
     }
     render(){
         return(
             <div className="new-custumer-container">
+                <NavLink to="/clientes/prestamos/"><img src={arrow} className="img-arrow-back" alt="arrow"/></NavLink>
                 <p className="title-new-customer">Nuevo Cliente</p>
                 <div className="topics-container">
                     <div className="topic">
                         <p>Nombre</p>
-                        <input type="text" onChange={(e)=>this.changeName(e)} value={this.state.Customers.Nombre}/>
+                        <input type="text" onChange={(e)=>this.changeName(e)} value={this.state.Customers.firstName}/>
                         <p>Apellido</p>
-                        <input type="text" onChange={(e)=>this.changeFirstName(e)} value={this.state.Customers.Apellido}/>
+                        <input type="text" onChange={(e)=>this.changeFirstName(e)} value={this.state.Customers.lastName}/>
                         <p>Dirección</p>
-                        <input type="text" onChange={(e)=>this.changeAddress(e)} value={this.state.Customers.Direccion}/>
+                        <input type="text" onChange={(e)=>this.changeAddress(e)} value={this.state.Customers.address}/>
                         <p>Correo</p>
-                        <input type="text" onChange={(e)=>this.changeEmail(e)} value={this.state.Customers.Correo}/>
+                        <input type="text" onChange={(e)=>this.changeEmail(e)} value={this.state.Customers.email}/>
                         <p>Teléfono</p>
-                        <input type="text" onChange={(e)=>this.changePhone(e)} value={this.state.Customers.Telefono}/>
+                        <input type="text" onChange={(e)=>this.changePhone(e)} value={this.state.Customers.phoneNumber}/>
                     </div>
                 </div>
                 <button className="add-button" onClick={this.Register}>Agregar</button>

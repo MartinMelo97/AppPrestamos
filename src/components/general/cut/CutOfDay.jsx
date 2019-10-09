@@ -5,49 +5,33 @@ class CutOfDay extends Component {
     constructor(props){
         super(props)
         this.state = {
-            customers: [],
+            payments: [],
             total: 0
         }
     }
     componentDidMount = () => {
-        firebase.firestore().collection('loan')
-            .onSnapshot((dates)=>{
-            let names = []
-            dates.forEach(date=>{
+        firebase.firestore().collection('LoansByDate')
+            .onSnapshot((infoLoan)=>{
+            let loans = []
+            infoLoan.forEach(date=>{
                 let dato = date.data()
-                dato.id = date.id
-                names.push(dato)
+                loans.push(dato)
             })
-            this.setState({customers: names})
-            this.updateTotal()
+            loans.forEach(payment => this.setState({payments: payment.payments, total: payment.total}))
         })
         
     }
-
-    updateTotal = () =>{
-        let { total, customers } = this.state
-
-        if( customers.length > 0 ){
-            total = 0
-            for(let i = 0; i < customers.length; i++){
-                total += customers[i].pago
-            }
-
-            this.setState({ total })
-        }
-    }
-
     render(){
         return(
             <div className="cut-day-container">
                 <div className="part-one">
                     <p>Corte de Hoy</p>
                     <div className="list-loans-container">
-                        {this.state.customers.length > 0 ?
-                        this.state.customers.map((customer, i)=>(
+                        {this.state.payments.length > 0 ?
+                        this.state.payments.map((payment, i)=>(
                             <div className="customer-value-container" key={i}> 
-                                <span className="customer-name">{customer.Cliente}</span>
-                                <span className="customer-value">{ `$${customer.pago}` }</span>
+                                <span className="customer-name">{payment.customer}</span>
+                                <span className="customer-value">{ `$${payment.amount}` }</span>
                             </div>
                         ))
                         :

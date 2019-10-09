@@ -14,10 +14,10 @@ export default class AdminList extends Component {
             datesAccount: {
                 id: "",
                 email: "",
-                pass: "",
                 username: "",
-                fecha: "",
-                active: false,
+                phone: "",
+                lastname: "",
+                root: false,
                 uid: ""
             },
             codesAccount: {
@@ -28,7 +28,7 @@ export default class AdminList extends Component {
     }
 
     componentDidMount = () => {
-        firebase.firestore().collection('admin')
+        firebase.firestore().collection('Admins')
         .onSnapshot((accounts)=>{
           let array_dates = []
           accounts.forEach(date=>{
@@ -53,14 +53,14 @@ export default class AdminList extends Component {
       })
     }
 
-    DatesAccount = (e, id, correo, password, username, date, active, uid) => {
+    DatesAccount = (e, id, correo, apellido, username, phone, root, uid) => {
         let {datesAccount} = this.state
         datesAccount.id = id
         datesAccount.email = correo
-        datesAccount.pass = password
+        datesAccount.lastname = apellido
         datesAccount.username = username
-        datesAccount.fecha = date
-        datesAccount.active = active
+        datesAccount.phone = phone
+        datesAccount.root = root
         datesAccount.uid = uid
         this.setState(datesAccount)
 
@@ -100,8 +100,8 @@ export default class AdminList extends Component {
                         <div className="info-customer-container" key={i}>
                             <span style = {{
                                 backgroundColor : "#0ac8e5"
-                            }}>{account.username}</span>
-                                <img src={ info } alt="info" onClick={(e)=>this.DatesAccount(e, account.id, account.correo, account.password, account.username, account.date, account.super, account.uid )}/>
+                            }}>{account.firstName}</span>
+                                <img src={ info } alt="info" onClick={(e)=>this.DatesAccount(e, account.id, account.email, account.lastName, account.firstName, account.phone, account.root, account.uid )}/>
                                 <img src={close} alt="close" onClick={(e)=>this.DeleteAccount(e, account.id, account.uid)}/>
                         </div>
                     ))

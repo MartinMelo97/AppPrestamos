@@ -35,3 +35,41 @@
         padding-bottom: 3vh;
     }
 }
+
+    .img-arrow-back {
+        width: 8vw;
+        height: 8vh;
+        position: fixed;
+        left: 3vw;
+        top: 11vh; 
+    }
+
+    .btn-list-info{
+        font-size: 1.8em;
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
+        width: 80vw;
+        background-color: #ffffff;
+        border-top-left-radius: 5% 40%;
+        border-bottom-left-radius: 5% 40%;
+        border-top-right-radius: 5% 40%;
+        border-bottom-right-radius: 5% 40%;
+        box-shadow: 0 3px 6px 0 #ccc;
+        padding: 5px;
+        font-weight: 600;
+        margin-left: 0;
+        margin-top: 2vh;
+    }
+    .sub-list-pay{
+        margin-top: 2vh;
+        margin-bottom: 0;
+        font-size: 2em;
+        text-align: center;
+        font-weight: 900;
+        text-transform: uppercase;
+    }
+    .container-list-payments{
+        display: flex;
+        flex-direction: column;
+    }
