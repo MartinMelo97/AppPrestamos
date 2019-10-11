@@ -10,7 +10,7 @@
         font-size: 4em;
         font-weight: 900;
         text-transform: uppercase;
-        margin: 10px 0 10vh 0;
+        margin: 10px 0 8vh 0;
         position: relative;
         .pay-loan-subtitle{
             position: absolute;
@@ -56,6 +56,8 @@
             &.not-active{
                 color: $white;
                 background-color: $detail;
+                width: 40vw;
+                height: 6vh;
             }
             &.active{
                 color: $black;
@@ -97,5 +99,25 @@
                 opacity: 1;
             }
         }
+    }
+}
+.info-loan-summary-p{
+    margin-bottom: 5vh;
+    p{
+        font-weight: 200;
+        font-size: 2em;
+        margin-bottom: 2vh;
+        text-align: center;
+        background-color: #ffffff;
+        border-top-left-radius: 5% 40%;
+        border-bottom-left-radius: 5% 40%;
+        border-top-right-radius: 5% 40%;
+        border-bottom-right-radius: 5% 40%;
+        box-shadow: 0 3px 6px 0 #ccc;
+        padding: 5px;
+    }
+    span {
+        font-weight: bold;
+        font-size: 1em !important;
     }
 }

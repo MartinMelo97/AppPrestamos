@@ -2,7 +2,7 @@ import React, { Component } from 'react'
 import './loans_detail.scss'
 import {NavLink} from 'react-router-dom'
 import arrow from '../../../assets/icons/left-arrow.svg'
-
+import InfoLoan from './../info'
 class LoansDetail extends Component {
     constructor(props){
         super(props)
@@ -148,10 +148,21 @@ class LoansDetail extends Component {
     }
 
     render(){
+        const {cantidad, pago, restante, payments} = this.props.location.state
         return(
             <div className="loans-div-container">
                 <img src={arrow} onClick={()=> window.history.back()} className="img-arrow-back" alt="arrow"/>
                 <p className="loans-detail-title">Detalles</p>
+                <NavLink to={{
+                    pathname: '/prestamos/a-pagar/',
+                    state: this.state.datesProps
+                }}><button className="button-loans-detail">Registrar pago</button></NavLink>
+                <InfoLoan
+                cantidad={cantidad}
+                pago={pago}
+                restante={restante}
+                payments={payments}
+                />
                 <p className="loans-detail-p">{this.state.dateInit}</p>
                 <div className="calendar-loans">
                     <div id="calendar-header-loans">
@@ -185,10 +196,6 @@ class LoansDetail extends Component {
                     </div>
                 </div>
                 <p className="loans-detail-p">{this.state.dateEnd}</p>
-                <NavLink to={{
-                    pathname: '/prestamos/a-pagar/',
-                    state: this.state.datesProps
-                }}><button className="button-loans-detail">Liquidar</button></NavLink>
             </div>
         )
     }

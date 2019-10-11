@@ -1,18 +1,8 @@
-import React, { Component } from 'react'
+import React from 'react'
 import { Progress } from 'antd'
-import arrow from './../../../assets/icons/left-arrow.svg'
 import './index.scss'
-import Information from './Information'
-export default class Info extends Component {
-    constructor(props){
-        super(props)
-        this.state = {
-            datesLoan: this.props.location.state,
-            returnDates: this.props.location.state.loans
-        }
-    }
-    render() {
-        const {fechaInicio, fechaFin, cantidad, pago, restante} = this.state.datesLoan
+const Info = (props) =>  {
+        const {cantidad, pago, restante, payments} = props
         var percentage = (pago*100)/cantidad
         var valuePersentage
         if (percentage % 1 === 0) {
@@ -22,17 +12,13 @@ export default class Info extends Component {
         }
         return (
             <div className="content-info-loan">
-               <img onClick={()=> window.history.back()} src={arrow} className="img-arrow-back" alt="arrow"/>
-                <p className="tittle-info-loan">Info</p>
-                {percentage < 100 ?
                 <div>
                     <p className="info-progress-p">Progreso del préstamo</p>
                     <Progress type="circle" percent={valuePersentage} style={{display: 'flex', justifyContent: 'center'}} />
                     <div className="info-p-container">
-                        <span className="s-info-fecha">{fechaInicio} - {fechaFin}</span>
                         <div className="container-list-payments">
                             <p className="sub-list-pay">Lista de pagos</p>
-                            { this.props.location.state.payments.length > 0 ? this.props.location.state.payments.map((payment, i)=>(
+                            { payments.length > 0 ? payments.map((payment, i)=>(
                                 <div className="btn-list-info" key={i}>
                                         <span>{i+1}</span>
                                         <span>${payment.amount} MXN</span>
@@ -47,9 +33,8 @@ export default class Info extends Component {
                     </div>
                        
                 </div>
-                : 
-                <Information dateEnd={fechaFin} dateInit={fechaInicio} cantidad={cantidad} pago={pago} restante={restante} />}
-            </div>
+                </div>
         )
-    }
 }
+
+export default Info

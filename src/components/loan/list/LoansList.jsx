@@ -47,21 +47,6 @@ class LoansList extends Component {
         })
     }
 
-    goDetail = (e, fechaFin, fechaInicio, cantidad, pago, restante, payments) => {
-        const {loansInfo} = this.state
-        loansInfo.fechaFin = fechaFin
-        loansInfo.fechaInicio = fechaInicio
-        loansInfo.cantidad = cantidad
-        loansInfo.pago = pago
-        loansInfo.restante = restante
-        loansInfo.payments = payments
-        this.setState(loansInfo)
-        
-        this.props.history.push({
-            pathname: '/prestamos/lista/info/',
-            state: this.state.loansInfo
-        })
-    }
 
     render(){
         return(
@@ -78,7 +63,7 @@ class LoansList extends Component {
                     <span>${loan.total} MXN</span>
                     <div className="Progress"><ProgressBar percentage={(loan.payed*100)/loan.total}/></div>
                </div>
-               <img src={info} alt="info" onClick={(e) => this.goDetail(e, loan.dateEnd, loan.dateStart, loan.total, loan.payed, loan.remaining, loan.payments)}/>
+               <img src={info} alt="info"/>
                </div>
            ))
             : <p>Cargando..</p>

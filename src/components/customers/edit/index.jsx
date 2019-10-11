@@ -36,34 +36,40 @@ class EditCustomer extends Component {
 
     changeName = (e) => {
         let { datesCustomers } = this.state
-        datesCustomers.Nombre = e.target.value
+        datesCustomers.firstName = e.target.value
         this.setState(datesCustomers)
     }
     changeFirstName = (e) => {
         let { datesCustomers } = this.state
-        datesCustomers.Apellido = e.target.value
+        datesCustomers.lastName = e.target.value
         this.setState(datesCustomers)
     }
     changeAddress = (e) => {
         let { datesCustomers } = this.state
-        datesCustomers.Direccion = e.target.value
+        datesCustomers.address = e.target.value
         this.setState(datesCustomers)
     }
     changeEmail = (e) => {
         let { datesCustomers } = this.state
-        datesCustomers.Correo = e.target.value
+        datesCustomers.email = e.target.value
         this.setState(datesCustomers)
     }
     changePhone = (e) => {
         let { datesCustomers } = this.state
-        datesCustomers.Telefono = e.target.value
+        datesCustomers.phoneNumber = e.target.value
         this.setState(datesCustomers)
     }
 
     Edit = () => {
-        console.log(this.state.datesCustomers)
-        firebase.firestore().collection('customers').doc(this.state.dates.id)
-        .set(this.state.datesCustomers)
+        firebase.firestore().collection('Customers').doc(this.state.dates.id)
+        .update({
+            firstName: this.state.datesCustomers.firstName,
+            lastName: this.state.datesCustomers.lastName,
+            address: this.state.datesCustomers.address,
+            email: this.state.datesCustomers.email,
+            phoneNumber: this.state.datesCustomers.phoneNumber,
+            updated: firebase.firestore.Timestamp.fromDate(new Date())
+        })
         .then(()=>{
             toast.info("Datos actualizados")
             let {datesCustomers} = this.state
@@ -73,6 +79,7 @@ class EditCustomer extends Component {
             datesCustomers.email = ""
             datesCustomers.phoneNumber = ""
             this.setState(datesCustomers)
+            this.props.history.push('/clientes/prestamos/')
         })
         .catch((err)=>{
             toast.error("Datos no actualizados")

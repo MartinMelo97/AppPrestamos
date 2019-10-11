@@ -72,24 +72,16 @@ class LoansToPay extends Component {
         this.setState(pay)
         
     }
-    changeActive = () =>{
-        let button = document.getElementsByClassName('button-style-two')[0]
-        let container = document.getElementsByClassName('ghost-container')[0]
-        let { active } = this.state
-
-        button.className = active ? "button-style-two not-active" : "button-style-two active"
-        container.className = active ? "ghost-container not-active" : "ghost-container active"
-        active = !active
-
-        this.setState({ active })
-    }
     payChange = (e) => {
         let {pay} = this.state
         pay.amount = parseInt(e.target.value)
         this.setState(pay)
     }
     loanPay = () => {
-        var payed = this.state.pay.amount + this.props.location.state.pago
+        if (this.state.pay.amount === ""){
+            toast.error("No has agregado un pago!")
+        } else {
+            var payed = this.state.pay.amount + this.props.location.state.pago
         var remaining = this.props.location.state.cantidad - payed
 
         var payments = this.state.payment
@@ -134,39 +126,37 @@ class LoansToPay extends Component {
                     payments: Acumpay
                 })
             }
+            this.props.history.push('/general/prestamos/')
         })
         .catch((err)=>{
             toast.error("No se agregó el pago")
             console.log(err)
         })
+        }
     }
 
     render(){
+        const {cantidad, pago, restante} = this.props.location.state
         return(
             <div className="pay-loan-container">
                 <img onClick={()=> window.history.back()} src={arrow} className="img-arrow-back" alt="arrow"/>
                 <p className="pay-loan-title">
-                { this.state.customer != null ?
-                this.state.customer.name
-                : 
-                null}
+                {this.state.customer.name}
                     <span className="pay-loan-subtitle">
-                        Pago #{ this.state.customer != null ?
-                                this.state.customer.payNumber
-                                : 
-                                null}
+                        Pago #{this.state.customer.payNumber}
                     </span>
                 </p>
                 <div className="buttons-container">
-                    <button className="button-style-one">Pagar</button>
-                    <span>Ó</span>
+                    <div className="info-loan-summary-p">
+                        <p>El préstamo fue: <span>${cantidad}</span></p>
+                        <p>Cantidad pagada: <span>${pago}</span></p>
+                        <p>Cantidad restante: <span>${restante}</span></p>
+                    </div>
                     <button 
-                    className="button-style-two not-active"
-                    onClick={ () => this.changeActive() }
-                    >Parcial</button>
-                    <div className="ghost-container not-active">
+                    className="button-style-two active">Agregar pago</button>
+                    <div className="ghost-container active">
                         <input type="number" placeholder="$" onChange={(e) => this.payChange(e)} value={this.state.pay.amount}/>
-                        <button className="button-add" onClick={this.loanPay}>Agregar</button>
+                        <button className="button-add" onClick={this.loanPay}>Registrar</button>
                     </div>
                 </div>
             </div>
