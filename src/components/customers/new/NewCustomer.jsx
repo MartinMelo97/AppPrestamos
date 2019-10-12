@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import './new_customer.scss'
 import firebase from 'firebase'
 import { toast } from 'react-toastify'
-import {NavLink} from 'react-router-dom'
 import arrow from './../../../assets/icons/left-arrow.svg'
 
 class NewCustomer extends Component {
@@ -69,7 +68,7 @@ class NewCustomer extends Component {
     render(){
         return(
             <div className="new-custumer-container">
-                <NavLink to="/clientes/prestamos/"><img src={arrow} className="img-arrow-back" alt="arrow"/></NavLink>
+                <img src={arrow} onClick={()=> window.history.back()} className="img-arrow-back" alt="arrow"/>
                 <p className="title-new-customer">Nuevo Cliente</p>
                 <div className="topics-container">
                     <div className="topic">

@@ -8,7 +8,7 @@ const CustomerDetail = (props) =>{
 
     return(
         <div className="detail">
-            <NavLink to="/clientes/prestamos/"><img src={arrow} className="img-arrow-back" alt="arrow"/></NavLink>
+            <img src={arrow} onClick={()=> window.history.back()} className="img-arrow-back" alt="arrow"/>
             <div className="head">
                 <p className="client-name">{nombre}</p>
                 <span>Info</span>

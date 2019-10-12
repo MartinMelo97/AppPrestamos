@@ -28,7 +28,6 @@ import LoansDetail from './components/loan/detail/LoansDetail'
 import LoansList from './components/loan/list/LoansList'
 import LoansToPay from './components/loan/pay/LoansToPay'
 import NewLoan from './components/loan/new/NewLoan'
-import InfoLoan from './components/loan/info'
 
 import ListOptions from './components/options/menu'
 import ListAmins from './components/options/admins'
@@ -53,7 +52,6 @@ const App = () => {
         <Route exact path="/general/historial/buscar" component={ RecordUpdate }/>
         <Route exact path="/error" component={ ErrorAccount }/>
         <Route exact path="/prestamos/lista/" component={ LoansList }/>
-        <Route exact path="/prestamos/lista/info/" component={ InfoLoan }/>
         <Route exact path="/opciones/lista/" component={ ListOptions }/>
         <Route exact path="/opciones/admins/" component={ ListAmins }/>
         <Route exact path="/admins/editar/" component={ EditAdmins }/>

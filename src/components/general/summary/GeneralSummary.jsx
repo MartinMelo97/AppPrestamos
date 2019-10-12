@@ -18,16 +18,42 @@ class GeneralSummary extends Component {
     }
 
     componentDidMount = () =>{
-        firebase.firestore().collection('SummaryDates')
-            .onSnapshot((dates)=>{
-            let summary = []
-            dates.forEach(date=>{
-                let dato = date.data()
-                summary.push(dato)
+        firebase.firestore().collection('Admins').onSnapshot(admins=>{
+            let datesAdmins = []
+            admins.forEach(admin=>{
+                let dataAmin = admin.data()
+                datesAdmins.push(dataAmin)
             })
-            summary.forEach(date=>{
-                this.setState({NumLoan: date.loans, Cantidad: date.total, NumCustomer: date.customers, SupAdmin: date.admins.root, NomAdmin: date.admins.normal})
+            var typeRoot = 0
+            var typeNormal = 0 
+            datesAdmins.forEach(admin=>{
+                if(admin.root === true){
+                    typeRoot += 1
+                }else{
+                    typeNormal += 1
+                }
             })
+            this.setState({SupAdmin: typeRoot, NomAdmin: typeNormal})
+        })
+        
+        firebase.firestore().collection('Customers').onSnapshot((customers)=>{
+         let datesCustomer = []
+         let Loans = []
+         customers.forEach(customer=>{
+             let dato = customer.data()
+             datesCustomer.push(dato)
+             let loan = customer.data().loans
+             Loans.push(loan)
+         })
+         var NumLoans = 0
+         var total = 0
+         Loans.forEach(loan=>{
+             if(loan !== undefined){
+                 NumLoans+= loan.length
+                 loan.forEach(date=>total += date.total)
+             }
+         })
+         this.setState({NumCustomer: datesCustomer.length, NumLoan: NumLoans, Cantidad: total})
         })
     }
 

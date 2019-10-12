@@ -3,6 +3,7 @@ import './loans_detail.scss'
 import {NavLink} from 'react-router-dom'
 import arrow from '../../../assets/icons/left-arrow.svg'
 import InfoLoan from './../info'
+import LoanComplete from './../info/Information'
 class LoansDetail extends Component {
     constructor(props){
         super(props)
@@ -149,10 +150,13 @@ class LoansDetail extends Component {
 
     render(){
         const {cantidad, pago, restante, payments} = this.props.location.state
+        var percentage = (pago*100)/cantidad
         return(
             <div className="loans-div-container">
                 <img src={arrow} onClick={()=> window.history.back()} className="img-arrow-back" alt="arrow"/>
                 <p className="loans-detail-title">Detalles</p>
+                {percentage < 100 ? 
+                <div className="loans-div-container">
                 <NavLink to={{
                     pathname: '/prestamos/a-pagar/',
                     state: this.state.datesProps
@@ -196,6 +200,12 @@ class LoansDetail extends Component {
                     </div>
                 </div>
                 <p className="loans-detail-p">{this.state.dateEnd}</p>
+                </div> : <LoanComplete 
+                dateEnd={this.state.dateEnd}
+                dateInit={this.state.dateInit}
+                cantidad={cantidad}
+                pago={pago}
+                restante={restante}/> }
             </div>
         )
     }

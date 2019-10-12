@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import {NavLink} from 'react-router-dom'
 import arrow from './../../../../assets/icons/left-arrow.svg'
 import './../record.scss'
 
@@ -14,7 +13,7 @@ export default class DetailRecord extends Component {
         return (
             <div>
                 <div className="detail">
-                <NavLink to="/dashboard"><img src={arrow} className="img-arrow-back" alt="arrow"/></NavLink>    
+                <img src={arrow} onClick={()=> window.history.back()} className="img-arrow-back" alt="arrow"/>   
                 <p className="head-record-detail">Detalle</p>
                     <div className="client-data">
                         <p>No. Pago: {num}</p>

@@ -139,14 +139,24 @@ class NewLoan extends Component {
         })
 
         firebase.firestore().collection('Customers')
-            .onSnapshot((dates)=>{
+            .onSnapshot((customers)=>{
             let names = []
-            dates.forEach(date=>{
+            let Loans = []
+            customers.forEach(date=>{
                 let dato = date.data()
                 dato.id = date.id
                 names.push(dato)
+                let loan = date.data().loans
+                Loans.push(loan)
             })
-            this.setState({customerNames: names})
+            var NumLoans = 0
+            Loans.forEach(loan=>{
+                if(loan !== undefined){
+                    NumLoans+= loan.length
+                }
+            })
+
+            this.setState({customerNames: names, loansLength: NumLoans})
         })
     }
 
@@ -157,6 +167,9 @@ class NewLoan extends Component {
     }
 
     Register = () => {
+        if(this.state.Loan.total === 0){
+            toast.error("Proporcione la cantidad del préstamo.")
+        } else {
         var newDate = new Date()
         var range = parseInt(this.state.plazo)
         newDate.setDate(newDate.getDate() + range) 
@@ -186,12 +199,13 @@ class NewLoan extends Component {
             toast.error("No se pudo registrar el présatmo")
             console.log(err)
         })
+        }
     }
 
     render(){
         return(
             <div className="new-loan-container">
-                <NavLink to="/general/prestamos/"><img src={arrow} className="img-arrow-back" alt="arrow"/></NavLink>
+                <img src={arrow} onClick={()=> window.history.back()} className="img-arrow-back" alt="arrow"/>
                 <p className="new-loan-title">Nuevo Prestamo</p>
                 <span className="loan-number">{this.state.loansLength != null ?
                 `#${this.state.loansLength}`
