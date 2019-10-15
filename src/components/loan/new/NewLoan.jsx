@@ -138,7 +138,7 @@ class NewLoan extends Component {
             
         })
 
-        firebase.firestore().collection('Customers')
+        firebase.firestore().collection('Customers').where("deleted", "==", false)
             .onSnapshot((customers)=>{
             let names = []
             let Loans = []
@@ -156,7 +156,7 @@ class NewLoan extends Component {
                 }
             })
 
-            this.setState({customerNames: names, loansLength: NumLoans})
+            this.setState({customerNames: names, loansLength: NumLoans+1})
         })
     }
 
@@ -190,10 +190,12 @@ class NewLoan extends Component {
         firebase.firestore().collection('Customers').doc(id).update({loans})
         .then(()=>{
             toast.info("Préstamo registrado!")
-            this.setState({Loan: {total: ""}})
-            this.setState({client: ""})
-            this.setState({ArrayLoans: []})
-            this.setState({limit: "20"})
+            this.props.history.push({
+                pathname: '/prestamos/lista/',
+                state: {
+                    id: id,
+                }
+            })
         })
         .catch((err)=>{
             toast.error("No se pudo registrar el présatmo")

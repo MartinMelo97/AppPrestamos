@@ -4,10 +4,12 @@ import arrow from '../../../assets/icons/left-arrow.svg'
 import firebase from 'firebase'
 import {NavLink} from 'react-router-dom' 
 import plus from './../../../assets/icons/magnifying-glass.svg'
+import NotFoundData from './NotFound'
 export default class RecordUpdate extends Component {
     constructor(props){
         super(props)
         this.state = {
+            acction: false,
             payments:[],
             days: [],
             date: "",
@@ -54,7 +56,6 @@ export default class RecordUpdate extends Component {
     }
     SearchDates = () =>{
         var fecha = this.state.day + "/" + this.state.month + "/"+ this.state.year
-        console.log("Fecha: "+fecha)
         firebase.firestore().collection('LoansByDate').where("date", "==", fecha)
             .onSnapshot((infoLoan)=>{
             let loans = []
@@ -63,6 +64,7 @@ export default class RecordUpdate extends Component {
                 loans.push(dato)
             })
             loans.forEach(payment => this.setState({payments: payment.payments, date: payment.date}))
+            this.setState({acction: true})
         })
     }
 
@@ -96,16 +98,17 @@ export default class RecordUpdate extends Component {
                     </select>
                     <img src={plus} alt="search" onClick={() => this.SearchDates()}/>
                 </div>
+                {this.state.acction === true ? 
                 <div className="customers-name-container">
-                { this.state.payments ?
+                { this.state.payments.length > 0 ?
                     this.state.payments.map((payment, i)=>(
                         <span key={i} 
                         onClick={(e) => this.Detail(e, payment.customer, payment.amount)}
-                        >{ payment.customer }</span>
+                        ><p>{payment.customer}</p><p>${payment.amount}</p></span>
                     ))
                     :
-                    <p>No hay datos para mostrar.</p> }
-                </div>
+                    <NotFoundData/> }
+                </div>: null}
             </div>
         )
     }

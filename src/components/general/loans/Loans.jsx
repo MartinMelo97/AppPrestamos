@@ -13,10 +13,7 @@ class Loans extends Component {
             day: 1,
             actualDay: null,
             datesLoan: {
-                id: "",
-                name: "",
-                loans: "",
-                payments: ""
+                id: ""
             }
         }
     }
@@ -63,12 +60,9 @@ class Loans extends Component {
         })
     }
 
-    Detail = (e,id, loans, name, lastName, payments) => {
+    Detail = (e,id, loans) => {
         let {datesLoan} = this.state
         datesLoan.id = id
-        datesLoan.name = name+" "+lastName
-        datesLoan.loans = loans
-        datesLoan.payments = payments
         this.setState(datesLoan)
         if (loans === undefined){
             toast.warn("Cliente sin préstamos 💲✋")
@@ -91,7 +85,7 @@ class Loans extends Component {
                     {this.state.customers.length > 0 ?
                     this.state.customers.map((customer, i)=>(
                         <div className="loans-container" key={i}
-                        onClick={(e) => this.Detail(e, customer.id, customer.loans, customer.firstName, customer.lastName, customer.payments)}
+                        onClick={(e) => this.Detail(e, customer.id, customer.loans)}
                         style = {{
                             backgroundColor : this.state.blues[i]
                         }} >

@@ -59,6 +59,7 @@ class NewCustomer extends Component {
             Customers.email = ""
             Customers.phoneNumber = ""
             this.setState(Customers)
+            this.props.history.push('/clientes/prestamos/',3000)
         })
         .catch((err)=>{
             toast.error("Datos del cliente no registrados")

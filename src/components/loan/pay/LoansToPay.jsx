@@ -126,7 +126,12 @@ class LoansToPay extends Component {
                     payments: Acumpay
                 })
             }
-            this.props.history.push('/general/prestamos/')
+            this.props.history.push({
+                pathname: '/prestamos/lista/',
+                state: {
+                    id: this.props.location.state.id,
+                }
+            })
         })
         .catch((err)=>{
             toast.error("No se agregó el pago")
@@ -137,11 +142,14 @@ class LoansToPay extends Component {
 
     render(){
         const {cantidad, pago, restante} = this.props.location.state
+        var text = this.props.location.state.name 
+        var arrayName = text.split(" ")
+        var Name = arrayName[0]+" "+arrayName[1]
         return(
             <div className="pay-loan-container">
                 <img onClick={()=> window.history.back()} src={arrow} className="img-arrow-back" alt="arrow"/>
                 <p className="pay-loan-title">
-                {this.state.customer.name}
+                {Name}
                     <span className="pay-loan-subtitle">
                         Pago #{this.state.customer.payNumber}
                     </span>

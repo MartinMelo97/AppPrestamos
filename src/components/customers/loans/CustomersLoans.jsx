@@ -113,9 +113,9 @@ class CustomersLoans extends Component {
                     { this.state.customers ?
                     this.state.customers.map((customer, i)=>(
                         <div className="info-customer-container" key={i}>
-                            <span style = {{
-                                backgroundColor : this.state.reds[i]
-                            }}>{customer.firstName}</span>
+                            <span style = {{backgroundColor : this.state.reds[i]}}
+                            onClick={(e)=>this.DatesCustomers(e, customer.id, customer.firstName, customer.lastName, customer.email, customer.address, customer.phoneNumber )}>
+                            {customer.firstName} {customer.lastName}</span>
                                 <img src={ info } alt="info" onClick={(e)=>this.DatesCustomers(e, customer.id, customer.firstName, customer.lastName, customer.email, customer.address, customer.phoneNumber )}/>
                                 <img src={close} alt="close" onClick={(e)=>this.DeleteCustomer(e, customer.id, customer.firstName)}/>
                         </div>

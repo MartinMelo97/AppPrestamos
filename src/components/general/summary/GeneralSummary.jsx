@@ -36,7 +36,8 @@ class GeneralSummary extends Component {
             this.setState({SupAdmin: typeRoot, NomAdmin: typeNormal})
         })
         
-        firebase.firestore().collection('Customers').onSnapshot((customers)=>{
+        firebase.firestore().collection('Customers').where("deleted", "==", false)
+        .onSnapshot((customers)=>{
          let datesCustomer = []
          let Loans = []
          customers.forEach(customer=>{

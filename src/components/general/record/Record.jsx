@@ -3,6 +3,7 @@ import './record.scss'
 import arrow from '../../../assets/icons/left-arrow.svg'
 import firebase from 'firebase'
 import {NavLink} from 'react-router-dom' 
+import NotFoundData from './NotFound'
 class Record extends Component {
     constructor(props){
         super(props)
@@ -57,10 +58,10 @@ class Record extends Component {
                     this.state.payments.map((payment, i)=>(
                         <span key={i} 
                         onClick={(e) => this.Detail(e, payment.customer, payment.amount)}
-                        >{ payment.customer }</span>
+                        ><p>{payment.customer}</p><p>${payment.amount}</p></span>
                     ))
                     :
-                    <p>No hay datos para mostrar.</p> }
+                    <NotFoundData/> }
                 </div>
             </div>
         )
