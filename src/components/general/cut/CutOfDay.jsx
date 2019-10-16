@@ -10,13 +10,19 @@ class CutOfDay extends Component {
         }
     }
     componentDidMount = () => {
-        firebase.firestore().collection('LoansByDate')
+        var newDate = new Date()
+        var newDay = newDate.getDate()
+        var newMonth = newDate.getMonth()+1
+        var newYear = newDate.getFullYear()
+        var fecha = newDay+"/"+newMonth+"/"+newYear
+        firebase.firestore().collection('LoansByDate').where("date","==",fecha)
             .onSnapshot((infoLoan)=>{
             let loans = []
             infoLoan.forEach(date=>{
                 let dato = date.data()
                 loans.push(dato)
             })
+            console.log(loans)
             loans.forEach(payment => this.setState({payments: payment.payments, total: payment.total}))
         })
         
