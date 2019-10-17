@@ -127,9 +127,18 @@ class LoansToPay extends Component {
                 })
             }
             this.props.history.push({
-                pathname: '/prestamos/lista/',
+                pathname: '/prestamos/detalle/',
                 state: {
+                    cantidad: this.props.location.state.cantidad,
+                    pago: payed,
+                    fechaInicio: this.props.location.state.fechaInicio,
+                    fechaFin: this.props.location.state.fechaFin,
+                    restante: remaining,
+                    name: this.props.location.state.name,
                     id: this.props.location.state.id,
+                    payments: payments,
+                    loans: loans,
+                    ref: this.props.location.state.ref,
                 }
             })
         })
@@ -141,6 +150,7 @@ class LoansToPay extends Component {
     }
 
     render(){
+        console.log(this.props.location.state)
         const {cantidad, pago, restante} = this.props.location.state
         var text = this.props.location.state.name 
         var arrayName = text.split(" ")

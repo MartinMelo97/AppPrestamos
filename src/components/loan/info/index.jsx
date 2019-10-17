@@ -22,6 +22,7 @@ const Info = (props) =>  {
                                 <div className="btn-list-info" key={i}>
                                         <span>{i+1}</span>
                                         <span>${payment.amount} MXN</span>
+                                        <span>{payment.date}</span>
                                 </div>
                                 ))
                                 : null

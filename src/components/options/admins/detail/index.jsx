@@ -21,13 +21,6 @@ const AdminDetail = (props) =>{
                  }
                 
             </div>
-            <NavLink
-            to={{
-                pathname: '/admins/editar/',
-                state: props.location.state
-            }}
-            >
-            <button className="edit-button">Editar</button></NavLink>
         </div>
     )
 }

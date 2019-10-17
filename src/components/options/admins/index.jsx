@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import { NavLink } from 'react-router-dom'
 import info from '../../../assets/icons/information.svg'
 import plus from '../../../assets/icons/plus.svg'
-import close from './../../../assets/icons/close.svg'
 import firebase from 'firebase'
 export default class AdminList extends Component {
     constructor(props){
@@ -69,24 +68,6 @@ export default class AdminList extends Component {
            state: this.state.datesAccount
         })
     }
-    DeleteAccount = (e, id, uid) => {
-        let {codesAccount} = this.state
-        codesAccount.id = id
-        codesAccount.uid = uid
-        this.setState(codesAccount)
-        console.log(this.state.codesAccount)
-
-        firebase.auth().deleteUser(uid).then(() => {
-            firebase.firestore().collection("admin").doc(id).delete()
-            .then(()=>alert("Producto eliminado correctamente"))            
-            .catch((err)=>{
-                alert("No se puedo eliminar el producto")
-                console.log(err)
-            })
-        }).catch((error)=>{
-            console.log("Recent error gral " + error)
-        })
-    }
 
     render(){
         return(
@@ -101,8 +82,7 @@ export default class AdminList extends Component {
                             <span style = {{
                                 backgroundColor : "#0ac8e5"
                             }}>{account.firstName}</span>
-                                <img src={ info } alt="info" onClick={(e)=>this.DatesAccount(e, account.id, account.email, account.lastName, account.firstName, account.phone, account.root, account.uid )}/>
-                                <img src={close} alt="close" onClick={(e)=>this.DeleteAccount(e, account.id, account.uid)}/>
+                                <img src={ info } alt="info" onClick={(e)=>this.DatesAccount(e, account.id, account.email, account.lastName, account.firstName, account.phone, account.root, account.uid )}/>                                
                         </div>
                     ))
                     :
