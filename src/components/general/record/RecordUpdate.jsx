@@ -70,7 +70,14 @@ export default class RecordUpdate extends Component {
 
     render(){
         const month = ["Mes","Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre","Octubre", "Noviembre", "Diciembre"]
-        const years = ["Año", 2019, 2020, 2021, 2022, 2023, 2024, 2025, 2026, 2027, 2028, 2029, 2030]
+        var date = new Date()
+        var actualYear = date.getFullYear()
+        var year = actualYear - 5
+        let years = ["Año"]
+        for (year; year<=actualYear; year++){
+        years.push(year.toString())
+        }        
+        years.sort((dateOne, dateTwo)=>{return dateTwo - dateOne})
         return(
             <div className="general-record-container">
                 <NavLink to="/general/historial/ayer"><img src={ arrow } alt="anterior" className="arrow-l"/></NavLink>

@@ -23,10 +23,13 @@
 
     .calendar-loans{
 
-        width: 60vw;
+        width: 70vw;
         height: 37vh;
         box-shadow: 0px 5px 10px 1px #0003;
         overflow: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
 
         #calendar-header-loans{
             width: 60vw;
@@ -59,10 +62,14 @@
             }
 
             .this-is-active{
-                background-color: $detail;
-                border-radius: 50%;
-                color: $white;
+                color: $detail;
             }  
+            .this-is-select{
+                color: #52c41a;
+            }
+            .this-not-select{
+                color: #f5222d;
+            }
         }
         #calendar-body-loans-two{
             display: grid;
@@ -84,13 +91,44 @@
             }
 
             .this-is-active{
-                background-color: $detail;
-                border-radius: 50%;
-                color: $white;
+                color: $detail;
+            }
+            .this-is-select{
+                color: #52c41a;
+            }
+            .this-not-select{
+                color: #f5222d;
             }  
         }
     }
     
+}
+.footer-info-calendar{
+    width: 60vw;
+    height: 20vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 5vh;
+    span {
+        border-radius: 10vh;
+        color: $white;
+        font-size: 1.7em;
+        font-weight: 900;
+        width: 50vw;
+        text-align: center;
+        margin-bottom: 1vh;
+        &:nth-child(1){
+            color: $detail; 
+        }
+        &:nth-child(2){
+            color: #52c41a; 
+        }
+        &:nth-child(3){
+            color: #f5222d; 
+        }
+    }
 }
 
 .button-loans-detail{

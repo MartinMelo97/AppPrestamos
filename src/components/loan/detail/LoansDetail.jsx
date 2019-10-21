@@ -4,6 +4,7 @@ import {NavLink} from 'react-router-dom'
 import arrow from '../../../assets/icons/left-arrow.svg'
 import InfoLoan from './../info'
 import LoanComplete from './../info/Information'
+import moment from 'moment'
 class LoansDetail extends Component {
     constructor(props){
         super(props)
@@ -23,7 +24,7 @@ class LoansDetail extends Component {
             startDay : 0,
             endDay: 0,
             contX: 2,
-            datesProps:"",
+            datesProps:this.props.location.state,
             weeksDays : [
                 "D","L","M","X","J","V","S"
             ]
@@ -34,14 +35,13 @@ class LoansDetail extends Component {
     componentDidMount = () =>{
         var Init = this.Dates(this.props.location.state.fechaInicio)
         var End = this.Dates(this.props.location.state.fechaFin) 
-
+        
         var diaInicio = Init[0]
         var mesInicio = Init[1]
         var diaFin = End[0]
         var mesFin = End[1]
         var Year = Init[2]
         var YearEnd = End[2]
-        console.log(this.props.location.state)
         let { day, month, year, days, startDay, ultimateDay, endDay, daystwo, monthend } = this.state
         let months = ["Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre", "Octubre", "Noviembre", "Diciembre"]
         let date = new Date()
@@ -63,16 +63,38 @@ class LoansDetail extends Component {
         ultimateDay= diaFin
         this.setState({important:{range: mesFin - mesInicio}})
         
-        this.setState({ day, month, year, days, startDay, ultimateDay, endDay, daystwo, monthend })
+        
         
 
         let monts = ["Ener", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"]
         
-        let {dateEnd, dateInit, datesProps} = this.state 
-        datesProps = this.props.location.state
+        let {dateEnd, dateInit } = this.state
         dateInit = diaInicio+" "+monts[mesInicio-1]+". "+Year
         dateEnd = diaFin+" "+monts[mesFin-1]+". "+YearEnd 
-        this.setState({ dateEnd, dateInit, datesProps})
+        this.setState({ day, month, year, days, startDay, ultimateDay, endDay, daystwo, monthend, dateEnd, dateInit })
+        this.CountDays()
+    }
+    CountDays = () =>{
+        var dateStart = this.Dates(this.props.location.state.fechaInicio)
+        var dayStart = ('0'+ dateStart[0]).slice(-2)
+        var monthStart = ('0'+ dateStart[1]).slice(-2)
+        var date = dateStart[2] + "-" + monthStart + "-" + dayStart
+        
+        var today = moment()
+        var before = moment(date)
+        var days = today.diff(before, "days")
+
+        var dateEnd = this.Dates(this.props.location.state.fechaFin)
+        var dayEnd = ('0'+ dateEnd[0]).slice(-2)
+        var monthEnd = ('0'+ dateEnd[1]).slice(-2)
+        var dateEnding = dateEnd[2]+"-"+monthEnd+"-"+dayEnd
+        var ending = moment(dateEnding)
+        var range = ending.diff(before, "days")
+
+          let {datesProps} = this.state
+          datesProps.today = parseInt(days)
+          datesProps.limit = parseInt(range)
+          this.setState(datesProps)
     }
 
     Dates = (date) => {
@@ -92,17 +114,60 @@ class LoansDetail extends Component {
         } else {
             limit = ultimateDay
         }
+        var ActualDay
+        var getMonth = new Date().getMonth()+1
+        if(getMonth === this.Dates(this.props.location.state.fechaInicio)[1]){
+        ActualDay = new Date().getDate()
+        } else {
+        ActualDay = days.length
+        }
+        var dateStar=this.Dates(this.props.location.state.fechaInicio)[0] 
+        var rangeDays = []
+        for(dateStar; dateStar<=ActualDay; dateStar++){
+        rangeDays.push(dateStar)
+        }
+        //Select Days Correct 
+        let SelectDays = []
+        this.props.location.state.payments.forEach(item=>{
+            if(this.Dates(item.date)[1]===this.Dates(this.props.location.state.fechaInicio)[1]){
+                SelectDays.push(this.Dates(item.date)[0])
+            }
+        })
+        let Select = [...new Set(SelectDays)]
+
+        //Days not select
+        rangeDays.forEach(date=>{
+        Select.forEach(select=>{
+            if(date === select){
+            var index = rangeDays.indexOf(date)
+            rangeDays.splice(index, 1)
+            }
+        })
+        })
+
         let container = document.getElementById('calendar-body-loans')
         let text 
         let child 
-        for(let i = 0; i < days.length; i++){
+        for(var i=0; i<days.length; i++){
             text = document.createTextNode(days[i])
             child = document.createElement('span')
             child.appendChild(text)
             child.style.gridColumn=startDay
             child.style.gridRow=contX
-            if( days[i] >= this.state.day && days[i] <= limit)
+            if( days[i] >= this.state.day && days[i] <= limit){
                 child.className="this-is-active"
+            }
+            for(var a=0; a<Select.length; a++){
+                if(days[i] == Select[a]){
+                   child.className="this-is-select"
+                }
+            }
+            for(var n=0; n<rangeDays.length; n++){
+                if( days[i] == rangeDays[n]){
+                    child.className="this-not-select"
+                }
+            }
+
             container.appendChild(child)
 
             startDay++
@@ -120,6 +185,45 @@ class LoansDetail extends Component {
     }
     mapingo = () =>{
         let { endDay, contX, daystwo } = this.state
+        var getMonth = new Date().getMonth()+1
+        var ActualDay
+        if(getMonth === this.Dates(this.props.location.state.fechaFin)[1]){
+        ActualDay = new Date().getDate()
+        }
+        else {
+            if(getMonth < this.Dates(this.props.location.state.fechaFin)[1]){
+                ActualDay = 0
+            }
+            else{
+                ActualDay = this.state.daystwo.length
+            }
+        }
+
+        var dateStar= 1
+        var rangeDays = []
+        for(dateStar; dateStar<=ActualDay; dateStar++){
+        rangeDays.push(dateStar)
+        }
+
+        //Select Days Correct 
+        let SelectDays = []
+        this.props.location.state.payments.forEach(item=> {
+        if(this.Dates(item.date)[1]===this.Dates(this.props.location.state.fechaFin)[1]){
+            SelectDays.push(this.Dates(item.date)[0])
+        }
+        
+        })
+        const Select = [...new Set(SelectDays)]
+
+        //Days not select
+        rangeDays.forEach(date=>{
+        Select.forEach(select=>{
+            if(date === select){
+            var index = rangeDays.indexOf(date)
+            rangeDays.splice(index, 1)
+            }
+        })
+        })
 
         let container = document.getElementById('calendar-body-loans-two')
         let text 
@@ -130,8 +234,19 @@ class LoansDetail extends Component {
             child.appendChild(text)
             child.style.gridColumn=endDay
             child.style.gridRow=contX
-            if( daystwo[i] >= 1 && daystwo[i] <= this.state.ultimateDay)
+            if( daystwo[i] >= 1 && daystwo[i] <= this.state.ultimateDay){
                 child.className="this-is-active"
+            }
+                for(var a=0; a<Select.length; a++){
+                    if(daystwo[i] == Select[a]){
+                       child.className="this-is-select"
+                    }
+                }
+                for(var n=0; n<rangeDays.length; n++){
+                    if( daystwo[i] == rangeDays[n]){
+                        child.className="this-not-select"
+                    }
+                }    
             container.appendChild(child)
 
             endDay++
@@ -147,6 +262,7 @@ class LoansDetail extends Component {
         if(contX < 7 && calendar != null)
             calendar.style.gridTemplateRows= ('repeat(6, calc(100% / 6))')
     }
+
 
     render(){
         const {cantidad, pago, restante, payments} = this.props.location.state
@@ -198,6 +314,11 @@ class LoansDetail extends Component {
                         )) : null}
                        { this.state.important.range > 0 ?  this.mapingo() : null}
                     </div>
+                </div>
+                <div className="footer-info-calendar">
+                        <span>Días del préstamo</span>
+                        <span>Días con pago</span>
+                        <span>Días sin pago</span>
                 </div>
                 <p className="loans-detail-p">{this.state.dateEnd}</p>
                 </div> : <LoanComplete 

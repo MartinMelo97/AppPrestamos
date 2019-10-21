@@ -31,7 +31,7 @@
         display: flex;
         align-items: center;
         justify-content: space-evenly;
-        width: 85%;
+        width: 90%;
         background-color: $white;
         //border: 0.5px solid #aaa;
         border-top-left-radius: 5% 40%;
@@ -54,6 +54,7 @@
 }
 .Progress{
     margin-right: 11px;
+    margin-left: 1vw;
     float: right;
     width: 30%;
     margin-top: 1vh;
