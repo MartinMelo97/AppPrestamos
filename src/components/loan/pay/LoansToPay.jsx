@@ -90,7 +90,7 @@ class LoansToPay extends Component {
         const loans = this.props.location.state.loans
         let loanToSelect = loans.filter(loan => {
             return loan.loanRef === this.props.location.state.ref;
-        }) 
+        })
 
         var addItemsLoans = loanToSelect[0]
         addItemsLoans.payments = payments
