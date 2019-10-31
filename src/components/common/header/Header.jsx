@@ -31,10 +31,9 @@ class Header extends Component {
 
         firebase.auth().onAuthStateChanged((user) => {
             if (user) {
-              console.log("El UID "+user.email)
-              firebase.firestore().collection('admin').where("correo", "==", user.email).onSnapshot((users)=>{
+              firebase.firestore().collection('Admins').where("email", "==", user.email).onSnapshot((users)=>{
                 users.forEach(user=>{
-                    let dato = user.data().username
+                    let dato = user.data().firstName
                     this.setState({user: dato})
                 })
               })

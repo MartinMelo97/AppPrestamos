@@ -228,7 +228,8 @@
             text-transform: uppercase;
             padding: 5px 25px;
             color: $white;
-            margin-top: 40px;
+            margin-top: 3vh;
+            margin-bottom: 3vh;
             font-size: 1.7em;
             border: none;
             letter-spacing: 2px;
@@ -241,4 +242,11 @@
 }
 .input-cant{
     padding-left: 10px;
+}
+.p-info-cantidad{
+    margin-bottom: 0;
+    margin-top: 2vh;
+    font-size: 1.5em;
+    color: $principal;
+    font-weight: 900;
 }

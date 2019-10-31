@@ -265,14 +265,16 @@ class LoansDetail extends Component {
 
 
     render(){
-        const {cantidad, pago, restante, payments} = this.props.location.state
+        const {cantidad, pago, restante, payments, prestamo, pagoPorDia, utilidad} = this.props.location.state
         var percentage = (pago*100)/cantidad
+        console.log(this.props.location.state)
         return(
             <div className="loans-div-container">
                 <img src={arrow} onClick={()=> window.history.back()} className="img-arrow-back" alt="arrow"/>
                 <p className="loans-detail-title">Detalles</p>
                 {percentage < 100 ? 
                 <div className="loans-div-container">
+                <p className="p-pagoHoy">Pagar hoy ${this.props.location.state.pagoPorDia} MXN</p>   
                 <NavLink to={{
                     pathname: '/prestamos/a-pagar/',
                     state: this.state.datesProps
@@ -282,6 +284,9 @@ class LoansDetail extends Component {
                 pago={pago}
                 restante={restante}
                 payments={payments}
+                utilidad={utilidad}
+                prestamo={prestamo}
+                pagoPorDia={pagoPorDia}
                 />
                 <p className="loans-detail-p">{this.state.dateInit}</p>
                 <div className="calendar-loans">
@@ -326,6 +331,8 @@ class LoansDetail extends Component {
                 dateInit={this.state.dateInit}
                 cantidad={cantidad}
                 pago={pago}
+                utilidad={utilidad}
+                prestamo={prestamo}
                 restante={restante}/> }
             </div>
         )

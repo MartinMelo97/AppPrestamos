@@ -2,7 +2,7 @@ import React from 'react'
 import { Progress } from 'antd'
 import './index.scss'
 const Info = (props) =>  {
-        const {cantidad, pago, restante, payments} = props
+        const {cantidad, pago, restante, payments, prestamo, utilidad} = props
         var percentage = (pago*100)/cantidad
         var valuePersentage
         if (percentage % 1 === 0) {
@@ -28,9 +28,11 @@ const Info = (props) =>  {
                                 : null
                                 }
                         </div> 
-                        <p className="info-progress-p">El préstamo fue: <span className="s-info">${cantidad}</span></p>
+                        <p className="info-progress-p">El préstamo fue: <span className="s-info">${prestamo}</span></p>
+                        <p className="info-progress-p">Cantidad total: <span className="s-info">${cantidad}</span></p>        
                         <p className="info-progress-p">Cantidad pagada: <span className="s-info">${pago}</span></p>
                         <p className="info-progress-p">Cantidad restante: <span className="s-info">${restante}</span></p>
+                        <p className="info-progress-p">Ganancia: <span className="s-info">${utilidad}</span></p>
                     </div>
                        
                 </div>

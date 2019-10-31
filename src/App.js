@@ -1,8 +1,8 @@
 import React from 'react'
-import { Switch, Route } from 'react-router-dom'
+import { Switch, Route} from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import { AuthProvider } from './auth'
-//import PrivateRoute from './routes/PrivateRoute'
+import PrivateRoute from './routes/PrivateRoute'
 import PublicRoute from './routes/PublicRoute'
 
 import 'react-toastify/dist/ReactToastify.css'
