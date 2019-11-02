@@ -17,7 +17,7 @@ class LoansToPay extends Component {
             pay: {
                 date: "",
                 number: 0,
-                amount: "",
+                amount: this.props.location.state.pagoPorDia,
                 created: firebase.firestore.Timestamp.fromDate(new Date()),
                 updated: firebase.firestore.Timestamp.fromDate(new Date()),
             }, 
@@ -44,6 +44,7 @@ class LoansToPay extends Component {
         var newFecha = newDay+"/"+newMonth+"/"+newYear
         let {pay} = this.state
         pay.date = newFecha
+        document.getElementById('input-pay').disabled = true
         
         firebase.firestore().collection('LoansByDate').where("date", "==", newFecha)
         .onSnapshot(infoLoan=>{
@@ -72,16 +73,8 @@ class LoansToPay extends Component {
         this.setState(pay)
         
     }
-    payChange = (e) => {
-        let {pay} = this.state
-        pay.amount = parseInt(e.target.value)
-        this.setState(pay)
-    }
     loanPay = () => {
-        if (this.state.pay.amount === ""){
-            toast.error("No has agregado un pago!")
-        } else {
-            var payed = this.state.pay.amount + this.props.location.state.pago
+        var payed = this.state.pay.amount + this.props.location.state.pago
         var remaining = this.props.location.state.cantidad - payed
 
         var payments = this.state.payment
@@ -126,32 +119,22 @@ class LoansToPay extends Component {
                     payments: Acumpay
                 })
             }
-            this.props.history.push({
-                pathname: '/prestamos/detalle/',
-                state: {
-                    cantidad: this.props.location.state.cantidad,
-                    pago: payed,
-                    fechaInicio: this.props.location.state.fechaInicio,
-                    fechaFin: this.props.location.state.fechaFin,
-                    restante: remaining,
-                    name: this.props.location.state.name,
-                    id: this.props.location.state.id,
-                    payments: payments,
-                    loans: loans,
-                    ref: this.props.location.state.ref,
-                }
+            this.props.history.push({    
+            pathname: '/prestamos/lista/',
+            state: {
+                id: this.props.location.state.id,
+            }
             })
         })
         .catch((err)=>{
             toast.error("No se agregó el pago")
             console.log(err)
         })
-        }
     }
 
     render(){
         console.log(this.props.location.state)
-        const {cantidad, pago, restante} = this.props.location.state
+        const {cantidad, pago, restante, prestamo} = this.props.location.state
         var text = this.props.location.state.name 
         var arrayName = text.split(" ")
         var Name = arrayName[0]+" "+arrayName[1]
@@ -166,14 +149,15 @@ class LoansToPay extends Component {
                 </p>
                 <div className="buttons-container">
                     <div className="info-loan-summary-p">
-                        <p>El préstamo fue: <span>${cantidad}</span></p>
+                        <p>El préstamo fue: <span>${prestamo}</span></p>
+                        <p>Cantidad total: <span>${cantidad}</span></p>
                         <p>Cantidad pagada: <span>${pago}</span></p>
                         <p>Cantidad restante: <span>${restante}</span></p>
                     </div>
                     <button 
                     className="button-style-two active">Agregar pago</button>
                     <div className="ghost-container active">
-                        <input type="number" placeholder="$" onChange={(e) => this.payChange(e)} value={this.state.pay.amount}/>
+                        <input type="number" placeholder="$" id="input-pay" value={this.state.pay.amount}/>
                         <button className="button-add" onClick={this.loanPay}>Registrar</button>
                     </div>
                 </div>

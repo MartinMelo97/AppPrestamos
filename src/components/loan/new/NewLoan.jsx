@@ -15,6 +15,9 @@ class NewLoan extends Component {
             customerNames:[],
             Loan: {
                 total: 0,
+                utility: 0,
+                amountLoan: 0,
+                payForDay: 0,
                 loanRef: "",
                 dateStart: "",
                 dateEnd: "",
@@ -29,7 +32,7 @@ class NewLoan extends Component {
             ArrayLoans: [],
             date: null,
             limit: null,
-            days: [],
+            days: [15, 18, 20, 24, 30],
             active: false,
             select: false,
         }
@@ -114,6 +117,22 @@ class NewLoan extends Component {
         select.style.color = "#0ac8e5"
 
         space.innerText = select.innerText
+
+        if(select.innerText == 18){
+            let { Loan } = this.state
+            Loan.amountLoan = 1500
+            Loan.payForDay = (1500*1.2)/select.innerText
+            this.setState(Loan)
+            document.getElementById('input-cantidad').disabled = true
+            
+        } else {
+            let { Loan } = this.state
+            Loan.amountLoan = 0
+            Loan.payForDay = (Loan.amountLoan*1.2)/select.innerText
+            this.setState(Loan)
+            document.getElementById('input-cantidad').disabled = false
+        }
+        
         this.setState({plazo: select.innerText})
         
 
@@ -121,23 +140,6 @@ class NewLoan extends Component {
 
     componentDidMount = () =>{
         this.date()
-        let { days } = this.state
-        for(let i = 1; i < 51; i++){
-            days.push(i)
-        }
-        this.setState({ days })
-
-        firebase.firestore().collection('loan')
-            .onSnapshot((dates)=>{
-            let num = []
-            dates.forEach(date=>{
-                let dato = date.data()
-                num.push(dato)
-            })
-            this.setState({loansLength: num.length+1})
-            
-        })
-
         firebase.firestore().collection('Customers').where("deleted", "==", false)
             .onSnapshot((customers)=>{
             let names = []
@@ -157,17 +159,18 @@ class NewLoan extends Component {
             })
 
             this.setState({customerNames: names, loansLength: NumLoans+1})
-        })
+        }) 
     }
 
     changeCant = (e) => {
         let { Loan } = this.state
-        Loan.total = parseInt(e.target.value)
+        Loan.amountLoan = parseInt(e.target.value)
+        Loan.payForDay = (Loan.amountLoan*1.2)/this.state.plazo
         this.setState(Loan)
     }
 
     Register = () => {
-        if(this.state.Loan.total === 0){
+        if(this.state.Loan.amountLoan === 0){
             toast.error("Proporcione la cantidad del préstamo.")
         } else {
         var newDate = new Date()
@@ -177,16 +180,19 @@ class NewLoan extends Component {
         var newMonth = newDate.getMonth()+1
         var newYear = newDate.getFullYear()
         var newFecha = newDay+"/"+newMonth+"/"+newYear
-        
+        var more  = this.state.Loan.amountLoan * 0.2
+        var AsingTotal = this.state.Loan.amountLoan * 1.2
         let { Loan } = this.state
         Loan.dateEnd = newFecha
+        Loan.utility = more
+        Loan.total = AsingTotal
         this.setState(Loan)
         console.log(this.state.Loan)
 
         var id = this.state.dateId
         var loans = this.state.ArrayLoans
         loans.push(this.state.Loan)
-        console.log(loans)       
+        console.log(loans)
         firebase.firestore().collection('Customers').doc(id).update({loans})
         .then(()=>{
             toast.info("Préstamo registrado!")
@@ -248,8 +254,9 @@ class NewLoan extends Component {
                     <input type="number" 
                     placeholder="$"
                     className="input-cant"
+                    id="input-cantidad"
                     onChange={(e)=>this.changeCant(e)} 
-                    value={this.state.Loan.total || ""}/>
+                    value={this.state.Loan.amountLoan || ""}/>
                     <span className="date-container">{ this.state.date != null ?
                     this.state.date
                     :
@@ -279,6 +286,7 @@ class NewLoan extends Component {
                         </div>
                         <span>Días</span>
                     </div>
+                    <p className="p-info-cantidad">Cantidad a pagar por día: ${this.state.Loan.payForDay > 0 ? this.state.Loan.payForDay : 0}</p>
                     <button className="add-loan-button" onClick={this.Register}>Agregar</button>
                 </div>
             </div>

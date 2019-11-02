@@ -18,6 +18,9 @@ class LoansList extends Component {
                 payments: "",
                 loans: "",
                 ref: "",
+                utilidad: "",
+                pagoPorDia: "",
+                prestamo: ""
             },
             name: "",
             loans: []
@@ -36,7 +39,7 @@ class LoansList extends Component {
         })
     } 
 
-    goInfo = (e, fechaFin, fechaInicio, cantidad, ref, pago, rest, payments ) => {
+    goInfo = (e, fechaFin, fechaInicio, cantidad, ref, pago, rest, payments, prestamo, utilidad, pagodia ) => {
         const {loansDates} = this.state
         loansDates.restante = rest
         loansDates.pago = pago
@@ -45,6 +48,9 @@ class LoansList extends Component {
         loansDates.cantidad = cantidad
         loansDates.ref = ref
         loansDates.payments = payments
+        loansDates.pagoPorDia = pagodia
+        loansDates.utilidad = utilidad
+        loansDates.prestamo = prestamo
         loansDates.loans = this.state.loans
         loansDates.name = this.state.name
         this.setState(loansDates)
@@ -65,7 +71,7 @@ class LoansList extends Component {
                 <span>Préstamo</span>
            </div>
            { this.state.loans.length > 0 ? this.state.loans.map((loan, i)=>(
-               <div className="btn-list" key={i} onClick={(e) => this.goInfo(e, loan.dateEnd, loan.dateStart, loan.total, loan.loanRef, loan.payed, loan.remaining, loan.payments)}>
+               <div className="btn-list" key={i} onClick={(e) => this.goInfo(e, loan.dateEnd, loan.dateStart, loan.total, loan.loanRef, loan.payed, loan.remaining, loan.payments, loan.amountLoan, loan.utility, loan.payForDay)}>
                     <span>{i+1}</span>
                     <span>${loan.total}</span>
                     <span>{loan.dateStart}</span>
