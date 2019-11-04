@@ -1,7 +1,7 @@
 import React, { Component } from 'react'
-import { NavLink } from 'react-router-dom'
+//import { NavLink } from 'react-router-dom'
 import info from '../../../assets/icons/information.svg'
-import plus from '../../../assets/icons/plus.svg'
+//import plus from '../../../assets/icons/plus.svg'
 import firebase from 'firebase'
 export default class AdminList extends Component {
     constructor(props){
@@ -72,9 +72,7 @@ export default class AdminList extends Component {
     render(){
         return(
             <div className="customers-loans-container">
-                <p className="customers-loans-title-admin">Administradores
-                <NavLink to={{ pathname: '/registro', state: this.state.user}}><img src={ plus } alt="agregar"/></NavLink>
-                </p>
+                <p className="customers-loans-title-admin">Administradores</p>
                 <div className="info-customers-container">
                     { this.state.accounts ?
                     this.state.accounts.map((account, i)=>(
