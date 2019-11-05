@@ -86,6 +86,7 @@ class GeneralSummary extends Component {
                         <p>{this.state.NomAdmin} Adim. Normal</p>
                     </div>
                 </div>
+                <button className="btn-summary" onClick={()=>{this.props.history.push({pathname: '/general/reporte/mes/'})}}>Generar Reportes</button>
             </div>
         )
     }

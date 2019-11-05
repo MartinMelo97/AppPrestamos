@@ -71,7 +71,7 @@ class EditCustomer extends Component {
             updated: firebase.firestore.Timestamp.fromDate(new Date())
         })
         .then(()=>{
-            toast.info("Datos actualizados")
+            toast.info("Datos actualizados!")
             let {datesCustomers} = this.state
             datesCustomers.firstName = ""
             datesCustomers.lastName = ""
@@ -82,9 +82,11 @@ class EditCustomer extends Component {
             this.props.history.push('/clientes/prestamos/')
         })
         .catch((err)=>{
-            toast.error("Datos no actualizados")
-            console.log(err)
+            toast.error("Datos no actualizados.")
         })
+        var container = document.getElementById('btn-edit-client')
+        container.disabled = true
+        container.className = "btn-not-active"
     }
 
     render(){
@@ -106,7 +108,7 @@ class EditCustomer extends Component {
                         <input type="text" onChange={(e)=>this.changePhone(e)} value={this.state.datesCustomers.phoneNumber}/>
                     </div>
                 </div>
-                <button className="add-button" onClick={this.Edit}>Editar</button>
+                <button className="add-button" id="btn-edit-client" onClick={this.Edit}>Editar</button>
             </div>
         )
     }

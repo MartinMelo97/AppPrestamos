@@ -1,0 +1,22 @@
+.visit-container{
+    font-size: 1.8em;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    width: 90%;
+    background-color: #ffffff;
+    border-top-left-radius: 5% 40%;
+    border-bottom-left-radius: 5% 40%;
+    border-top-right-radius: 5% 40%;
+    border-bottom-right-radius: 5% 40%;
+    box-shadow: 0 3px 6px 0 #ccc;
+    padding: 5px;
+    font-weight: 600;
+    margin-bottom: 2vh;
+}
+.circle-item{
+    border-radius: 50%;
+    width: 6vw;
+    height: 6vw;
+    background-color: red;
+}

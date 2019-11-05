@@ -11,7 +11,7 @@ const PublicRoute = ({ component: RouteComponent, ...rest }) => {
        !currentUser ? (
           <RouteComponent {...routeProps} />
         ) : (
-          <Redirect to={"/clientes/prestamos/"} />
+          <Redirect to={"/general/prestamos/"} />
         )
       }
     />

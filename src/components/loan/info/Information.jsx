@@ -9,11 +9,10 @@ const InfoLoan = (props) =>{
                     <Progress type="circle" percent={100} style={{display: 'flex', justifyContent: 'center'}}/>
                     <div className="info-p-container">
                         <span className="s-info-fecha">{props.dateInit} - {props.dateEnd}</span>
-                        <p className="info-progress-p">El préstamo fue: <span className="s-info">${props.prestamo}</span></p>
-                        <p className="info-progress-p">Cantidad total: <span className="s-info">${props.cantidad}</span></p>        
-                        <p className="info-progress-p">Cantidad pagada: <span className="s-info">${props.pago}</span></p>
-                        <p className="info-progress-p">Cantidad restante: <span className="s-info">${props.restante}</span></p>
-                        <p className="info-progress-p">Ganancia: <span className="s-info">${props.utilidad}</span></p>
+                        <p className="info-progress-p">Duración del préstamo: <span className="s-info">{props.dias} días</span></p> 
+                        <p className="info-progress-p">Monto prestado: <span className="s-info">${props.prestamo}</span></p>
+                        <p className="info-progress-p">Ganancia (20%): <span className="s-info">${props.utilidad}</span></p>
+                        <p className="info-progress-p">Total pagado: <span className="s-info">${props.cantidad}</span></p>
                     </div>
                 </div>
             </div>

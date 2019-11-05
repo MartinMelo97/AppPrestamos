@@ -134,7 +134,7 @@ class LoansToPay extends Component {
 
     render(){
         console.log(this.props.location.state)
-        const {cantidad, pago, restante, prestamo} = this.props.location.state
+        const {cantidad, pago, restante, prestamo, utilidad} = this.props.location.state
         var text = this.props.location.state.name 
         var arrayName = text.split(" ")
         var Name = arrayName[0]+" "+arrayName[1]
@@ -148,17 +148,18 @@ class LoansToPay extends Component {
                     </span>
                 </p>
                 <div className="buttons-container">
-                    <div className="info-loan-summary-p">
-                        <p>El préstamo fue: <span>${prestamo}</span></p>
-                        <p>Cantidad total: <span>${cantidad}</span></p>
-                        <p>Cantidad pagada: <span>${pago}</span></p>
-                        <p>Cantidad restante: <span>${restante}</span></p>
-                    </div>
                     <button 
                     className="button-style-two active">Agregar pago</button>
                     <div className="ghost-container active">
                         <input type="number" placeholder="$" id="input-pay" value={this.state.pay.amount}/>
                         <button className="button-add" onClick={this.loanPay}>Registrar</button>
+                    </div>
+                    <div className="info-loan-summary-p"> 
+                        <p>Monto prestado: <span>${prestamo}</span></p>
+                        <p>Ganancia (20%): <span>${utilidad}</span></p>
+                        <p>Total a pagar: <span>${cantidad}</span></p>        
+                        <p>Cantidad pagada: <span>${pago}</span></p>
+                        <p>Cantidad restante: <span>${restante}</span></p>
                     </div>
                 </div>
             </div>

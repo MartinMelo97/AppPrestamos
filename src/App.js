@@ -38,6 +38,9 @@ import ErrorAccount from './components/common/Error'
 import RecordY from './components/general/record/RecordY'
 import RecordUpdate from './components/general/record/RecordUpdate'
 
+import ReportWeek from './components/general/reports/reportWeek'
+import ReportMonth from './components/general/reports/reportMonth'
+import Visit from './components/general/visits/listVisit'
 const App = () => {
   return (
     <AuthProvider>
@@ -66,6 +69,9 @@ const App = () => {
         <PrivateRoute exact path="/general/historial/" component={ Record } />
         <PrivateRoute exact path="/general/resumen/" component={ GeneralSummary } />
         <PrivateRoute exact path="/general/prestamos/" component={ Loans } />
+        <PrivateRoute exact path="/general/reporte/mes/" component={ ReportMonth } />
+        <PrivateRoute exact path="/general/reporte/semanas/" component={ ReportWeek } />
+        <PrivateRoute exact path="/general/visitas/" component={ Visit } />
 
         <PrivateRoute exact path="/prestamos/detalle/" component={ LoansDetail } />
         <PrivateRoute exact path="/prestamos/lista/" component={ LoansList } />

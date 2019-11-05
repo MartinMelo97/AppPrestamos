@@ -48,7 +48,6 @@ class NewCustomer extends Component {
     }
 
     Register = () => {
-        console.log(this.state.Customers)
         firebase.firestore().collection('Customers').add(this.state.Customers)
         .then(()=>{
             toast.info("Datos del cliente registrados!")
@@ -63,8 +62,10 @@ class NewCustomer extends Component {
         })
         .catch((err)=>{
             toast.error("Datos del cliente no registrados")
-            console.log(err)
         })
+        var container = document.getElementById('btn-add-client')
+        container.disabled = true
+        container.className = "btn-not-active"
     }
     render(){
         return(
@@ -85,7 +86,7 @@ class NewCustomer extends Component {
                         <input type="text" onChange={(e)=>this.changePhone(e)} value={this.state.Customers.phoneNumber}/>
                     </div>
                 </div>
-                <button className="add-button" onClick={this.Register}>Agregar</button>
+                <button className="add-button" id="btn-add-client" onClick={this.Register}>Agregar</button>
             </div>
         )
     }
