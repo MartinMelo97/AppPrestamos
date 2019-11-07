@@ -9,7 +9,7 @@ const HamburgerMenu = (props) =>{
             <div className="side-bar-close" onClick={props.sidebar}><img src={close} alt="close"/></div>
                 <div className="day">
                     <p>{props.day}</p>
-                    <img className="Link-option-img" src={sun} alt="sol"/>
+                    <Link onClick={props.sidebar} to="/dashboard/"><img className="Link-option-img" src={sun} alt="sol"/></Link>
                     <p>{props.user}</p>
                 </div>
                 <div className="options-side-bar">

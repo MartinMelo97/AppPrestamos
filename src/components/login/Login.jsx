@@ -14,7 +14,7 @@ const Login = ({ history }) => {
             await firebase
               .auth()
               .signInWithEmailAndPassword(email.value, password.value);
-            history.push("/general/prestamos/");
+            history.push("/dashboard/");
           } catch (error) {
             toast.error("Ups! No es posible logearse.")
           }

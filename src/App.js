@@ -71,7 +71,7 @@ const App = () => {
         <PrivateRoute exact path="/general/prestamos/" component={ Loans } />
         <PrivateRoute exact path="/general/reporte/mes/" component={ ReportMonth } />
         <PrivateRoute exact path="/general/reporte/semanas/" component={ ReportWeek } />
-        <PrivateRoute exact path="/general/visitas/" component={ Visit } />
+        <PrivateRoute exact path="/dashboard/" component={ Visit } />
 
         <PrivateRoute exact path="/prestamos/detalle/" component={ LoansDetail } />
         <PrivateRoute exact path="/prestamos/lista/" component={ LoansList } />

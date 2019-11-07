@@ -252,18 +252,5 @@
 }
 
 .btn-not-active{
-    text-transform: uppercase;
-    color: $white;
-    font-weight: 600;
-    background-color: $notactive;
-    border: none;
-    border-radius: 10px;
-    font-size: 1.6em;
-    font-family: 'Barlow Condensed', sans-serif;
-    padding: 5px 0;
-    letter-spacing: 1px;
-    width: 40vw;
-    
-    @media screen and (max-width: 600px) and (max-height: 700px){font-size: 1.3em;}
-    @media screen and (max-width: 600px) and (max-height: 500px){font-size: 1.1em;}
+    display: none;
 }

@@ -30,7 +30,7 @@ class LoansToPay extends Component {
             SummaryLoan: {
                 amount: 0,
                 customer: this.props.location.state.name,
-                customerRef: `/Customers/${this.props.location.state.id}`,
+                NumLoan: this.props.location.state.payments.length + 1,
                 created: firebase.firestore.Timestamp.fromDate(new Date()),
                 updated: firebase.firestore.Timestamp.fromDate(new Date()),
             }  
@@ -99,7 +99,7 @@ class LoansToPay extends Component {
         var Acumpay = this.state.infoByLoan.pays
         Acumpay.push(this.state.SummaryLoan)
         firebase.firestore().collection('Customers').doc(this.props.location.state.id)
-        .update({loans})
+        .update({loans, visited: null})
         .then(()=>{
             toast.info("Se agregó el pago")
             let {pay} = this.state

@@ -33,10 +33,11 @@ class CutOfDay extends Component {
         })
         
     }
-    Detail = (e, Cliente, pago ) => {
+    Detail = (e, Cliente, pago, num ) => {
         let {datesLoan} = this.state
         datesLoan.Nombre = Cliente
         datesLoan.pago = pago
+        datesLoan.num = num
         datesLoan.fecha = this.state.date 
         this.setState(datesLoan)
         this.props.history.push({
@@ -52,7 +53,7 @@ class CutOfDay extends Component {
                     <div className="list-loans-container">
                         {this.state.payments.length > 0 ?
                         this.state.payments.map((payment, i)=>(
-                            <div className="customer-value-container" key={i} onClick={(e) => this.Detail(e, payment.customer, payment.amount)}> 
+                            <div className="customer-value-container" key={i} onClick={(e) => this.Detail(e, payment.customer, payment.amount, payment.NumLoan)}> 
                                 <span className="customer-name">{payment.customer}</span>
                                 <span className="customer-value">{ `$${payment.amount}` }</span>
                             </div>

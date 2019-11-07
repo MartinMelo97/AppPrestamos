@@ -1,3 +1,4 @@
+@import './../../../variables.scss';
 .visit-container{
     font-size: 1.8em;
     display: flex;
@@ -14,9 +15,41 @@
     font-weight: 600;
     margin-bottom: 2vh;
 }
+.visit-container-gral{
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    img {
+        width: 15vw;
+        height: 7vw;
+    }
+}
 .circle-item{
     border-radius: 50%;
     width: 6vw;
     height: 6vw;
-    background-color: red;
+    background-color: $detail;
+}
+.visit{
+    width: 85vw;
+}
+.info-circle{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    p{
+        margin-bottom: 0;
+        font-size: 1.2em;
+    }
+}
+.footer-info{
+    width: 100vw;
+    height: 10vh;
+    position: fixed;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: space-evenly;
+    border-top: 1px solid #ccc;
 }

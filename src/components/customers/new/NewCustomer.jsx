@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import './new_customer.scss'
 import firebase from 'firebase'
 import { toast } from 'react-toastify'
+import Loader from './../../common/loader/loader'
 import arrow from './../../../assets/icons/left-arrow.svg'
 
 class NewCustomer extends Component {
@@ -17,7 +18,8 @@ class NewCustomer extends Component {
                 deleted: false,
                 created: firebase.firestore.Timestamp.fromDate(new Date()),
                 updated: firebase.firestore.Timestamp.fromDate(new Date()),
-            }
+            },
+            loader: false
         }
     }
     
@@ -66,6 +68,7 @@ class NewCustomer extends Component {
         var container = document.getElementById('btn-add-client')
         container.disabled = true
         container.className = "btn-not-active"
+        this.setState({loader: true})
     }
     render(){
         return(
@@ -87,6 +90,7 @@ class NewCustomer extends Component {
                     </div>
                 </div>
                 <button className="add-button" id="btn-add-client" onClick={this.Register}>Agregar</button>
+                {this.state.loader === true ? <Loader/> : null}
             </div>
         )
     }

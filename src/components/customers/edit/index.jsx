@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import './index.scss'
 import firebase from 'firebase'
 import { toast } from 'react-toastify'
+import Loader from './../../common/loader/loader'
 import arrow from './../../../assets/icons/left-arrow.svg'
 
 class EditCustomer extends Component {
@@ -16,6 +17,7 @@ class EditCustomer extends Component {
                 email: "",
                 phoneNumber: ""
             },
+            loader: false
         }
     }
     componentDidMount = () => {
@@ -87,6 +89,7 @@ class EditCustomer extends Component {
         var container = document.getElementById('btn-edit-client')
         container.disabled = true
         container.className = "btn-not-active"
+        this.setState({loader: true})
     }
 
     render(){
@@ -109,6 +112,7 @@ class EditCustomer extends Component {
                     </div>
                 </div>
                 <button className="add-button" id="btn-edit-client" onClick={this.Edit}>Editar</button>
+                {this.state.loader === true ? <Loader/> : null}
             </div>
         )
     }
