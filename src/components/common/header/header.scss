@@ -67,7 +67,7 @@
 .side-bar{
     grid-column: 1/auto;
     grid-row: 1/auto;
-    height: 100vh;
+    min-height: 100vh;
     width: 100%;
     background-color: $principal;
     box-shadow: 10px 0 50px 0 #00000099;
@@ -76,6 +76,7 @@
     justify-content: flex-start;
     align-items: center;
     z-index: 10000;
+    overflow-y: auto;
     .day{
         width: 70%;
         margin-bottom: 15%;
