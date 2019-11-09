@@ -24,11 +24,15 @@ export default class Visits extends Component {
             let customer = []
             dates.forEach(date=>{
                 let dato = date.data()
-                dato.id = date.id
-                customer.push(dato)
+                if(dato.loans) {
+                    dato.id = date.id
+                    customer.push(dato)
+                }
             })
+            console.log(customer)
             var select
             customer.forEach(dataCustomer=>{
+                console.log("dataCustomer", dataCustomer)
                 var loans = dataCustomer.loans
                 loans.forEach(loan =>{
                     var payments = loan.payments
