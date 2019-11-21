@@ -64,7 +64,12 @@ export default class RecordUpdate extends Component {
                 let dato = date.data()
                 loans.push(dato)
             })
-            loans.forEach(payment => this.setState({payments: payment.payments, date: payment.date}))
+            if(loans.length > 0){
+                loans.forEach(payment => this.setState({payments: payment.payments, date: payment.date}))
+            } else {
+                this.setState({payments: []})
+            }
+            
             this.setState({acction: true})
         })
     }

@@ -1,101 +1,27 @@
 import React, { Component } from 'react'
 import './index.scss'
-import firebase from 'firebase' 
-import {toast} from 'react-toastify'
+import firebase from 'firebase'
 import Circle from './status'
-import Refresh from './../../../assets/icons/refresh.svg'
-import Go from './../../../assets/icons/paper-plane.svg'
-import arrow from './../../../assets/icons/chevron-upwards-arrow.svg'
+//import {toast} from 'react-toastify'
 export default class Visits extends Component {
     constructor(props){
         super(props)
         this.state = {
             customers:[],
-            customersNotLoan: [],
-            num: 0,
-            position: null,
-            Gral: [],
+            Gral: [], 
             datesLoan: {
                 id: ""
             },
-            key: "",
+            newArray: [],
+            num: 0,
+            position: null,
+            numM: 1,
+            random: 5,
+            List: []
         }
     }
-
-    componentDidMount = () =>{
-        var date = new Date().getDate()+"/"+(new Date().getMonth()+1)+"/"+new Date().getFullYear()
-        firebase.firestore().collection('Visits')
-            .onSnapshot((dates)=>{
-            let visits = []
-            dates.forEach(date=>{
-                let dato = date.data()
-                dato.id = date.id
-                visits.push(dato)
-            })
-            var list
-            var id
-            visits.forEach(item=>{
-                list = item.ListVisit
-                id = item.id
-            })
-            console.log(id)
-            this.setState({key: id})
-            var CustomersWithLoan = []
-            var CustomersNotLoan = []
-            list.forEach(listItem=>{
-                var ref = listItem.ref
-                ref.get().then(dataCustomer => {
-                    var data = dataCustomer.data()
-                    var loans = data.loans
-                    if(loans){
-                        loans.forEach(loan =>{
-                            var payments = loan.payments
-                            payments.forEach(pay=>{
-                                if(parseInt(listItem.visited) !== 0){
-                                    if(date === pay.date){
-                                        listItem.visited = true
-                                    }
-                                    else{
-                                        listItem.visited = false
-                                    }
-                                }
-                            })
-                        })
-                        CustomersWithLoan.push(listItem)
-                    } else{
-                        CustomersNotLoan.push(listItem)
-                    }
-                    this.setState({customers: CustomersWithLoan, customersNotLoan: CustomersNotLoan})
-                })
-            })
-        })
-    }
-
-    Detail = (e,id,) => {
-        let {datesLoan} = this.state
-        datesLoan.id = id
-        this.setState(datesLoan)
-        console.log(id)
-            this.props.history.push({
-                pathname: '/prestamos/lista/',
-                state: this.state.datesLoan
-            })
-    }
-    ComeBack = (id) =>{
-        var ListVisit = this.state.customers
-        this.state.customersNotLoan.forEach(NotLoan=>ListVisit.push(NotLoan))
-        ListVisit.forEach(data=>{
-            if(data.uid === id){
-                data.visited = 0
-            }
-        })
-        firebase.firestore().collection("Visits").doc(this.state.key).update({ListVisit})
-        .then(()=>{
-            toast.warn("Vuelve más tarde!")
-        }).catch(err=>{
-            toast.error("Ups, hubo un error.")
-            console.log(err)
-        })
+    edit = () =>{
+        console.log("Edito")
     }
     more = () =>{
         var cont
@@ -154,26 +80,65 @@ export default class Visits extends Component {
         this.setState({customers: array})
     }
     save = () =>{
-        var ListVisit = this.state.customers
-        this.state.customersNotLoan.forEach(NotLoan=>ListVisit.push(NotLoan))
-        firebase.firestore().collection("Visits").doc(this.state.key).update({ListVisit})
-        .then(()=>{
-            toast.success("Visitas ordenadas!")
-        }).catch(err=>{
-            toast.error("Error al ordenar visiitas, inténtelo más tarde.")
-            console.log(err)
-        })
         document.getElementById('buttons-container').className = "buttons-not"
         document.getElementById(this.state.position).className = "visit-container"
     }
+    componentDidMount = () =>{
+        var date = new Date().getDate()+"/"+(new Date().getMonth()+1)+"/"+new Date().getFullYear()
+        firebase.firestore().collection('Visits')
+            .onSnapshot((dates)=>{
+            let visits = []
+            dates.forEach(date=>{
+                let dato = date.data()
+                dato.id = date.id
+                visits.push(dato)
+            })
+            var list
+            visits.forEach(item=>{
+                list = item.ListVisit
+            })
+            var CustomersWithLoan = []
+            var CustomersNotLoan = []
+            list.forEach(listItem=>{
+                var ref = listItem.ref
+                ref.get().then(dataCustomer => {
+                    var data = dataCustomer.data()
+                    var loans = data.loans
+                    if(loans){
+                        loans.forEach(loan =>{
+                            var payments = loan.payments
+                            payments.forEach(pay=>{
+                                if(data.visited !== 0){
+                                    if(date === pay.date){
+                                        listItem.visited = true
+                                    }
+                                    else{
+                                        listItem.visited = false
+                                    }
+                                } else {
+                                    listItem.visited = null
+                                }
+                            })
+                        })
+                        CustomersWithLoan.push(listItem)
+                    } else{
+                        CustomersNotLoan.push(listItem)
+                    }
+                })
+            })
+            console.info(CustomersWithLoan)
+            console.info(CustomersNotLoan)
+        })
+    }
+
     render(){
         return(
             <div className="general-loans-container">
                 <p className="customers-loans-title">Visitas
                 </p>
                 <div className="buttons-not" id="buttons-container">
-                    <img src={arrow} alt="arrow" onClick={this.back}/>
-                    <img src={arrow} alt="arrow" onClick={this.more}/>
+                    <button className="btn-circle" id="back" onClick={this.back}>^</button>
+                    <button className="btn-circle" id="left"onClick={this.more}>v</button>
                     <button className="btn-save" onClick={this.save}>Guardar</button>
                 </div>
                 <div className="visit">
@@ -190,8 +155,6 @@ export default class Visits extends Component {
                             <span>{customer.name}</span>
                             <Circle status={customer.visited}/>
                         </div>
-                        <img onClick={()=>this.ComeBack(customer.uid)} src={Refresh} alt="Regresar"/>
-                        <img onClick={(e) => this.Detail(e, customer.uid)} src={Go} alt="Vamos"/>
                         </div>
                     ))
                     :
@@ -212,6 +175,6 @@ export default class Visits extends Component {
                     </div>
                 </div>
             </div>
-        )
+        );
     }
 } 

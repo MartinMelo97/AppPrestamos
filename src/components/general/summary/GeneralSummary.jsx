@@ -4,6 +4,7 @@ import money from './../../../assets/icons/money.svg'
 import loan from './../../../assets/icons/funding.svg'
 import admin from './../../../assets/icons/coordinator.svg'
 import customer from './../../../assets/icons/teamwork.svg'
+import utility from './../../../assets/icons/money-bag.svg'
 import firebase from 'firebase'  
 class GeneralSummary extends Component {
     constructor(props){
@@ -13,7 +14,8 @@ class GeneralSummary extends Component {
             NumLoan: "",
             Cantidad: "",
             SupAdmin: 0,
-            NomAdmin: 0
+            NomAdmin: 0,
+            Utilidad: ""
         }
     }
 
@@ -48,13 +50,18 @@ class GeneralSummary extends Component {
          })
          var NumLoans = 0
          var total = 0
+         var utilidad = 0
          Loans.forEach(loan=>{
-             if(loan !== undefined){
-                 NumLoans+= loan.length
-                 loan.forEach(date=>total += date.total)
+             if(loan !== undefined){                 
+                loan.forEach(date=>{
+                    if(date.deleted === false){
+                    NumLoans++    
+                    total += date.amountLoan
+                    utilidad += date.utility }
+                })
              }
          })
-         this.setState({NumCustomer: datesCustomer.length, NumLoan: NumLoans, Cantidad: total})
+         this.setState({NumCustomer: datesCustomer.length, NumLoan: NumLoans, Cantidad: total, Utilidad: utilidad})
         })
     }
 
@@ -76,7 +83,11 @@ class GeneralSummary extends Component {
                         <p>{this.state.Cantidad} MXN Prestados</p>
                     </div>
                     <div className="summary-body-two">
-                        <img src={admin} alt="admins"/>
+                    <img src={utility} alt="money"/>
+                        <p>{this.state.Utilidad} MXN Ganancia</p>
+                    </div>
+                    <div className="summary-body-two-b">
+                    <img src={admin} alt="admins"/>
                         <p>{this.state.SupAdmin + this.state.NomAdmin} Administradores</p>
                     </div>
                     <div className="summary-body-three-l">

@@ -20,7 +20,7 @@ class LoansToPay extends Component {
                 amount: this.props.location.state.pagoPorDia,
                 created: firebase.firestore.Timestamp.fromDate(new Date()),
                 updated: firebase.firestore.Timestamp.fromDate(new Date()),
-            }, 
+            },
             infoByLoan: {
                 pays: [],
                 total: 0,
@@ -44,8 +44,6 @@ class LoansToPay extends Component {
         var newFecha = newDay+"/"+newMonth+"/"+newYear
         let {pay} = this.state
         pay.date = newFecha
-        document.getElementById('input-pay').disabled = true
-        
         firebase.firestore().collection('LoansByDate').where("date", "==", newFecha)
         .onSnapshot(infoLoan=>{
             let loans = []
@@ -71,7 +69,11 @@ class LoansToPay extends Component {
             pay.number = 1
         }
         this.setState(pay)
-        
+    }
+    handleChangeAmount = (e) => {
+        const { pay } = this.state
+        pay.amount = parseInt(e.target.value)
+        this.setState({ pay })
     }
     loanPay = () => {
         var payed = this.state.pay.amount + this.props.location.state.pago
@@ -83,7 +85,7 @@ class LoansToPay extends Component {
         const loans = this.props.location.state.loans
         let loanToSelect = loans.filter(loan => {
             return loan.loanRef === this.props.location.state.ref;
-        }) 
+        })
 
         var addItemsLoans = loanToSelect[0]
         addItemsLoans.payments = payments
@@ -151,13 +153,18 @@ class LoansToPay extends Component {
                     <button 
                     className="button-style-two active">Agregar pago</button>
                     <div className="ghost-container active">
-                        <input type="number" placeholder="$" id="input-pay" value={this.state.pay.amount}/>
+                        <input type="number"
+                            placeholder="$"
+                            id="input-pay"
+                            value={this.state.pay.amount}
+                            onChange={this.handleChangeAmount}
+                        />
                         <button className="button-add" onClick={this.loanPay}>Registrar</button>
                     </div>
                     <div className="info-loan-summary-p"> 
                         <p>Monto prestado: <span>${prestamo}</span></p>
                         <p>Ganancia (20%): <span>${utilidad}</span></p>
-                        <p>Total a pagar: <span>${cantidad}</span></p>        
+                        <p>Total a pagar: <span>${cantidad}</span></p>
                         <p>Cantidad pagada: <span>${pago}</span></p>
                         <p>Cantidad restante: <span>${restante}</span></p>
                     </div>

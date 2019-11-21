@@ -19,10 +19,25 @@ class NewCustomer extends Component {
                 created: firebase.firestore.Timestamp.fromDate(new Date()),
                 updated: firebase.firestore.Timestamp.fromDate(new Date()),
             },
-            loader: false
+            loader: false,
+            list: [],
+            id_list: "",
         }
     }
-    
+    componentDidMount = () =>{
+        firebase.firestore().collection('Visits')
+        .onSnapshot((customers)=>{
+          let array_dates = []
+          customers.forEach(date=>{
+              let dato = date.data()
+              dato.id = date.id
+              array_dates.push(dato)
+          })
+          array_dates.forEach(date=>{
+            this.setState({id_list: date.id, list: date.ListVisit})
+          })
+      })
+    }
     changeName = (e) => {
         let { Customers } = this.state
         Customers.firstName = e.target.value
@@ -51,16 +66,24 @@ class NewCustomer extends Component {
 
     Register = () => {
         firebase.firestore().collection('Customers').add(this.state.Customers)
-        .then(()=>{
+        .then((ref)=>{
             toast.info("Datos del cliente registrados!")
-            let {Customers} = this.state
-            Customers.firstName = ""
-            Customers.lastName = ""
-            Customers.address = ""
-            Customers.email = ""
-            Customers.phoneNumber = ""
-            this.setState(Customers)
-            setTimeout(()=>this.props.history.push('/clientes/prestamos/'), 3000)    
+            setTimeout(()=>this.props.history.push('/clientes/prestamos/'), 3000)
+            var dataVisit = {
+                uid: ref.id,
+                ref: firebase.firestore().collection('Customers').doc(ref.id),
+                name: this.state.Customers.firstName +" "+ this.state.Customers.lastName,
+                visited: null,
+                loan: false,
+                deleted: false
+            }
+            var ListVisit = this.state.list
+            ListVisit.push(dataVisit)
+            if(this.state.id_list === ""){
+                firebase.firestore().collection('Visits').add({ListVisit})
+            }else{
+                firebase.firestore().collection('Visits').doc(this.state.id_list).update({ListVisit})
+            }
         })
         .catch((err)=>{
             toast.error("Datos del cliente no registrados")

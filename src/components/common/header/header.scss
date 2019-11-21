@@ -49,6 +49,7 @@
     top: 0;
     left: -100%;
     transition: 0.5s ease-in-out;
+    overflow: auto;
     -webkit-transition: 0.5s ease-in-out;
     z-index: 10000;
 
@@ -67,7 +68,7 @@
 .side-bar{
     grid-column: 1/auto;
     grid-row: 1/auto;
-    height: 100vh;
+    height: 100%;
     width: 100%;
     background-color: $principal;
     box-shadow: 10px 0 50px 0 #00000099;
@@ -78,7 +79,7 @@
     z-index: 10000;
     .day{
         width: 70%;
-        margin-bottom: 15%;
+        margin-bottom: 2vh;
         display: flex;
         flex-direction: column;
         align-items: center;
@@ -115,7 +116,7 @@
             &:active{
                 background-color: $detail;
             }
-        }        
+        }
     }
 }
 .side-bar-content.active{
@@ -217,11 +218,10 @@
                 box-shadow: 0 3px 4px 0 #28079b88, 0 -3px 4px 0 #28079b88;
                 margin: 10px 0;
                 transition: ease-in-out 0.1s;
-    
                 &:active{
                     background-color: $detail;
                 }
-            }        
+            }
         }
     }
     .side-bar-content.active{

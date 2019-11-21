@@ -11,19 +11,22 @@ export default class ReportWeek extends Component {
         this.state = {
             month: this.props.location.state.month,
             loans: 0,
-            utility: 0, 
+            utility: 0,
             search: false,
             year: this.props.location.state.year,
             week: 0,
             daysOfMonth: [],
             selectDays: [],
+            weekOne: [],
+            weekTwo: [],
+            weekThree: [],
+            weekFour: [],
+            weekFive: [],
         }
     }
     componentDidMount = () =>{
         var date = new Date(this.props.location.state.year, this.props.location.state.month-1, 1).getDay()
         var numDay = new Date(this.props.location.state.year, this.props.location.state.month, 0).getDate()
-        console.info(date)
-        console.info(numDay)
         var weekOne = []
         var weekTwo = []
         var weekThree = []
@@ -80,6 +83,8 @@ export default class ReportWeek extends Component {
                 if(i>=16 && i<=22){weekFour.push(i)}
                 if(i>=23 && i<=31){weekFive.push(i)}
             break;
+            default:
+                console.log("Error")
         }}
         let {daysOfMonth} = this.state
         daysOfMonth.push(weekOne)
@@ -88,6 +93,7 @@ export default class ReportWeek extends Component {
         daysOfMonth.push(weekFour)
         daysOfMonth.push(weekFive)
         this.setState(daysOfMonth)
+        this.setState({weekOne: weekOne, weekTwo: weekTwo, weekThree: weekThree, weekFour: weekFour, weekFive: weekFive })
     } 
 
     ChangeWeek = (e) =>{
@@ -130,9 +136,14 @@ export default class ReportWeek extends Component {
         } 
     }
     render() {
-        const weeks = ["Semanas", "Semana 1", "Semana 2", "Semana 3", "Semana 4", "Semana 5"]
         const days = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"]
         let months = ["Ener", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"]
+        const weeks = ["Semanas", 
+        `Semana 1 (${this.state.weekOne[0]} - ${this.state.weekOne[this.state.weekOne.length - 1]} de ${months[this.props.location.state.month-1]}.)`,
+        `Semana 2 (${this.state.weekTwo[0]} - ${this.state.weekTwo[this.state.weekTwo.length - 1]} de ${months[this.props.location.state.month-1]}.)`,
+        `Semana 3 (${this.state.weekThree[0]} - ${this.state.weekThree[this.state.weekThree.length - 1]} de ${months[this.props.location.state.month-1]}.)`,
+        `Semana 4 (${this.state.weekFour[0]} - ${this.state.weekFour[this.state.weekFour.length - 1]} de ${months[this.props.location.state.month-1]}.)`,
+        `Semana 5 (${this.state.weekFive[0]} - ${this.state.weekFive[this.state.weekFive.length - 1]} de ${months[this.props.location.state.month-1]}.)`]
         var n = new Date(this.props.location.state.year, this.props.location.state.month, 0).getDate()
         var position
         if (parseInt(this.state.week) === 1){

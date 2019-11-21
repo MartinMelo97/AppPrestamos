@@ -1,5 +1,5 @@
 import React from 'react'
-import { Switch } from 'react-router-dom'
+import { Switch, Route } from 'react-router-dom'
 import { ToastContainer } from 'react-toastify'
 import { AuthProvider } from './auth'
 import PrivateRoute from './routes/PrivateRoute'
@@ -41,6 +41,7 @@ import RecordUpdate from './components/general/record/RecordUpdate'
 import ReportWeek from './components/general/reports/reportWeek'
 import ReportMonth from './components/general/reports/reportMonth'
 import Visit from './components/general/visits/listVisit'
+import OrderVisit from './components/general/visits/orderVisit'
 const App = () => {
   return (
     <AuthProvider>
@@ -49,34 +50,35 @@ const App = () => {
       <ToastContainer />
       <Switch>
         <PublicRoute exact path="/" component={ Login }/>
-        <PrivateRoute exact path="/registro" component={ Register }/>
-        <PrivateRoute exact path="/historial/detalle" component={ RecordDetail }/>
-        <PrivateRoute exact path="/general/historial/ayer" component={ RecordY }/>
-        <PrivateRoute exact path="/general/historial/buscar" component={ RecordUpdate }/>
-        <PrivateRoute exact path="/error" component={ ErrorAccount }/>
-        <PrivateRoute exact path="/prestamos/lista/" component={ LoansList }/>
-        <PrivateRoute exact path="/opciones/lista/" component={ ListOptions }/>
-        <PrivateRoute exact path="/opciones/admins/" component={ ListAmins }/>
-        <PrivateRoute exact path="/admins/editar/" component={ EditAdmins }/>
-        <PrivateRoute exact path="/admins/detalle/" component={ DetailAmins }/>
+        <Route exact path="/registro" component={ Register }/>
+        <Route exact path="/historial/detalle" component={ RecordDetail }/>
+        <Route exact path="/general/historial/ayer" component={ RecordY }/>
+        <Route exact path="/general/historial/buscar" component={ RecordUpdate }/>
+        <Route exact path="/error" component={ ErrorAccount }/>
+        <Route exact path="/prestamos/lista/" component={ LoansList }/>
+        <Route exact path="/opciones/lista/" component={ ListOptions }/>
+        <Route exact path="/opciones/admins/" component={ ListAmins }/>
+        <Route exact path="/admins/editar/" component={ EditAdmins }/>
+        <Route exact path="/admins/detalle/" component={ DetailAmins }/>
 
-        <PrivateRoute exact path="/clientes/detalle/" component={ CustomerDetail } />
-        <PrivateRoute exact path="/clientes/prestamos/" component={ CustomersLoans } />
-        <PrivateRoute exact path="/clientes/nuevo/" component={ NewCustomer } />
-        <PrivateRoute exact path="/clientes/editar/" component={ EditCustomer } />
+        <Route exact path="/clientes/detalle/" component={ CustomerDetail } />
+        <Route exact path="/clientes/prestamos/" component={ CustomersLoans } />
+        <Route exact path="/clientes/nuevo/" component={ NewCustomer } />
+        <Route exact path="/clientes/editar/" component={ EditCustomer } />
 
-        <PrivateRoute exact path="/general/corte-dia/" component={ CutOfDay } />
-        <PrivateRoute exact path="/general/historial/" component={ Record } />
-        <PrivateRoute exact path="/general/resumen/" component={ GeneralSummary } />
-        <PrivateRoute exact path="/general/prestamos/" component={ Loans } />
-        <PrivateRoute exact path="/general/reporte/mes/" component={ ReportMonth } />
-        <PrivateRoute exact path="/general/reporte/semanas/" component={ ReportWeek } />
-        <PrivateRoute exact path="/dashboard/" component={ Visit } />
+        <Route exact path="/general/corte-dia/" component={ CutOfDay } />
+        <Route exact path="/general/historial/" component={ Record } />
+        <Route exact path="/general/resumen/" component={ GeneralSummary } />
+        <Route exact path="/general/prestamos/" component={ Loans } />
+        <Route exact path="/general/reporte/mes/" component={ ReportMonth } />
+        <Route exact path="/general/reporte/semanas/" component={ ReportWeek } />
+        <Route exact path="/dashboard/" component={ Visit } />
+        <Route exact path="/general/visitas/ordenar/" component={ OrderVisit } />
 
-        <PrivateRoute exact path="/prestamos/detalle/" component={ LoansDetail } />
-        <PrivateRoute exact path="/prestamos/lista/" component={ LoansList } />
-        <PrivateRoute exact path="/prestamos/a-pagar/" component={ LoansToPay } />
-        <PrivateRoute exact path="/prestamos/nuevo/" component={ NewLoan } />
+        <Route exact path="/prestamos/detalle/" component={ LoansDetail } />
+        <Route exact path="/prestamos/lista/" component={ LoansList } />
+        <Route exact path="/prestamos/a-pagar/" component={ LoansToPay } />
+        <Route exact path="/prestamos/nuevo/" component={ NewLoan } />
 
         <PrivateRoute component={ NotFound } />
       </Switch>

@@ -89,7 +89,17 @@ export default class reportMonth extends Component {
         years.push(year.toString())
         }        
         years.sort((dateOne, dateTwo)=>{return dateTwo - dateOne})
-        const month = ["Mes","Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre","Octubre", "Noviembre", "Diciembre"]
+        const monthGral = ["Mes","Enero", "Febrero", "Marzo", "Abril", "Mayo", "Junio", "Julio", "Agosto", "Septiembre","Octubre", "Noviembre", "Diciembre"]
+        var month = []
+        if(parseInt(this.state.year) === date.getFullYear()){
+            for(var i=0; i<=date.getMonth()+1; i++){
+                month.push(monthGral[i])
+            }
+        } else {
+            for(var j=0; j<monthGral.length; j++){
+                month.push(monthGral[j])
+            }
+        }
         return (
             <div>
                 <img src={arrow} onClick={()=> window.history.back()} className="img-arrow-back" alt="arrow"/>
