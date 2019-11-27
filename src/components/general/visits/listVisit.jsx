@@ -30,16 +30,13 @@ export default class Visits extends Component {
             dates.forEach(date=>{
                 let dato = date.data()
                 dato.id = date.id
+                localStorage.setItem("id", dato.id)
                 visits.push(dato)
             })
-            var list
-            var id
+            var list = []
             visits.forEach(item=>{
-                list = item.ListVisit
-                id = item.id
+                item.ListVisit.forEach(dataList=> list.push(dataList))
             })
-            console.log(id)
-            this.setState({key: id})
             var CustomersWithLoan = []
             var CustomersNotLoan = []
             list.forEach(listItem=>{
@@ -82,6 +79,7 @@ export default class Visits extends Component {
             })
     }
     ComeBack = (id) =>{
+        var key = localStorage.getItem("id")
         var ListVisit = this.state.customers
         this.state.customersNotLoan.forEach(NotLoan=>ListVisit.push(NotLoan))
         ListVisit.forEach(data=>{
@@ -89,7 +87,7 @@ export default class Visits extends Component {
                 data.visited = 0
             }
         })
-        firebase.firestore().collection("Visits").doc(this.state.key).update({ListVisit})
+        firebase.firestore().collection("Visits").doc(key).update({ListVisit})
         .then(()=>{
             toast.warn("Vuelve más tarde!")
         }).catch(err=>{
@@ -154,9 +152,10 @@ export default class Visits extends Component {
         this.setState({customers: array})
     }
     save = () =>{
+        var key = localStorage.getItem("id")
         var ListVisit = this.state.customers
         this.state.customersNotLoan.forEach(NotLoan=>ListVisit.push(NotLoan))
-        firebase.firestore().collection("Visits").doc(this.state.key).update({ListVisit})
+        firebase.firestore().collection("Visits").doc(key).update({ListVisit})
         .then(()=>{
             toast.success("Visitas ordenadas!")
         }).catch(err=>{

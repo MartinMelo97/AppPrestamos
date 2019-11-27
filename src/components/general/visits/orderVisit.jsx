@@ -7,7 +7,9 @@ export default class Visits extends Component {
     constructor(props){
         super(props)
         this.state = {
-            customers:[],
+            customers:[{name: "Juan", visited: 0},
+            {name: "Jorge", visited: 0},
+            {name: "Pedro", visited: 0}],
             Gral: [], 
             datesLoan: {
                 id: ""
@@ -25,14 +27,14 @@ export default class Visits extends Component {
     }
     more = () =>{
         var cont
-        if(this.state.num-1<0){
+        if((this.state.num+1)-1<0){
             cont=0
         }else{
-            cont= this.state.num-1
+            cont= (this.state.num+1)-1
         }
         document.getElementById(cont).className = "visit-container"
         let array = this.state.customers
-        var click=this.state.num, n
+        var click=this.state.num+1, n
         const actualIndex = this.state.position
         if (click>array.length-1){
             n = 0
@@ -51,7 +53,7 @@ export default class Visits extends Component {
     back = () =>{
         document.getElementById(this.state.num-1).className = "visit-container"
         let array = this.state.customers
-        var click=this.state.num-2,n,p
+        var click=this.state.num-1,n,p
         if (click<0){
             n = 0
             this.setState({num: 0, position: 1})
@@ -83,54 +85,7 @@ export default class Visits extends Component {
         document.getElementById('buttons-container').className = "buttons-not"
         document.getElementById(this.state.position).className = "visit-container"
     }
-    componentDidMount = () =>{
-        var date = new Date().getDate()+"/"+(new Date().getMonth()+1)+"/"+new Date().getFullYear()
-        firebase.firestore().collection('Visits')
-            .onSnapshot((dates)=>{
-            let visits = []
-            dates.forEach(date=>{
-                let dato = date.data()
-                dato.id = date.id
-                visits.push(dato)
-            })
-            var list
-            visits.forEach(item=>{
-                list = item.ListVisit
-            })
-            var CustomersWithLoan = []
-            var CustomersNotLoan = []
-            list.forEach(listItem=>{
-                var ref = listItem.ref
-                ref.get().then(dataCustomer => {
-                    var data = dataCustomer.data()
-                    var loans = data.loans
-                    if(loans){
-                        loans.forEach(loan =>{
-                            var payments = loan.payments
-                            payments.forEach(pay=>{
-                                if(data.visited !== 0){
-                                    if(date === pay.date){
-                                        listItem.visited = true
-                                    }
-                                    else{
-                                        listItem.visited = false
-                                    }
-                                } else {
-                                    listItem.visited = null
-                                }
-                            })
-                        })
-                        CustomersWithLoan.push(listItem)
-                    } else{
-                        CustomersNotLoan.push(listItem)
-                    }
-                })
-            })
-            console.info(CustomersWithLoan)
-            console.info(CustomersNotLoan)
-        })
-    }
-
+    
     render(){
         return(
             <div className="general-loans-container">
@@ -147,7 +102,7 @@ export default class Visits extends Component {
                         <div className="visit-container-gral" key={i}>
                         <div className="visit-container" id={i}
                         onClick={() => {
-                            this.setState({position: i, num: i+1, numM: i-1})
+                            this.setState({position: i, num: i})
                             document.getElementById(i).className = "visit-select"
                             document.getElementById('buttons-container').className = "buttons-acctions"
                         }}>
