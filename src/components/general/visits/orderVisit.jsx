@@ -1,6 +1,5 @@
 import React, { Component } from 'react'
 import './index.scss'
-import firebase from 'firebase'
 import Circle from './status'
 //import {toast} from 'react-toastify'
 export default class Visits extends Component {
@@ -27,14 +26,14 @@ export default class Visits extends Component {
     }
     more = () =>{
         var cont
-        if((this.state.num+1)-1<0){
+        if(this.state.num-1<0){
             cont=0
         }else{
-            cont= (this.state.num+1)-1
+            cont=this.state.num+1-1
         }
         document.getElementById(cont).className = "visit-container"
         let array = this.state.customers
-        var click=this.state.num+1, n
+        var click=this.state.num, n
         const actualIndex = this.state.position
         if (click>array.length-1){
             n = 0
@@ -92,7 +91,9 @@ export default class Visits extends Component {
                 <p className="customers-loans-title">Visitas
                 </p>
                 <div className="buttons-not" id="buttons-container">
+                    {this.state.position===0? null :
                     <button className="btn-circle" id="back" onClick={this.back}>^</button>
+                    }
                     <button className="btn-circle" id="left"onClick={this.more}>v</button>
                     <button className="btn-save" onClick={this.save}>Guardar</button>
                 </div>
@@ -102,7 +103,7 @@ export default class Visits extends Component {
                         <div className="visit-container-gral" key={i}>
                         <div className="visit-container" id={i}
                         onClick={() => {
-                            this.setState({position: i, num: i})
+                            this.setState({position: i, num: i+1})
                             document.getElementById(i).className = "visit-select"
                             document.getElementById('buttons-container').className = "buttons-acctions"
                         }}>

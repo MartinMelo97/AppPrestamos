@@ -9,6 +9,6 @@ const Status = (props) => {
   }
   if(props.status === 0){
     return  <div className="circle-item" style={{backgroundColor: '#faad14'}}/>
-  }  
+  }
 }
 export default Status

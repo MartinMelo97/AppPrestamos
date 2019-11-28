@@ -27,16 +27,16 @@ export default class Visits extends Component {
         firebase.firestore().collection('Visits')
             .onSnapshot((dates)=>{
             let visits = []
+            let dato
             dates.forEach(date=>{
-                let dato = date.data()
+                dato = date.data()
                 dato.id = date.id
+                dato.ListVisit = date.data().ListVisit
                 localStorage.setItem("id", dato.id)
                 visits.push(dato)
             })
             var list = []
-            visits.forEach(item=>{
-                item.ListVisit.forEach(dataList=> list.push(dataList))
-            })
+            dato.ListVisit.forEach(dataList=> list.push(dataList))
             var CustomersWithLoan = []
             var CustomersNotLoan = []
             list.forEach(listItem=>{
@@ -47,16 +47,22 @@ export default class Visits extends Component {
                     if(loans){
                         loans.forEach(loan =>{
                             var payments = loan.payments
-                            payments.forEach(pay=>{
+                            if(payments.length>0){
+                                payments.forEach(pay=>{
+                                    if(parseInt(listItem.visited) !== 0){
+                                        if(date === pay.date){
+                                            listItem.visited = true
+                                        }
+                                        else{
+                                            listItem.visited = false
+                                        }
+                                    }
+                                })
+                            }else{
                                 if(parseInt(listItem.visited) !== 0){
-                                    if(date === pay.date){
-                                        listItem.visited = true
-                                    }
-                                    else{
-                                        listItem.visited = false
-                                    }
+                                listItem.visited = false
                                 }
-                            })
+                            }
                         })
                         CustomersWithLoan.push(listItem)
                     } else{
@@ -171,8 +177,10 @@ export default class Visits extends Component {
                 <p className="customers-loans-title">Visitas
                 </p>
                 <div className="buttons-not" id="buttons-container">
-                    <img src={arrow} alt="arrow" onClick={this.back}/>
-                    <img src={arrow} alt="arrow" onClick={this.more}/>
+                    {this.state.position===0 ? null :
+                    <img src={arrow} alt="arrow" className="img-one-btn" onClick={this.back}/>
+                    }
+                    <img src={arrow} alt="arrow" className="img-two-btn" onClick={this.more}/>
                     <button className="btn-save" onClick={this.save}>Guardar</button>
                 </div>
                 <div className="visit">

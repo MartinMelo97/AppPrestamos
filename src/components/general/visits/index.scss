@@ -120,10 +120,10 @@
     justify-content: space-evenly;
     width: 80vw;
     margin-bottom: 4vh;
-    img:nth-child(1){
+    .img-one-btn{
         width: 11vw;
     }
-    img:nth-child(2){
+    .img-two-btn{
         width: 11vw;
         transform: rotate(180deg);
     }
