@@ -27,7 +27,7 @@ export default class Visits extends Component {
         firebase.firestore().collection('Visits')
             .onSnapshot((dates)=>{
             let visits = []
-            let dato
+            let dato = null
             dates.forEach(date=>{
                 dato = date.data()
                 dato.id = date.id
@@ -36,7 +36,7 @@ export default class Visits extends Component {
                 visits.push(dato)
             })
             var list = []
-            dato.ListVisit.forEach(dataList=> list.push(dataList))
+            if(dato.ListVisit) dato.ListVisit.forEach(dataList=> list.push(dataList))
             var CustomersWithLoan = []
             var CustomersNotLoan = []
             list.forEach(listItem=>{
