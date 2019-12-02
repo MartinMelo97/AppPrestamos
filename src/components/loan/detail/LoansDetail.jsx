@@ -100,7 +100,8 @@ class LoansDetail extends Component {
     Dates = (date) => {
         var array = date.split("/")
         var newArray = []
-        array.map((item) =>{
+        // eslint-disable-next-line 
+        array.map((item) => {
             newArray.push(parseInt(item))
         })
         return newArray
@@ -158,12 +159,12 @@ class LoansDetail extends Component {
                 child.className="this-is-active"
             }
             for(var a=0; a<Select.length; a++){
-                if(days[i] == Select[a]){
+                if(days[i] === Select[a]){
                    child.className="this-is-select"
                 }
             }
             for(var n=0; n<rangeDays.length; n++){
-                if( days[i] == rangeDays[n]){
+                if( days[i] === rangeDays[n]){
                     child.className="this-not-select"
                 }
             }
@@ -238,12 +239,12 @@ class LoansDetail extends Component {
                 child.className="this-is-active"
             }
                 for(var a=0; a<Select.length; a++){
-                    if(daystwo[i] == Select[a]){
+                    if(daystwo[i] === Select[a]){
                        child.className="this-is-select"
                     }
                 }
                 for(var n=0; n<rangeDays.length; n++){
-                    if( daystwo[i] == rangeDays[n]){
+                    if( daystwo[i] === rangeDays[n]){
                         child.className="this-not-select"
                     }
                 }    

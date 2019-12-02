@@ -118,7 +118,7 @@ class NewLoan extends Component {
 
         space.innerText = select.innerText
 
-        if(select.innerText == 18){
+        if(select.innerText === 18){
             let { Loan } = this.state
             Loan.amountLoan = 1500
             Loan.payForDay = (1500*1.2)/select.innerText

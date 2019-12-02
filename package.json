@@ -4,6 +4,7 @@
   "private": true,
   "dependencies": {
     "antd": "^3.18.1",
+    "dotenv": "^8.2.0",
     "firebase": "^6.6.2",
     "firebase-admin": "^8.6.0",
     "http2": "^3.3.7",

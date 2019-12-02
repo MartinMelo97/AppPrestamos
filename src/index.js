@@ -7,15 +7,16 @@ import * as serviceWorker from './serviceWorker';
 import * as firebase from "firebase/app";
 import "firebase/auth";
 import "firebase/database";
+
 firebase.initializeApp(
     {
-        apiKey: "AIzaSyDk6vp22tgyVqgJmPDB_vhxV1JaKw4fvqY",
-        authDomain: "appprestamos-3d915.firebaseapp.com",
-        databaseURL: "https://appprestamos-3d915.firebaseio.com",
-        projectId: "appprestamos-3d915",
-        storageBucket: "",
-        messagingSenderId: "963326054228",
-        appId: "1:963326054228:web:771d7d662322b1b66bc2c1"
+        apiKey: process.env.REACT_APP_API_KEY,
+        authDomain: process.env.REACT_APP_AUTH_DOMAIN,
+        databaseURL: process.env.REACT_APP_DATABASE_URL,
+        projectId: process.env.REACT_APP_PROJECT_ID,
+        storageBucket: process.env.REACT_APP_STORAGE_BUCKET,
+        messagingSenderId: process.env.REACT_APP_MESSAGING_SENDER_ID,
+        appId: process.env.REACT_APP_APP_ID
     }
 )
 ReactDOM.render(
