@@ -2,7 +2,10 @@ import React, { Component } from 'react'
 import './loans_list.scss'
 import ProgressBar from './ProgressBar'
 import arrow from './../../../assets/icons/left-arrow.svg'
+import close from './../../../assets/icons/close.svg'
 import firebase from 'firebase'
+import { toast } from 'react-toastify'
+import {Modal} from 'antd'
 class LoansList extends Component {
     constructor(props){
         super(props)
@@ -23,7 +26,9 @@ class LoansList extends Component {
                 prestamo: ""
             },
             name: "",
-            loans: []
+            loans: [],
+            visible: false,
+            position: 0,
         }
     }
     componentDidMount = () =>{
@@ -60,9 +65,37 @@ class LoansList extends Component {
             state: this.state.loansDates
         })
     }
+    DeleteLoan = (i) =>{
+        this.setState({visible: true, position: i})    
+    }
 
-
+    handleOk = e => {
+        var data = this.state.loans[this.state.position]
+        data.deleted = true
+        firebase.firestore().collection('Customers').doc(this.props.location.state.id).update({loans: this.state.loans})
+        .then(()=>{
+            toast.info("Préstamo eliminado.")
+        })
+        .catch(()=>{
+            toast.error("Préstamo no eliminado, inténtalo más tarde.")
+        })
+        this.setState({
+            visible: false,
+        })
+    }
+    
+    handleCancel = e => {
+        this.setState({
+          visible: false,
+        })
+    }
     render(){
+        var Loans = []
+        this.state.loans.forEach(loan=>{
+            if(loan.deleted === false){
+                Loans.push(loan)
+            }
+        })
         return(
             <div className="detail">
             <img onClick={()=> this.props.history.push('/general/prestamos/')} src={arrow} className="img-arrow-back" alt="arrow"/>    
@@ -70,16 +103,28 @@ class LoansList extends Component {
                 <p className="client-name">{this.state.name}</p>
                 <span>Préstamo</span>
            </div>
-           { this.state.loans.length > 0 ? this.state.loans.map((loan, i)=>(
-               <div className="btn-list" key={i} onClick={(e) => this.goInfo(e, loan.dateEnd, loan.dateStart, loan.total, loan.loanRef, loan.payed, loan.remaining, loan.payments, loan.amountLoan, loan.utility, loan.payForDay)}>
-                    <span>{i+1}</span>
-                    <span>${loan.total}</span>
-                    <span>{loan.dateStart}</span>
-                    <div className="Progress"><ProgressBar percentage={(loan.payed*100)/loan.total}/></div>
+           { this.state.loans.length > 0 ? Loans.map((loan, i)=>(
+               <div className="container-list" key={i}>
+                    <div className="btn-list" onClick={(e) => this.goInfo(e, loan.dateEnd, loan.dateStart, loan.total, loan.loanRef, loan.payed, loan.remaining, loan.payments, loan.amountLoan, loan.utility, loan.payForDay)}>
+                            <span>{i+1}</span>
+                            <span>${loan.total}</span>
+                            <span>{loan.dateStart}</span>
+                            <div className="Progress"><ProgressBar percentage={(loan.payed*100)/loan.total}/></div>
+                    </div>
+                    <img src={close} onClick={()=>this.DeleteLoan(i)} alt="delete-loan"/>
                </div>
            ))
             : <p>Cargando..</p>
             }
+            <Modal
+                className="design-modal-c"
+                title="Confirma"
+                visible={this.state.visible}
+                onOk={this.handleOk}
+                onCancel={this.handleCancel}
+                >
+                <p>¿Estás seguro de eliminar este préstamo?</p>
+            </Modal>
             </div>
         )
     }

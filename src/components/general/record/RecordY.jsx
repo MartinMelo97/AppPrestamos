@@ -35,10 +35,11 @@ export default class RecordY extends Component {
             loans.forEach(payment => this.setState({payments: payment.payments, date: payment.date}))
         })
     }
-    Detail = (e, Cliente, pago ) => {
+    Detail = (e, Cliente, pago, num ) => {
         let {datesLoan} = this.state
         datesLoan.Nombre = Cliente
         datesLoan.pago = pago
+        datesLoan.num = num
         datesLoan.fecha = this.state.date 
         this.setState(datesLoan)
         this.props.history.push({
@@ -60,7 +61,7 @@ export default class RecordY extends Component {
                 { this.state.payments.length > 0 ?
                     this.state.payments.map((payment, i)=>(
                         <span key={i} 
-                        onClick={(e) => this.Detail(e, payment.customer, payment.amount)}
+                        onClick={(e) => this.Detail(e, payment.customer, payment.amount, payment.NumLoan)}
                         ><p>{payment.customer}</p><p>${payment.amount}</p></span>
                     ))
                     :

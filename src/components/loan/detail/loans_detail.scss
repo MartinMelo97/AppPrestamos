@@ -16,9 +16,12 @@
         text-align: center;
     }
     .loans-detail-p{
-        font-size: 5vh;
+        font-size: 1.5em;
         margin-top: 2vh;
         margin-bottom: 2vh;
+        label {
+            font-weight: 900;
+        } 
     }
 
     .calendar-loans{
@@ -110,25 +113,36 @@
     justify-content: center;
     flex-direction: column;
     align-items: center;
-    margin-top: 5vh;
-    span {
-        border-radius: 10vh;
-        color: $white;
+    margin-top: 2vh;
+    .footer-list{
         font-size: 1.7em;
         font-weight: 900;
         width: 50vw;
         text-align: center;
         margin-bottom: 1vh;
-        &:nth-child(1){
-            color: $detail; 
-        }
-        &:nth-child(2){
-            color: #52c41a; 
-        }
-        &:nth-child(3){
-            color: #f5222d; 
-        }
+        display: flex;
+        align-items: center;
+        justify-content: space-evenly;
     }
+}
+
+.circle-color-red{
+    background-color: #f5222d;
+    width: 4vw;
+    height: 4vw;
+    border-radius: 50%; 
+}
+.circle-color-blue{
+    background-color: $detail;
+    width: 4vw;
+    height: 4vw;
+    border-radius: 50%; 
+}
+.circle-color-green{
+    background-color: #52c41a;
+    width: 4vw;
+    height: 4vw;
+    border-radius: 50%; 
 }
 
 .button-loans-detail{

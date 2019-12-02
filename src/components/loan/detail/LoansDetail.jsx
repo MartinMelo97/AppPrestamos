@@ -159,12 +159,12 @@ class LoansDetail extends Component {
                 child.className="this-is-active"
             }
             for(var a=0; a<Select.length; a++){
-                if(days[i] === Select[a]){
+                if(parseInt(days[i]) === parseInt(Select[a])){
                    child.className="this-is-select"
                 }
             }
             for(var n=0; n<rangeDays.length; n++){
-                if( days[i] === rangeDays[n]){
+                if(parseInt(days[i]) === parseInt(rangeDays[n])){
                     child.className="this-not-select"
                 }
             }
@@ -239,12 +239,12 @@ class LoansDetail extends Component {
                 child.className="this-is-active"
             }
                 for(var a=0; a<Select.length; a++){
-                    if(daystwo[i] === Select[a]){
+                    if(parseInt(daystwo[i]) === parseInt(Select[a])){
                        child.className="this-is-select"
                     }
                 }
                 for(var n=0; n<rangeDays.length; n++){
-                    if( daystwo[i] === rangeDays[n]){
+                    if( parseInt(daystwo[i]) === parseInt(rangeDays[n])){
                         child.className="this-not-select"
                     }
                 }    
@@ -266,9 +266,8 @@ class LoansDetail extends Component {
 
 
     render(){
-        const {cantidad, pago, restante, payments, prestamo, pagoPorDia, utilidad} = this.props.location.state
+        const {cantidad, pago, restante, payments, prestamo, pagoPorDia, utilidad, limit} = this.props.location.state
         var percentage = (pago*100)/cantidad
-        console.log(this.props.location.state)
         return(
             <div className="loans-div-container">
                 <img src={arrow} onClick={()=> window.history.back()} className="img-arrow-back" alt="arrow"/>
@@ -287,9 +286,10 @@ class LoansDetail extends Component {
                 payments={payments}
                 utilidad={utilidad}
                 prestamo={prestamo}
+                dias={limit}
                 pagoPorDia={pagoPorDia}
                 />
-                <p className="loans-detail-p">{this.state.dateInit}</p>
+                <p className="loans-detail-p">Inicio: <label>{this.state.dateInit}</label></p>
                 <div className="calendar-loans">
                     <div id="calendar-header-loans">
                         <span className="month">{ this.state.month }</span>
@@ -321,12 +321,12 @@ class LoansDetail extends Component {
                        { this.state.important.range > 0 ?  this.mapingo() : null}
                     </div>
                 </div>
+                <p className="loans-detail-p">Término: <label>{this.state.dateEnd}</label></p>
                 <div className="footer-info-calendar">
-                        <span>Días del préstamo</span>
-                        <span>Días con pago</span>
-                        <span>Días sin pago</span>
+                        <div className="footer-list"><div className="circle-color-blue"/><span>Días del préstamo</span></div>
+                        <div className="footer-list"><div className="circle-color-green"/><span>Días con pago</span></div>
+                        <div className="footer-list"><div className="circle-color-red"/><span>Días sin pago</span></div>
                 </div>
-                <p className="loans-detail-p">{this.state.dateEnd}</p>
                 </div> : <LoanComplete 
                 dateEnd={this.state.dateEnd}
                 dateInit={this.state.dateInit}
@@ -334,7 +334,8 @@ class LoansDetail extends Component {
                 pago={pago}
                 utilidad={utilidad}
                 prestamo={prestamo}
-                restante={restante}/> }
+                restante={restante}
+                dias={limit}/> }
             </div>
         )
     }

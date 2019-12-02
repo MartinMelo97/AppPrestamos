@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import './new_customer.scss'
 import firebase from 'firebase'
 import { toast } from 'react-toastify'
+import Loader from './../../common/loader/loader'
 import arrow from './../../../assets/icons/left-arrow.svg'
 
 class NewCustomer extends Component {
@@ -17,10 +18,26 @@ class NewCustomer extends Component {
                 deleted: false,
                 created: firebase.firestore.Timestamp.fromDate(new Date()),
                 updated: firebase.firestore.Timestamp.fromDate(new Date()),
-            }
+            },
+            loader: false,
+            list: [],
+            id_list: "",
         }
     }
-    
+    componentDidMount = () =>{
+        firebase.firestore().collection('Visits')
+        .onSnapshot((customers)=>{
+          let array_dates = []
+          customers.forEach(date=>{
+              let dato = date.data()
+              dato.id = date.id
+              array_dates.push(dato)
+          })
+          array_dates.forEach(date=>{
+            this.setState({id_list: date.id, list: date.ListVisit})
+          })
+      })
+    }
     changeName = (e) => {
         let { Customers } = this.state
         Customers.firstName = e.target.value
@@ -48,23 +65,33 @@ class NewCustomer extends Component {
     }
 
     Register = () => {
-        console.log(this.state.Customers)
         firebase.firestore().collection('Customers').add(this.state.Customers)
-        .then(()=>{
+        .then((ref)=>{
             toast.info("Datos del cliente registrados!")
-            let {Customers} = this.state
-            Customers.firstName = ""
-            Customers.lastName = ""
-            Customers.address = ""
-            Customers.email = ""
-            Customers.phoneNumber = ""
-            this.setState(Customers)
-            setTimeout(()=>this.props.history.push('/clientes/prestamos/'), 3000)    
+            setTimeout(()=>this.props.history.push('/clientes/prestamos/'), 3000)
+            var dataVisit = {
+                uid: ref.id,
+                ref: firebase.firestore().collection('Customers').doc(ref.id),
+                name: this.state.Customers.firstName +" "+ this.state.Customers.lastName,
+                visited: null,
+                loan: false,
+                deleted: false
+            }
+            var ListVisit = this.state.list
+            ListVisit.push(dataVisit)
+            if(this.state.id_list === ""){
+                firebase.firestore().collection('Visits').add({ListVisit})
+            }else{
+                firebase.firestore().collection('Visits').doc(this.state.id_list).update({ListVisit})
+            }
         })
         .catch((err)=>{
             toast.error("Datos del cliente no registrados")
-            console.log(err)
         })
+        var container = document.getElementById('btn-add-client')
+        container.disabled = true
+        container.className = "btn-not-active"
+        this.setState({loader: true})
     }
     render(){
         return(
@@ -85,7 +112,8 @@ class NewCustomer extends Component {
                         <input type="text" onChange={(e)=>this.changePhone(e)} value={this.state.Customers.phoneNumber}/>
                     </div>
                 </div>
-                <button className="add-button" onClick={this.Register}>Agregar</button>
+                <button className="add-button" id="btn-add-client" onClick={this.Register}>Agregar</button>
+                {this.state.loader === true ? <Loader/> : null}
             </div>
         )
     }
