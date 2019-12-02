@@ -26,6 +26,7 @@ export default class reportMonth extends Component {
     SearchMonth = (date) => {
         var array = date.split("/")
         var newArray = []
+        // eslint-disable-next-line
         array.map((item) =>{
             newArray.push(parseInt(item))
         })
