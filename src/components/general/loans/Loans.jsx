@@ -72,7 +72,6 @@ class Loans extends Component {
                 state: this.state.datesLoan
             })
         }
-        
     }
 
     render(){

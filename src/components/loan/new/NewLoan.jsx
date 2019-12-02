@@ -5,6 +5,7 @@ import arrow from '../../../assets/icons/left-arrow.svg'
 import plus from '../../../assets/icons/plus.svg'
 import firebase from 'firebase'
 import { toast } from 'react-toastify'
+import Loader from './../../common/loader/loader'
 
 class NewLoan extends Component {
     constructor(props){
@@ -18,6 +19,7 @@ class NewLoan extends Component {
                 utility: 0,
                 amountLoan: 0,
                 payForDay: 0,
+                deleted: false,
                 loanRef: "",
                 dateStart: "",
                 dateEnd: "",
@@ -35,6 +37,7 @@ class NewLoan extends Component {
             days: [15, 18, 20, 24, 30],
             active: false,
             select: false,
+            loader: false
         }
     }
 
@@ -118,7 +121,7 @@ class NewLoan extends Component {
 
         space.innerText = select.innerText
 
-        if(select.innerText === 18){
+        if(parseInt(select.innerText) === 18){
             let { Loan } = this.state
             Loan.amountLoan = 1500
             Loan.payForDay = (1500*1.2)/select.innerText
@@ -204,9 +207,13 @@ class NewLoan extends Component {
             })
         })
         .catch((err)=>{
-            toast.error("No se pudo registrar el présatmo")
+            toast.error("No se pudo registrar el présatmo.")
             console.log(err)
         })
+        var container = document.getElementById('btn-add-loan')
+        container.disabled = true
+        container.className = "btn-not-active"
+        this.setState({loader: true})
         }
     }
 
@@ -287,7 +294,8 @@ class NewLoan extends Component {
                         <span>Días</span>
                     </div>
                     <p className="p-info-cantidad">Cantidad a pagar por día: ${this.state.Loan.payForDay > 0 ? this.state.Loan.payForDay : 0}</p>
-                    <button className="add-loan-button" onClick={this.Register}>Agregar</button>
+                    <button className="add-loan-button" id="btn-add-loan" onClick={this.Register}>Agregar</button>
+                    {this.state.loader === true ? <Loader/> : null}
                 </div>
             </div>
         )

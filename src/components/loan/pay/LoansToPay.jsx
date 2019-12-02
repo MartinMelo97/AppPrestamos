@@ -20,7 +20,7 @@ class LoansToPay extends Component {
                 amount: this.props.location.state.pagoPorDia,
                 created: firebase.firestore.Timestamp.fromDate(new Date()),
                 updated: firebase.firestore.Timestamp.fromDate(new Date()),
-            }, 
+            },
             infoByLoan: {
                 pays: [],
                 total: 0,
@@ -30,10 +30,11 @@ class LoansToPay extends Component {
             SummaryLoan: {
                 amount: 0,
                 customer: this.props.location.state.name,
-                customerRef: `/Customers/${this.props.location.state.id}`,
+                NumLoan: this.props.location.state.payments.length + 1,
                 created: firebase.firestore.Timestamp.fromDate(new Date()),
                 updated: firebase.firestore.Timestamp.fromDate(new Date()),
-            }  
+            },
+            clientVisit: [],
         }
     }
     componentDidMount = () =>{
@@ -44,8 +45,6 @@ class LoansToPay extends Component {
         var newFecha = newDay+"/"+newMonth+"/"+newYear
         let {pay} = this.state
         pay.date = newFecha
-        document.getElementById('input-pay').disabled = true
-        
         firebase.firestore().collection('LoansByDate').where("date", "==", newFecha)
         .onSnapshot(infoLoan=>{
             let loans = []
@@ -71,7 +70,17 @@ class LoansToPay extends Component {
             pay.number = 1
         }
         this.setState(pay)
-        
+        if(localStorage.getItem("id")!== ""){
+            firebase.firestore().collection("Visits").doc(localStorage.getItem("id")).get()
+            .then(dataVisits=>{
+                this.setState({clientVisit: dataVisits.data().ListVisit})
+            })
+        }
+    }
+    handleChangeAmount = (e) => {
+        const { pay } = this.state
+        pay.amount = parseInt(e.target.value)
+        this.setState({ pay })
     }
     loanPay = () => {
         var payed = this.state.pay.amount + this.props.location.state.pago
@@ -98,6 +107,15 @@ class LoansToPay extends Component {
 
         var Acumpay = this.state.infoByLoan.pays
         Acumpay.push(this.state.SummaryLoan)
+        var ListVisit
+        if(this.state.clientVisit.length>0){
+            ListVisit = this.state.clientVisit
+            ListVisit.forEach(visit=>{
+                if(visit.uid === this.props.location.state.id){
+                    visit.visited = true
+                }
+            })
+        }
         firebase.firestore().collection('Customers').doc(this.props.location.state.id)
         .update({loans})
         .then(()=>{
@@ -119,7 +137,10 @@ class LoansToPay extends Component {
                     payments: Acumpay
                 })
             }
-            this.props.history.push({    
+            if(this.state.clientVisit.length>0){
+                firebase.firestore().collection('Visits').doc(localStorage.getItem("id")).update({ListVisit})
+            }
+            this.props.history.push({
             pathname: '/prestamos/lista/',
             state: {
                 id: this.props.location.state.id,
@@ -133,8 +154,7 @@ class LoansToPay extends Component {
     }
 
     render(){
-        console.log(this.props.location.state)
-        const {cantidad, pago, restante, prestamo} = this.props.location.state
+        const {cantidad, pago, restante, prestamo, utilidad} = this.props.location.state
         var text = this.props.location.state.name 
         var arrayName = text.split(" ")
         var Name = arrayName[0]+" "+arrayName[1]
@@ -148,17 +168,23 @@ class LoansToPay extends Component {
                     </span>
                 </p>
                 <div className="buttons-container">
-                    <div className="info-loan-summary-p">
-                        <p>El préstamo fue: <span>${prestamo}</span></p>
-                        <p>Cantidad total: <span>${cantidad}</span></p>
-                        <p>Cantidad pagada: <span>${pago}</span></p>
-                        <p>Cantidad restante: <span>${restante}</span></p>
-                    </div>
                     <button 
                     className="button-style-two active">Agregar pago</button>
                     <div className="ghost-container active">
-                        <input type="number" placeholder="$" id="input-pay" value={this.state.pay.amount}/>
+                        <input type="number"
+                            placeholder="$"
+                            id="input-pay"
+                            value={this.state.pay.amount}
+                            onChange={this.handleChangeAmount}
+                        />
                         <button className="button-add" onClick={this.loanPay}>Registrar</button>
+                    </div>
+                    <div className="info-loan-summary-p"> 
+                        <p>Monto prestado: <span>${prestamo}</span></p>
+                        <p>Ganancia (20%): <span>${utilidad}</span></p>
+                        <p>Total a pagar: <span>${cantidad}</span></p>
+                        <p>Cantidad pagada: <span>${pago}</span></p>
+                        <p>Cantidad restante: <span>${restante}</span></p>
                     </div>
                 </div>
             </div>

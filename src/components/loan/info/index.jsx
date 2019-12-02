@@ -2,13 +2,19 @@ import React from 'react'
 import { Progress } from 'antd'
 import './index.scss'
 const Info = (props) =>  {
-        const {cantidad, pago, restante, payments, prestamo, utilidad} = props
+        const {cantidad, pago, restante, payments, prestamo, utilidad, dias} = props
         var percentage = (pago*100)/cantidad
         var valuePersentage
+        var restant
         if (percentage % 1 === 0) {
             valuePersentage = parseInt(percentage)
         } else {
             valuePersentage = parseFloat(percentage.toFixed(1)) 
+        }
+        if(parseInt(restante) > 0){
+            restant = restante
+        } else {
+            restant = cantidad
         }
         return (
             <div className="content-info-loan">
@@ -27,12 +33,13 @@ const Info = (props) =>  {
                                 ))
                                 : null
                                 }
-                        </div> 
-                        <p className="info-progress-p">El préstamo fue: <span className="s-info">${prestamo}</span></p>
-                        <p className="info-progress-p">Cantidad total: <span className="s-info">${cantidad}</span></p>        
+                        </div>
+                        <p className="info-progress-p">Duración del préstamo: <span className="s-info">{dias} días</span></p> 
+                        <p className="info-progress-p">Monto prestado: <span className="s-info">${prestamo}</span></p>
+                        <p className="info-progress-p">Ganancia (20%): <span className="s-info">${utilidad}</span></p>
+                        <p className="info-progress-p">Total a pagar: <span className="s-info">${cantidad}</span></p>        
                         <p className="info-progress-p">Cantidad pagada: <span className="s-info">${pago}</span></p>
-                        <p className="info-progress-p">Cantidad restante: <span className="s-info">${restante}</span></p>
-                        <p className="info-progress-p">Ganancia: <span className="s-info">${utilidad}</span></p>
+                        <p className="info-progress-p">Cantidad restante: <span className="s-info">${restant}</span></p>                        
                     </div>
                        
                 </div>
