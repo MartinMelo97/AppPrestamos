@@ -1,0 +1,252 @@
+@import '../../../variables.scss';
+
+.new-loan-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    .new-loan-title{
+        font-size: 4em;
+        max-width: 80vw;
+        margin: 0;
+        text-align: center;
+        font-weight: 900;
+        text-transform: uppercase;
+    }
+    .loan-number{
+        margin: 2vh 0;
+        font-size: 1.5em;
+        font-weight: 600;
+    }
+    .data-container{
+        display: inherit;
+        flex-direction: inherit;
+        align-items: inherit;
+        justify-content: inherit;
+        span{
+            width: 80vw;
+            font-size: 1.5em;
+            font-weight: 600;
+            margin-top: 10px;
+        }
+        .select-customer{
+            width: 80vw;
+            position: relative;
+            .space{
+                font-size: 1.5em;
+                border: 1px solid $black;
+                border-radius: 10px;
+                padding-left: 2vw;
+                height: 30px;
+                margin: 0;
+                transition: ease-in-out 0.15s;
+                &.active{
+                    border-radius: 10px 10px 0 0;
+                }
+                &.not-active{
+                    border-radius: 10px;
+                }
+            }
+            img{
+                position: absolute;
+                &.view-button{
+                    width: 5vw;
+                    right: 10px;
+                    top: calc(15px - 2.5vw);
+                    transform: rotate(-90deg);
+                    transition: ease-in-out 0.15s;
+                    &.active{
+                        transform: rotate(90deg);
+                    }
+                    &.not-active{
+                        transform: rotate(-90deg);
+                    }
+                }
+                &.add-button{
+                    width: 7vw;
+                    left: calc(100% + 1.5vw);
+                    top: calc(15px - 2.5vw);
+                }
+            }
+            .options-container{
+                position: absolute;
+                top: 100%;
+                left: 0px;
+                font-weight: 900;
+                max-height: 200px;
+                border: 1px solid $black;
+                width: calc(80vw - 2px);
+                background-color: $white;
+                z-index: 10;
+                border-bottom-left-radius: 10px;
+                border-bottom-right-radius: 10px;
+                transition: ease-in-out 0.15s;
+                &.active{
+                    visibility: visible;
+                    animation: open 0.3s;
+                    opacity: 1;
+                    @keyframes open {
+                        from{
+                            clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%);
+                        }to{
+                            clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+                        }
+                    }
+                }
+                &.not-active{
+                    visibility: hidden;
+                    animation: close 0.3s;
+                    opacity: 0;
+                    @keyframes close {
+                        from{
+                            clip-path: polygon(0% 0%, 100% 0%, 100% 100%, 0% 100%);
+                            opacity: 1;
+                        }to{
+                            clip-path: polygon(0% 0%, 100% 0%, 100% 0%, 0% 0%);
+                            opacity: 1;
+                        }
+                    }
+                }
+                .option{
+                    margin: 0;
+                    height: 38px;
+                    border-width: 1px 0;
+                    border-style: solid;
+                    border-color: $black;
+                    color: $black;
+                    font-size: 1.5em;
+                    width: 100%;
+                    transition: ease-in-out 0.15s;
+                    background: $white;
+                    &:active{
+                        background-color: $principal;
+                        color: $white; 
+                    }
+                }
+            }
+        }
+        input{
+            width: 80vw;
+            border: 1px solid $black;
+            border-radius: 10px;
+            height: 30px;
+            font-size: 1.5em;
+            &:focus{
+                outline: none;
+            }
+        }        
+        .date-container{
+            width: fit-content;
+            margin: 2vh 0;
+        }
+        .limit{
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            width: 60vw;
+            margin: 2vw 0;
+            span{
+                margin: 0;
+                width: fit-content;
+            }
+            .choiseDay{
+                width: 20vw;
+                height: 30px;
+                position: relative;
+                p{
+                    margin: 0;
+                    width: 20vw;
+                    height: 30px;
+                    border-radius: 15px;
+                    box-shadow: 0 2px 5px 0 #0009;
+                    font-size: 1.5em;
+                    font-weight: 600;
+                    text-align: center;
+                    transition: ease-in-out 0.15s;
+                    &.not-active{
+                        visibility: visible;
+                        opacity: 1;
+                    }
+                    &.active{
+                        visibility: hidden;
+                        opacity: 0;
+                    }
+                }
+                .numbers-container{
+                    position: absolute;
+                    max-height: 120px;
+                    overflow-y: scroll;
+                    display: flex;
+                    border-radius: 15px;
+                    top: 0;
+                    flex-direction: column;
+                    background-color: $white;
+                    box-shadow: 0 1px 5px 0px #0009;
+                    transition: ease-in-out 0.15s;
+                    &.not-active{
+                        visibility: hidden;
+                        opacity: 0;
+                        animation: close1 0.15s;
+                        @keyframes close1 {
+                            from{
+                                //clip-path: polygon(0% 0%, 100% 0%, 100% 120px, 0% 120px);
+                                height: 120px;
+                            }to{
+                                //clip-path: polygon(0% 0%, 100% 0%, 100% 40px, 0% 40px);
+                                height: 40px;
+                            }
+                        }
+                    }
+                    &.active{
+                        visibility: visible;
+                        opacity: 1;
+                        animation: oper1 0.15s;
+                        @keyframes oper1 {
+                            from{
+                                //clip-path: polygon(0% 0%, 100% 0%, 100% 40px, 0% 40px);
+                                height: 40px;
+                            }to{
+                                //clip-path: polygon(0% 0%, 100% 0%, 100% 120px, 0% 120px);
+                                height: 120px;
+                            }
+                        }
+                    }
+                    .number-option{
+                        width: 20vw;
+                        min-height: 40px;
+                        font-size: 1.5em;
+                        color: $black;
+                        text-align: center;
+                    }
+                }
+            }
+
+        }
+        .add-loan-button{
+            background-color: $principal;
+            border-radius: 15px;
+            text-transform: uppercase;
+            padding: 5px 25px;
+            color: $white;
+            margin-top: 3vh;
+            margin-bottom: 3vh;
+            font-size: 1.7em;
+            border: none;
+            letter-spacing: 2px;
+            font-family: 'Barlow Condensed';
+            &:focus{
+                outline: none;
+            }
+        }
+    }
+}
+.input-cant{
+    padding-left: 10px;
+}
+.p-info-cantidad{
+    margin-bottom: 0;
+    margin-top: 2vh;
+    font-size: 1.5em;
+    color: $principal;
+    font-weight: 900;
+}

@@ -1,0 +1,99 @@
+@import '../../../variables.scss';
+
+.customers-loans-container{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-start;
+    .customers-loans-title{
+        font-weight: 900;
+        text-transform: uppercase;
+        font-size: 4em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 0 0 0;
+        img{
+            width: 7vw;
+            margin-left: 5vw;
+        }
+    }
+
+    .info-customers-container {
+        z-index: 10;
+    }
+
+    .info-customer-container{
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        width: 85vw;
+        margin: 2vh 0;
+        z-index: 999;
+
+        span{
+            color: $white;
+            font-size: 1.8em;
+            width: 65vw;
+            padding: 5px 0;
+            border-radius: 50px;
+            text-align: center;
+        }
+        img{
+            width: 7vw;
+        }
+    }
+    .transparent-white-div{
+        position: fixed;
+        z-index: 1;
+        bottom: 0;
+        height: 50vh;
+        width: 100vw;
+        background: linear-gradient(to bottom, #e8e8e800, #e8e8e899);
+    }
+}
+.Link-option{ 
+    text-decoration: none;
+    color: none;
+}
+.detail-prop{
+    display: none;
+}
+.customers-loans-title-admin{
+    font-weight: 900;
+        text-transform: uppercase;
+        font-size: 3em;
+        display: flex;
+        justify-content: center;
+        align-items: center;
+        margin: 0 0 3vh 0;
+        img{
+            width: 7vw;
+            margin-left: 2vw;
+        }
+}
+
+.design-modal-c{
+    .ant-modal-header{
+        background-color: #f5222d;
+        color: #fff;
+    }
+    .ant-modal-title{
+        color: #fff;
+        font-size: 1.8em;
+    }
+    p{
+        margin-bottom: 0;
+        font-size: 1.5em;
+        text-align: center;
+    }
+    .ant-btn-primary{
+        background-color: #f5222d;
+        border-color: #f5222d;
+        font-size: 1.5em;
+    }
+    .ant-btn{
+        font-size: 1.5em !important;
+    }
+
+}

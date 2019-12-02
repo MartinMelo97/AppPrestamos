@@ -1,37 +1,35 @@
-import React, { Component } from 'react'
+import React from 'react'
+import {NavLink} from 'react-router-dom'
 import './customer_detail.scss'
+import arrow from './../../../assets/icons/left-arrow.svg'
 
-class CustomerDetail extends Component{
-    constructor(props){
-        super(props)
-        this.state = {
-            customer:{
-                name: 'Alicia',
-                active: 2,
-                email: 'test@gmail.com',
-                direction: 'Col. Centro #20',
-                phoneNumber: '772 123 9823'
-            }
-        }
-    }
+const CustomerDetail = (props) =>{
+    const {nombre, correo, direccion, telefono, apellido} = props.location.state
 
-    render(){
-        return(
-            <div className="detail">
-                <div className="head">
-                    <p className="client-name">{this.state.customer.name}</p>
-                    <span>Info</span>
-                </div>
-                <div className="client-data">
-                    <p>Activos: <span>{this.state.customer.active}</span></p>
-                    <p>{this.state.customer.email}</p>
-                    <p>{this.state.customer.direction}</p>
-                    <p>{this.state.customer.phoneNumber}</p>
-                </div>
-                <button className="edit-button">Editar</button>
+    return(
+        <div className="detail">
+            <img src={arrow} onClick={()=> window.history.back()} className="img-arrow-back" alt="arrow"/>
+            <div className="head">
+                <p className="client-name">{nombre}</p>
+                <span>Info</span>
             </div>
-        )
-    }
+            <div className="client-data">
+                <p>Apellido: <span>{apellido}</span></p>
+                <p>Correo: <span>{correo}</span></p>
+                <p>Dirección: <span>{direccion}</span></p>
+                <p>Teléfono: <span>{telefono}</span></p>
+            </div>
+            <NavLink
+            to={{
+                pathname: '/clientes/editar/',
+                state: {
+                    id: props.location.state.id
+                }
+            }}
+            >
+            <button className="edit-button">Editar</button></NavLink>
+        </div>
+    )
 }
 
 export default CustomerDetail

@@ -1,0 +1,159 @@
+@import '../../../variables.scss';
+
+.loans-div-container{
+
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+
+    .loans-detail-title{
+        text-transform: uppercase;
+        font-weight: 900;
+        font-size: 4em;
+        margin-top: 1vh;
+        margin-bottom: 2vh;
+        width: 80vw;
+        text-align: center;
+    }
+    .loans-detail-p{
+        font-size: 5vh;
+        margin-top: 2vh;
+        margin-bottom: 2vh;
+    }
+
+    .calendar-loans{
+
+        width: 70vw;
+        height: 37vh;
+        box-shadow: 0px 5px 10px 1px #0003;
+        overflow: auto;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+
+        #calendar-header-loans{
+            width: 60vw;
+            padding-left: 3vw;
+            background-color: #fff;
+            span{
+                font-size: 2em;
+                font-weight: 900;
+                margin: 0 1vw;
+            }
+        }
+
+        #calendar-body-loans{
+            display: grid;
+            grid-template-columns: repeat(7, calc(100% / 7));
+            grid-template-rows: repeat(7, calc(100% / 7));
+            width: 60vw;
+            max-height: 30vh;
+            align-items: center;
+            justify-items: center;
+            span{
+                width: calc(60vw / 7);
+                height: calc(60vw / 7);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                font-size: 1.7em;
+                font-weight: 900;
+            }
+
+            .this-is-active{
+                color: $detail;
+            }  
+            .this-is-select{
+                color: #52c41a;
+            }
+            .this-not-select{
+                color: #f5222d;
+            }
+        }
+        #calendar-body-loans-two{
+            display: grid;
+            grid-template-columns: repeat(7, calc(100% / 7));
+            grid-template-rows: repeat(7, calc(100% / 7));
+            width: 60vw;
+            max-height: 30vh;
+            align-items: center;
+            justify-items: center;
+            span{
+                width: calc(60vw / 7);
+                height: calc(60vw / 7);
+                display: flex;
+                justify-content: center;
+                align-items: center;
+                text-align: center;
+                font-size: 1.7em;
+                font-weight: 900;
+            }
+
+            .this-is-active{
+                color: $detail;
+            }
+            .this-is-select{
+                color: #52c41a;
+            }
+            .this-not-select{
+                color: #f5222d;
+            }  
+        }
+    }
+    
+}
+.footer-info-calendar{
+    width: 60vw;
+    height: 20vh;
+    display: flex;
+    justify-content: center;
+    flex-direction: column;
+    align-items: center;
+    margin-top: 5vh;
+    span {
+        border-radius: 10vh;
+        color: $white;
+        font-size: 1.7em;
+        font-weight: 900;
+        width: 50vw;
+        text-align: center;
+        margin-bottom: 1vh;
+        &:nth-child(1){
+            color: $detail; 
+        }
+        &:nth-child(2){
+            color: #52c41a; 
+        }
+        &:nth-child(3){
+            color: #f5222d; 
+        }
+    }
+}
+
+.button-loans-detail{
+    font-size: 1.7em;
+    text-transform: uppercase;
+    border: none;
+    margin-bottom: 3vh;
+    border-radius: 15px;
+    font-weight: 600;
+    letter-spacing: 1px;
+    padding: 5px 25px;
+    color: $white;
+    background-color: $detail;
+    font-family: 'Barlow Condensed';
+}
+
+
+.icon-s{
+    font-size: 3vh !important;
+}
+.p-pagoHoy{
+    text-transform: uppercase;
+    font-weight: 900;
+    margin-top: 0;
+    margin-bottom: 2vh;
+    font-size: 1.5em;
+    color: $principal;
+}

@@ -1,39 +1,91 @@
 import React, { Component } from 'react'
 import './new_customer.scss'
+import firebase from 'firebase'
+import { toast } from 'react-toastify'
+import arrow from './../../../assets/icons/left-arrow.svg'
 
 class NewCustomer extends Component {
     constructor(props){
         super(props)
         this.state = {
-            topics : [
-                'Nombre',
-                'Apellidos',
-                'Dirección',
-                'Correo',
-                'Teléfono'
-            ]
+            Customers: {
+                firstName: "",
+                lastName: "",
+                address: "",
+                email: "",
+                phoneNumber: "",
+                deleted: false,
+                created: firebase.firestore.Timestamp.fromDate(new Date()),
+                updated: firebase.firestore.Timestamp.fromDate(new Date()),
+            }
         }
     }
+    
+    changeName = (e) => {
+        let { Customers } = this.state
+        Customers.firstName = e.target.value
+        this.setState(Customers)
+    }
+    changeFirstName = (e) => {
+        let { Customers } = this.state
+        Customers.lastName = e.target.value
+        this.setState(Customers)
+    }
+    changeAddress = (e) => {
+        let { Customers } = this.state
+        Customers.address = e.target.value
+        this.setState(Customers)
+    }
+    changeEmail = (e) => {
+        let { Customers } = this.state
+        Customers.email = e.target.value
+        this.setState(Customers)
+    }
+    changePhone = (e) => {
+        let { Customers } = this.state
+        Customers.phoneNumber = e.target.value
+        this.setState(Customers)
+    }
 
+    Register = () => {
+        console.log(this.state.Customers)
+        firebase.firestore().collection('Customers').add(this.state.Customers)
+        .then(()=>{
+            toast.info("Datos del cliente registrados!")
+            let {Customers} = this.state
+            Customers.firstName = ""
+            Customers.lastName = ""
+            Customers.address = ""
+            Customers.email = ""
+            Customers.phoneNumber = ""
+            this.setState(Customers)
+            setTimeout(()=>this.props.history.push('/clientes/prestamos/'), 3000)    
+        })
+        .catch((err)=>{
+            toast.error("Datos del cliente no registrados")
+            console.log(err)
+        })
+    }
     render(){
         return(
             <div className="new-custumer-container">
+                <img src={arrow} onClick={()=> window.history.back()} className="img-arrow-back" alt="arrow"/>
                 <p className="title-new-customer">Nuevo Cliente</p>
                 <div className="topics-container">
-                    {this.state.topics.map((topic, i)=>(
-                        i != this.state.topics.length-1 ?
-                        <div className="topic">
-                            <p>{topic}</p>
-                            <input type="text"/>
-                        </div>
-                        :
-                        <div className="topic">
-                            <p>{topic}</p>
-                            <input type="number"/>
-                        </div>
-                    ))}
+                    <div className="topic">
+                        <p>Nombre</p>
+                        <input type="text" onChange={(e)=>this.changeName(e)} value={this.state.Customers.firstName}/>
+                        <p>Apellido</p>
+                        <input type="text" onChange={(e)=>this.changeFirstName(e)} value={this.state.Customers.lastName}/>
+                        <p>Dirección</p>
+                        <input type="text" onChange={(e)=>this.changeAddress(e)} value={this.state.Customers.address}/>
+                        <p>Correo</p>
+                        <input type="text" onChange={(e)=>this.changeEmail(e)} value={this.state.Customers.email}/>
+                        <p>Teléfono</p>
+                        <input type="text" onChange={(e)=>this.changePhone(e)} value={this.state.Customers.phoneNumber}/>
+                    </div>
                 </div>
-                <button className="add-button">Agregar</button>
+                <button className="add-button" onClick={this.Register}>Agregar</button>
             </div>
         )
     }

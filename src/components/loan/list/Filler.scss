@@ -1,0 +1,7 @@
+@import '../../../variables.scss';
+.filler {
+    background: $detail;
+    height: 100%;
+   border-radius: 3em;
+    transition: width .2s ease-in;
+  }
