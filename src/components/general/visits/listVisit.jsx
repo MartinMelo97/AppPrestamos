@@ -172,6 +172,10 @@ export default class Visits extends Component {
         document.getElementById(this.state.position).className = "visit-container"
     }
     render(){
+        let numbersInList = []
+        for(var i=0; i<this.state.customers.length; i++){
+            numbersInList.push(i)
+        }
         return(
             <div className="general-loans-container">
                 <p className="customers-loans-title">Visitas
@@ -190,7 +194,13 @@ export default class Visits extends Component {
                         <div className="visit-container" id={i}
                         onClick={() => {
                             this.setState({position: i, num: i+1, numM: i-1})
-                            document.getElementById(i).className = "visit-select"
+                            numbersInList.forEach(n=>{
+                                if(n!==i){
+                                    document.getElementById(n).className = "visit-container"
+                                }else{
+                                    document.getElementById(i).className = "visit-select"
+                                }
+                            })
                             document.getElementById('buttons-container').className = "buttons-acctions"
                         }}>
                             <span>{i+1}</span>

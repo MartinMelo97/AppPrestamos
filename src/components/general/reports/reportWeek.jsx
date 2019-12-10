@@ -11,6 +11,7 @@ export default class ReportWeek extends Component {
         this.state = {
             month: this.props.location.state.month,
             loans: 0,
+            numberWeek: 1,
             utility: 0,
             search: false,
             year: this.props.location.state.year,
@@ -26,7 +27,14 @@ export default class ReportWeek extends Component {
     }
     componentDidMount = () =>{
         var date = new Date(this.props.location.state.year, this.props.location.state.month-1, 1).getDay()
-        var numDay = new Date(this.props.location.state.year, this.props.location.state.month, 0).getDate()
+        var numDay
+        if(parseInt(new Date().getFullYear()) === parseInt(this.props.location.state.year)){
+            if(parseInt(new Date().getMonth())+1 === parseInt(this.props.location.state.month)){
+                numDay= new Date().getDate()
+            }else {numDay = new Date(this.props.location.state.year, this.props.location.state.month, 0).getDate()}
+        }else {
+            numDay = new Date(this.props.location.state.year, this.props.location.state.month, 0).getDate()
+        }
         var weekOne = []
         var weekTwo = []
         var weekThree = []
@@ -35,53 +43,53 @@ export default class ReportWeek extends Component {
         for(var i=1; i<=numDay; i++){
             switch(date){
             case 0:
-                if(i>=1 && i<=7){weekOne.push(i)}
-                if(i>=8 && i<=14){weekTwo.push(i)}
-                if(i>=15 && i<=21){weekThree.push(i)}
-                if(i>=22 && i<=28){weekFour.push(i)}
-                if(i>=29 && i<=31){weekFive.push(i)}
+                if(i>=1 && i<=7){weekOne.push(i); this.setState({numberWeek: 1})}
+                if(i>=8 && i<=14){weekTwo.push(i); this.setState({numberWeek: 2})}
+                if(i>=15 && i<=21){weekThree.push(i); this.setState({numberWeek: 3})}
+                if(i>=22 && i<=28){weekFour.push(i); this.setState({numberWeek: 4})}
+                if(i>=29 && i<=31){weekFive.push(i); this.setState({numberWeek: 5})}
             break;
             case 1:
-                if(i>=1 && i<=6){weekOne.push(i)}
-                if(i>=7 && i<=13){weekTwo.push(i)}
-                if(i>=14 && i<=20){weekThree.push(i)}
-                if(i>=21 && i<=27){weekFour.push(i)}
-                if(i>=28 && i<=31){weekFive.push(i)}
+                if(i>=1 && i<=6){weekOne.push(i); this.setState({numberWeek: 1})}
+                if(i>=7 && i<=13){weekTwo.push(i); this.setState({numberWeek: 2})}
+                if(i>=14 && i<=20){weekThree.push(i); this.setState({numberWeek: 3})}
+                if(i>=21 && i<=27){weekFour.push(i); this.setState({numberWeek: 4})}
+                if(i>=28 && i<=31){weekFive.push(i); this.setState({numberWeek: 5})}
             break;
             case 2:
-                if(i>=1 && i<=5){weekOne.push(i)}
-                if(i>=6 && i<=12){weekTwo.push(i)}
-                if(i>=13 && i<=19){weekThree.push(i)}
-                if(i>=20 && i<=26){weekFour.push(i)}
-                if(i>=27 && i<=31){weekFive.push(i)}
+                if(i>=1 && i<=5){weekOne.push(i); this.setState({numberWeek: 1})}
+                if(i>=6 && i<=12){weekTwo.push(i); this.setState({numberWeek: 2})}
+                if(i>=13 && i<=19){weekThree.push(i); this.setState({numberWeek: 3})}
+                if(i>=20 && i<=26){weekFour.push(i); this.setState({numberWeek: 4})}
+                if(i>=27 && i<=31){weekFive.push(i); this.setState({numberWeek: 5})}
             break;
             case 3:
-                if(i>=1 && i<=4){weekOne.push(i)}
-                if(i>=5 && i<=11){weekTwo.push(i)}
-                if(i>=12 && i<=18){weekThree.push(i)}
-                if(i>=19 && i<=25){weekFour.push(i)}
-                if(i>=26 && i<=31){weekFive.push(i)}
+                if(i>=1 && i<=4){weekOne.push(i); this.setState({numberWeek: 1})}
+                if(i>=5 && i<=11){weekTwo.push(i); this.setState({numberWeek: 2})}
+                if(i>=12 && i<=18){weekThree.push(i); this.setState({numberWeek: 3})}
+                if(i>=19 && i<=25){weekFour.push(i); this.setState({numberWeek: 4})}
+                if(i>=26 && i<=31){weekFive.push(i); this.setState({numberWeek: 5})}
             break;
             case 4:
-                if(i>=1 && i<=3){weekOne.push(i)}
-                if(i>=4 && i<=10){weekTwo.push(i)}
-                if(i>=11 && i<=17){weekThree.push(i)}
-                if(i>=18 && i<=24){weekFour.push(i)}
-                if(i>=26 && i<=31){weekFive.push(i)}
+                if(i>=1 && i<=3){weekOne.push(i); this.setState({numberWeek: 1})}
+                if(i>=4 && i<=10){weekTwo.push(i); this.setState({numberWeek: 2})}
+                if(i>=11 && i<=17){weekThree.push(i); this.setState({numberWeek: 3})}
+                if(i>=18 && i<=24){weekFour.push(i); this.setState({numberWeek: 4})}
+                if(i>=26 && i<=31){weekFive.push(i); this.setState({numberWeek: 5})}
             break;
             case 5:
-                if(i>=1 && i<=2){weekOne.push(i)}
-                if(i>=3 && i<=9){weekTwo.push(i)}
-                if(i>=10 && i<=16){weekThree.push(i)}
-                if(i>=17 && i<=23){weekFour.push(i)}
-                if(i>=24 && i<=31){weekFive.push(i)}
+                if(i>=1 && i<=2){weekOne.push(i); this.setState({numberWeek: 1})}
+                if(i>=3 && i<=9){weekTwo.push(i); this.setState({numberWeek: 2})}
+                if(i>=10 && i<=16){weekThree.push(i); this.setState({numberWeek: 3})}
+                if(i>=17 && i<=23){weekFour.push(i); this.setState({numberWeek: 4})}
+                if(i>=24 && i<=31){weekFive.push(i); this.setState({numberWeek: 5})}
             break;
             case 6:
-                if(i>=1 && i<2){weekOne.push(i)}
-                if(i>=2 && i<=8){weekTwo.push(i)}
-                if(i>=9 && i<=15){weekThree.push(i)}
-                if(i>=16 && i<=22){weekFour.push(i)}
-                if(i>=23 && i<=31){weekFive.push(i)}
+                if(i>=1 && i<2){weekOne.push(i); this.setState({numberWeek: 1})}
+                if(i>=2 && i<=8){weekTwo.push(i); this.setState({numberWeek: 2})}
+                if(i>=9 && i<=15){weekThree.push(i); this.setState({numberWeek: 3})}
+                if(i>=16 && i<=22){weekFour.push(i); this.setState({numberWeek: 4})}
+                if(i>=23 && i<=31){weekFive.push(i); this.setState({numberWeek: 5})}
             break;
             default:
                 console.log("Error")
@@ -138,12 +146,16 @@ export default class ReportWeek extends Component {
     render() {
         const days = ["Domingo", "Lunes", "Martes", "Miércoles", "Jueves", "Viernes", "Sábado"]
         let months = ["Ener", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"]
-        const weeks = ["Semanas", 
+        let weeks = []
+        const weeksList = ["Semanas", 
         `Semana 1 (${this.state.weekOne[0]} - ${this.state.weekOne[this.state.weekOne.length - 1]} de ${months[this.props.location.state.month-1]}.)`,
         `Semana 2 (${this.state.weekTwo[0]} - ${this.state.weekTwo[this.state.weekTwo.length - 1]} de ${months[this.props.location.state.month-1]}.)`,
         `Semana 3 (${this.state.weekThree[0]} - ${this.state.weekThree[this.state.weekThree.length - 1]} de ${months[this.props.location.state.month-1]}.)`,
         `Semana 4 (${this.state.weekFour[0]} - ${this.state.weekFour[this.state.weekFour.length - 1]} de ${months[this.props.location.state.month-1]}.)`,
         `Semana 5 (${this.state.weekFive[0]} - ${this.state.weekFive[this.state.weekFive.length - 1]} de ${months[this.props.location.state.month-1]}.)`]
+        for(var d=0; d<=this.state.numberWeek; d++){
+            weeks.push(weeksList[d])
+        }
         var n = new Date(this.props.location.state.year, this.props.location.state.month, 0).getDate()
         var position
         if (parseInt(this.state.week) === 1){

@@ -130,7 +130,6 @@ class NewLoan extends Component {
             
         } else {
             let { Loan } = this.state
-            Loan.amountLoan = 0
             Loan.payForDay = (Loan.amountLoan*1.2)/select.innerText
             this.setState(Loan)
             document.getElementById('input-cantidad').disabled = false

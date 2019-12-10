@@ -1,10 +1,10 @@
 import React, { Component } from 'react'
 import './loans_detail.scss'
-import {NavLink} from 'react-router-dom'
 import arrow from '../../../assets/icons/left-arrow.svg'
 import InfoLoan from './../info'
 import LoanComplete from './../info/Information'
 import moment from 'moment'
+import {toast} from 'react-toastify'
 class LoansDetail extends Component {
     constructor(props){
         super(props)
@@ -35,7 +35,7 @@ class LoansDetail extends Component {
     componentDidMount = () =>{
         var Init = this.Dates(this.props.location.state.fechaInicio)
         var End = this.Dates(this.props.location.state.fechaFin) 
-        
+
         var diaInicio = Init[0]
         var mesInicio = Init[1]
         var diaFin = End[0]
@@ -62,12 +62,7 @@ class LoansDetail extends Component {
         monthend = months[mesFin-1]
         ultimateDay= diaFin
         this.setState({important:{range: mesFin - mesInicio}})
-        
-        
-        
-
         let monts = ["Ener", "Feb", "Mar", "Abr", "May", "Jun", "Jul", "Ago", "Sep", "Oct", "Nov", "Dic"]
-        
         let {dateEnd, dateInit } = this.state
         dateInit = diaInicio+" "+monts[mesInicio-1]+". "+Year
         dateEnd = diaFin+" "+monts[mesFin-1]+". "+YearEnd 
@@ -135,7 +130,6 @@ class LoansDetail extends Component {
             }
         })
         let Select = [...new Set(SelectDays)]
-
         //Days not select
         rangeDays.forEach(date=>{
         Select.forEach(select=>{
@@ -263,7 +257,24 @@ class LoansDetail extends Component {
         if(contX < 7 && calendar != null)
             calendar.style.gridTemplateRows= ('repeat(6, calc(100% / 6))')
     }
+    RegisterPayment = () =>{
+        var register = false
+        var ActualDate = new Date().getDate()+"/"+ (new Date().getMonth()+1)+ "/" + new Date().getFullYear()
+        this.props.location.state.payments.forEach(payment=>{
+            if(payment.date === ActualDate){
+                register = true
+            }
+        })
 
+        if(register === true){
+            toast.warn("Ya realizaste un pago hoy, vuelve mañana.")
+        }else {
+            this.props.history.push({
+                pathname: '/prestamos/a-pagar/',
+                state: this.state.datesProps
+            })
+        }
+    }
 
     render(){
         const {cantidad, pago, restante, payments, prestamo, pagoPorDia, utilidad, limit} = this.props.location.state
@@ -275,10 +286,7 @@ class LoansDetail extends Component {
                 {percentage < 100 ? 
                 <div className="loans-div-container">
                 <p className="p-pagoHoy">Pagar hoy ${this.props.location.state.pagoPorDia} MXN</p>   
-                <NavLink to={{
-                    pathname: '/prestamos/a-pagar/',
-                    state: this.state.datesProps
-                }}><button className="button-loans-detail">Registrar pago</button></NavLink>
+                <button className="button-loans-detail" onClick={this.RegisterPayment}>Registrar pago</button>
                 <InfoLoan
                 cantidad={cantidad}
                 pago={pago}
